@@ -9,5 +9,9 @@ namespace apps::vao
 {
     void main_loop(GLFWwindow *window);
 }
+namespace apps::xyzw
+{
+    void main_loop(GLFWwindow *window);
+}
 
 #endif

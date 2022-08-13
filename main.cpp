@@ -44,5 +44,6 @@ int main()
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     mc::App ins_init{_window, "init"};
     mc::App ins_vao{_window, "vao"};
-    ins_vao.Run(apps::vao::main_loop);
+    mc::App ins_xyzw{_window, "xyzw"};
+    ins_xyzw.Run(apps::xyzw::main_loop);
 }

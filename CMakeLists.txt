@@ -5,6 +5,10 @@ project(hello_world)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+SET(CMAKE_BUILD_TYPE "Debug")
+SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g2 -ggdb")
+SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
+
 set (INCLUDE_DIR ${PROJECT_SOURCE_DIR}/others/include)
 set (GLFW_LIB ${PROJECT_SOURCE_DIR}/others/lib/libglfw.3.dylib)
 set (GLAD_LIB ${PROJECT_SOURCE_DIR}/others/lib/libglad.dylib)
