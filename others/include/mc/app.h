@@ -9,8 +9,8 @@ namespace mc
 {
     class App
     {
-        const std::string m_name;
         GLFWwindow *m_window;
+        const std::string m_name;
 
     public:
         using RunFunc = void (*)(GLFWwindow *m_window);
