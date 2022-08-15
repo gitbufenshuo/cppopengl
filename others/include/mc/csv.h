@@ -5,11 +5,11 @@
 
 namespace mc::tools
 {
-    template <typename T>
+    template <typename T, typename U, typename W>
     class CSVReader
     {
     public:
-        static void Read(const char *file_path, std::vector<T> &m_data);
+        static void Read(const char *file_path, std::vector<T> &m_v_data, std::vector<U> &m_e_data, std::vector<W> &m_s_data);
     };
 }
 
