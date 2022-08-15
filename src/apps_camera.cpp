@@ -1,0 +1,43 @@
+#include <iostream>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <mc/camera.h>
+#include <mc/model.h>
+#include <mc/shader.h>
+#include <mc/transform.h>
+
+namespace apps::camera
+{
+    void main_loop(GLFWwindow *window)
+    {
+        mc::low::Camera main_camera;
+        mc::low::Model model_0{"../others/resource/model/cube.model"};
+        model_0.Upload();
+        mc::low::Shader shader{"../others/resource/shader/mvp.vs", "../others/resource/shader/mvp.fs"};
+        shader.Load();
+        mc::low::Transform gb_0;
+        gb_0.Translate(0.0f, -1.0f, -5.0f);
+
+        glEnable(GL_DEPTH_TEST);
+        glEnable(GL_CULL_FACE);
+
+        while (!glfwWindowShouldClose(window))
+        {
+            glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            shader.Use();  // shader bind
+            model_0.Use(); // vao bind
+            shader.Uniform("ma_View", main_camera.GetViewMat());
+            shader.Uniform("ma_Proj", main_camera.GetProjMat());
+            shader.Uniform("ma_Model", gb_0.GetWorldMat());
+            glDrawElements(GL_TRIANGLES, model_0.GetEBOCount(), GL_UNSIGNED_INT, 0);
+            // glDrawArrays(GL_TRIANGLES, 0, 3);
+            glfwSwapBuffers(window);
+            glfwPollEvents();
+        }
+
+        // glfw: terminate, clearing all previously allocated GLFW resources.
+        // ------------------------------------------------------------------
+        glfwTerminate();
+    }
+}

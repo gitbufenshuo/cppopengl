@@ -13,6 +13,7 @@ namespace mc::low
         Transform &GetUpper() const;
         const glm::mat4 &GetLocalMat();
         const glm::mat4 &GetWorldMat();
+        void Translate(float x = 0.0f, float y = 0.0f, float z = 0.0f);
 
     private:
         void updateMat();

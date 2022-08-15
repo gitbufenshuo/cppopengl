@@ -17,28 +17,30 @@ namespace mc::low
         {
             return;
         }
+        m_uploaded = true;
         //
         glGenVertexArrays(1, &m_vao);
+        glBindVertexArray(m_vao);
         glGenBuffers(1, &m_vbo);
         glGenBuffers(1, &m_ebo);
         //
         glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
         glBufferData(GL_ARRAY_BUFFER, m_v_data.size() * sizeof(float), m_v_data.data(), GL_STATIC_DRAW);
         //
-        glBindVertexArray(m_vao);
         int _loc = 0;
         int _total = 0;
+        int _off = 0;
         for (auto one : m_s_data)
         {
             _total += one;
         }
-        _total = 0;
+
         for (auto one : m_s_data)
         {
-            glVertexAttribPointer(_loc, one, GL_FLOAT, GL_FALSE, _total * sizeof(float), (void *)(_total * sizeof(float)));
+            glVertexAttribPointer(_loc, one, GL_FLOAT, GL_FALSE, _total * sizeof(float), (void *)(_off * sizeof(float)));
             glEnableVertexAttribArray(_loc);
             ++_loc;
-            _total += one;
+            _off += one;
         }
         // ebo
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
@@ -46,5 +48,10 @@ namespace mc::low
     }
     void Model::Use()
     {
+        glBindVertexArray(m_vao);
+    }
+    int Model::GetEBOCount() const
+    {
+        return static_cast<int>(m_e_data.size());
     }
 }

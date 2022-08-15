@@ -1,5 +1,5 @@
-set (LOW_CODE low_transform.cpp low_shader.cpp low_camera.cpp)
-set (APPS_CODE app.cpp apps_init.cpp apps_vao.cpp apps_xyzw.cpp apps_math.cpp apps_csv.cpp)
+set (LOW_CODE low_transform.cpp low_shader.cpp low_camera.cpp low_model.cpp)
+set (APPS_CODE app.cpp apps_init.cpp apps_vao.cpp apps_xyzw.cpp apps_math.cpp apps_csv.cpp apps_camera.cpp)
 
 add_compile_options(-Wno-unused-function)
 add_library(src ${APPS_CODE} ${LOW_CODE} ${TOOLS_CODE})

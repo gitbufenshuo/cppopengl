@@ -47,5 +47,6 @@ int main()
     mc::App ins_math{_window, "glm"};
     mc::App ins_xyzw{_window, "xyzw"};
     mc::App ins_csv{_window, "csv"};
-    ins_csv.Run(apps::csv::main_loop);
+    mc::App ins_camera{_window, "camera"};
+    ins_camera.Run(apps::camera::main_loop);
 }

@@ -53,5 +53,13 @@ namespace mc::low
         }
         return m_world_mat;
     }
+    void Transform::Translate(float x, float y, float z)
+    {
+        m_dirty = true;
+        //
+        m_translate.x += x;
+        m_translate.y += y;
+        m_translate.z += z;
+    }
 
 }

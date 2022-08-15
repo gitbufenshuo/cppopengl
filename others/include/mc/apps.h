@@ -23,4 +23,9 @@ namespace apps::csv
 {
     void main_loop(GLFWwindow *window);
 }
+
+namespace apps::camera
+{
+    void main_loop(GLFWwindow *window);
+}
 #endif

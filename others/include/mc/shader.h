@@ -4,6 +4,7 @@
 #include <string_view>
 //
 #include <glad/glad.h>
+#include <glm/glm.hpp>
 
 namespace mc::low
 {
@@ -14,6 +15,7 @@ namespace mc::low
         Shader(const char *vname, const char *fname);
         void Load();
         void Use() const;
+        void Uniform(const char *_name, const glm::mat4 &input);
 
     private:
         std::string_view v_file_name;

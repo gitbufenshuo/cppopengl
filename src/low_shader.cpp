@@ -68,5 +68,8 @@ namespace mc::low
         const auto vdata = s.c_str();
         return compile(shader_type, vdata);
     }
-
+    void Shader::Uniform(const char *_name, const glm::mat4 &input)
+    {
+        glUniformMatrix4fv(glGetUniformLocation(shader_id, _name), 1, GL_FALSE, &input[0][0]);
+    }
 }

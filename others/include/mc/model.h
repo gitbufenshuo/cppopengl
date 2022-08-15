@@ -10,6 +10,7 @@ namespace mc::low
         Model(const char *file_name);
         void Upload();
         void Use();
+        int GetEBOCount() const;
 
     private:
         unsigned int m_vao{};
