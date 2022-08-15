@@ -19,4 +19,8 @@ namespace apps::xyzw
     void main_loop(GLFWwindow *window);
 }
 
+namespace apps::csv
+{
+    void main_loop(GLFWwindow *window);
+}
 #endif

@@ -46,5 +46,6 @@ int main()
     mc::App ins_vao{_window, "vao"};
     mc::App ins_math{_window, "glm"};
     mc::App ins_xyzw{_window, "xyzw"};
-    ins_math.Run(apps::math::main_loop);
+    mc::App ins_csv{_window, "csv"};
+    ins_csv.Run(apps::csv::main_loop);
 }
