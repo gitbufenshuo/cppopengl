@@ -21,7 +21,7 @@ namespace apps::camera
         shader.Load();
         // objects
         mc::low::Transform gb_0;
-        gb_0.Translate(0.0f, 0.0f, -10.0f);
+        gb_0.Translate(0.0f, -1.0f, -2.0f);
         mc::low::Transform gb_1;
         gb_1.SetLocalTranslate(0.0f, 0.5f, -5.0f);
         gb_1.SetLocalScale(0.1f, 0.1f, 0.1f);
