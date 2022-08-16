@@ -75,6 +75,9 @@
         "utility": "cpp",
         "valarray": "cpp",
         "variant": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "filesystem": "cpp",
+        "__memory": "cpp",
+        "*.ipp": "cpp"
     }
 }

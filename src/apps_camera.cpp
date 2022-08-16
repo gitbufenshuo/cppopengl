@@ -21,18 +21,21 @@ namespace apps::camera
         shader.Load();
         // objects
         mc::low::Transform gb_0;
-        gb_0.Translate(0.0f, 0.0f, -5.0f);
+        gb_0.Translate(0.0f, 0.0f, -10.0f);
         mc::low::Transform gb_1;
-        gb_1.Translate(0.0f, 0.0f, -5.0f);
-        gb_1.SetUpper(&gb_0);
-        // textures
+        gb_1.SetLocalTranslate(0.0f, 0.5f, -5.0f);
+        gb_1.SetLocalScale(0.1f, 0.1f, 0.1f);
+        // texture
         mc::low::Texture image{"../others/resource/texture/mc.png"};
         image.Load();
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
+
+        glm::vec3 light_color{1.0f};
         double now_time{glfwGetTime()};
         double last_time{now_time};
         const double init_time{now_time};
+
         while (!glfwWindowShouldClose(window))
         {
             now_time = glfwGetTime();
@@ -45,20 +48,31 @@ namespace apps::camera
             image.Use();
             shader.Uniform("ma_View", main_camera.GetViewMat());
             shader.Uniform("ma_Proj", main_camera.GetProjMat());
-            // logic update
-            std::cout << "-->" << std::endl;
-            // gb_0.ShowVersion();
-            // gb_1.ShowVersion();
-            // gb_0.Translate(0.005f, 0.0f, 0.0f);
-            gb_0.SetLocalEuler(0.0f, 0.0f, static_cast<float>(now_time - init_time) * 10.0f);
-            // render update
-            // gb_0
-            shader.Uniform("ma_Model", gb_0.GetWorldMat());
-            glDrawElements(GL_TRIANGLES, model_0.GetEBOCount(), GL_UNSIGNED_INT, 0);
-            // gb_1
-            shader.Uniform("ma_Model", gb_1.GetWorldMat());
-            glDrawElements(GL_TRIANGLES, model_0.GetEBOCount(), GL_UNSIGNED_INT, 0);
+            {
+                // logic update
+                glm::sin(static_cast<float>(now_time - init_time));
+                gb_1.SetLocalTranslate(glm::sin(static_cast<float>(now_time - init_time)),
+                                       glm::cos(static_cast<float>(now_time - init_time)) * 10.0f,
+                                       -5.0f);
+                shader.Uniform("lightPos", gb_1.GetWorldPos());
+                shader.Uniform("lightColor", light_color);
 
+                // gb_0.SetLocalEuler(0.0f, static_cast<float>(now_time - init_time) * 10.0f, 0.0f);
+                // std::cout << "-->" << std::endl;
+                // gb_0.ShowVersion();
+                // gb_1.ShowVersion();
+                // gb_0.Translate(0.005f, 0.0f, 0.0f);
+                // gb_0.SetLocalEuler(0.0f, 0.0f, static_cast<float>(now_time - init_time) * 10.0f);
+            }
+            {
+                // render update
+                // gb_0
+                shader.Uniform("ma_Model", gb_0.GetWorldMat());
+                glDrawElements(GL_TRIANGLES, model_0.GetEBOCount(), GL_UNSIGNED_INT, 0);
+                // gb_1
+                shader.Uniform("ma_Model", gb_1.GetWorldMat());
+                glDrawElements(GL_TRIANGLES, model_0.GetEBOCount(), GL_UNSIGNED_INT, 0);
+            }
             glfwSwapBuffers(window);
             glfwPollEvents();
         }

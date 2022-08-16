@@ -57,6 +57,23 @@ namespace mc::low
         m_translate.y += y;
         m_translate.z += z;
     }
+    void Transform::SetLocalTranslate(float x, float y, float z)
+    {
+        m_local_dirty = true;
+        //
+        m_translate.x = x;
+        m_translate.y = y;
+        m_translate.z = z;
+    }
+    void Transform::SetLocalScale(float x, float y, float z)
+    {
+        m_local_dirty = true;
+        //
+        m_scale.x = x;
+        m_scale.y = y;
+        m_scale.z = z;
+    }
+
     // 这个过程，会更新路径上所有节点的 local mat 和 world mat
     // 按需更新
     unsigned int Transform::getUpperVersion()
@@ -114,5 +131,41 @@ namespace mc::low
         auto quat_yx = glm::cross(quat_y, quat_x);            // y45 x45
         m_rotation = glm::cross(quat_z, quat_yx);             // z45 y45 x45
         m_local_dirty = true;
+    }
+    void showVec(const glm::vec3 &input)
+    {
+        std::cout << "        " << input.x << " "
+                  << input.y << " "
+                  << input.z << " "
+                  << std::endl;
+    }
+    void showVec(const glm::vec4 &input)
+    {
+        std::cout << "        " << input.x << " "
+                  << input.y << " "
+                  << input.z << " "
+                  << input.w << " "
+                  << std::endl;
+    }
+    void showMat(const glm::mat4 &input)
+    {
+        std::cout << "---show mat---" << std::endl;
+        for (int row = 0; row < 4; ++row)
+        {
+            for (int col = 0; col < 4; ++col)
+            {
+                std::cout << input[col][row] << " ";
+            }
+            std::cout << std::endl;
+        }
+    }
+
+    glm::vec3 Transform::GetWorldPos()
+    {
+        auto &mat{GetWorldMat()};
+        auto res{mat * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)};
+        auto cast_res{static_cast<glm::vec3>(res)};
+        showVec(cast_res);
+        return cast_res;
     }
 }

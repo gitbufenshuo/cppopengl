@@ -72,4 +72,9 @@ namespace mc::low
     {
         glUniformMatrix4fv(glGetUniformLocation(shader_id, _name), 1, GL_FALSE, &input[0][0]);
     }
+    void Shader::Uniform(const char *_name, const glm::vec3 &input)
+    {
+        glUniform3fv(glGetUniformLocation(shader_id, _name), 1, &input[0]);
+    }
+
 }
