@@ -17,7 +17,7 @@ void gl_context_init()
 }
 GLFWwindow *open_new_window()
 {
-    GLFWwindow *window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
+    GLFWwindow *window = glfwCreateWindow(800, 800, "LearnOpenGL", NULL, NULL);
     if (!window)
     {
         glfwTerminate();

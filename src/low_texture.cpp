@@ -8,6 +8,7 @@ namespace mc::low
 {
     Texture::Texture(const char *file_name) : m_file_name{file_name}
     {
+        stbi_set_flip_vertically_on_load(true);
         m_image_data = stbi_load(file_name, &m_width, &m_height, &m_nrChannels, 0);
         std::cout << m_width << " " << m_height << " " << m_nrChannels << std::endl;
         if (!m_image_data)
