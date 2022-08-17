@@ -8,24 +8,32 @@ in vec3 u_FragPos;
 
 uniform sampler2D ourTexture;
 
+struct Material {
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+    float shininess;
+};
+
+uniform Material material;
+
 uniform vec3 lightPos;
 uniform vec3 lightColor;
 uniform vec3 viewPos;
 
 void main() {
     // ambient light
-    float ambientFactor = 0.1;
-    vec3 light_ambient = ambientFactor * lightColor;
+    vec3 light_ambient = material.ambient * lightColor;
     // diffuse light
     vec3 norm = normalize(u_Normal);
     vec3 lightDir = normalize(lightPos - u_FragPos);
     float diffFactor = max(dot(norm, lightDir), 0.0);
-    vec3 light_diffuse = diffFactor * lightColor;
+    vec3 light_diffuse = diffFactor * material.diffuse * lightColor;
     // specular light
     vec3 viewDir = normalize(viewPos - u_FragPos);
     vec3 reflectDir = reflect(-lightDir, norm);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-    vec3 light_spec = 0.5 * spec * lightColor;
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+    vec3 light_spec = material.specular * spec * lightColor;
     // combination light -> Phone
     vec4 object_color = texture(ourTexture, u_UV);
     //
