@@ -66,7 +66,16 @@ namespace mc::low
         buffer << t.rdbuf();
         auto s = buffer.str();
         const auto vdata = s.c_str();
-        return compile(shader_type, vdata);
+        try
+        {
+            std::cout << "begin compile" << file_name << std::endl;
+            return compile(shader_type, vdata);
+        }
+        catch (...)
+        {
+            std::cout << "compile Wrong" << file_name << std::endl;
+            throw;
+        }
     }
     void Shader::Uniform(const char *_name, const glm::mat4 &input)
     {
@@ -75,6 +84,10 @@ namespace mc::low
     void Shader::Uniform(const char *_name, const glm::vec3 &input)
     {
         glUniform3fv(glGetUniformLocation(shader_id, _name), 1, &input[0]);
+    }
+    void Shader::Uniform(const char *_name, const float input)
+    {
+        glUniform1f(glGetUniformLocation(shader_id, _name), input);
     }
 
 }

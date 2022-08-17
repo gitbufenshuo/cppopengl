@@ -8,6 +8,21 @@
 
 namespace mc::tools
 {
+
+    template <typename T>
+    T sto(std::string &input)
+    {
+        return sto(input, the_type<T>());
+    }
+    inline float sto(std::string &input, the_type<float>)
+    {
+        return std::stof(input);
+    }
+    inline float sto(std::string &input, the_type<int>)
+    {
+        return std::stoi(input);
+    }
+
     template <typename T, typename U, typename W>
     void CSVReader<T, U, W>::Read(const char *file_path, std::vector<T> &v_data, std::vector<U> &e_data, std::vector<W> &s_data)
     {
@@ -40,7 +55,7 @@ namespace mc::tools
                 std::stringstream row_stream{row};
                 while (std::getline(row_stream, col, ','))
                 {
-                    v_data.push_back(std::stof(col));
+                    v_data.push_back(sto<T>(col));
                 }
             }
             break;
@@ -49,7 +64,7 @@ namespace mc::tools
                 std::stringstream row_stream{row};
                 while (std::getline(row_stream, col, ','))
                 {
-                    e_data.push_back(std::stoi(col));
+                    e_data.push_back(sto<U>(col));
                 }
             }
             break;
@@ -58,12 +73,38 @@ namespace mc::tools
                 std::stringstream row_stream{row};
                 while (std::getline(row_stream, col, ','))
                 {
-                    s_data.push_back(std::stoi(col));
+                    s_data.push_back(sto<W>(col));
                 }
             }
             break;
             default:
                 break;
+            }
+        }
+    }
+    template <typename T, typename U, typename W>
+    void CSVReader<T, U, W>::ReadMaterial(const char *file_path, std::vector<T> &data)
+    {
+        std::ifstream t(file_path);
+        //
+        std::string row;
+        std::string col;
+        //
+        while (std::getline(t, row))
+        {
+            if (row.size() <= 1)
+            {
+                continue; // 空行
+            }
+            if (row[0] == '#')
+            {
+                continue; // 注释行
+            }
+            //
+            std::stringstream row_stream{row};
+            while (std::getline(row_stream, col, ','))
+            {
+                data.push_back(sto<T>(col));
             }
         }
     }

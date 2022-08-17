@@ -17,6 +17,7 @@ namespace mc::low
         void Use() const;
         void Uniform(const char *_name, const glm::mat4 &input);
         void Uniform(const char *_name, const glm::vec3 &input);
+        void Uniform(const char *_name, const float input);
 
     private:
         std::string_view v_file_name;

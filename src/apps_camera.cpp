@@ -1,4 +1,6 @@
 #include <iostream>
+#include <vector>
+//
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <mc/camera.h>
@@ -6,6 +8,7 @@
 #include <mc/shader.h>
 #include <mc/texture.h>
 #include <mc/transform.h>
+#include <mc/material.h>
 
 namespace apps::camera
 {
@@ -17,7 +20,7 @@ namespace apps::camera
         mc::low::Model model_0{"../others/resource/model/cube.model"};
         model_0.Upload();
         // shaders
-        mc::low::Shader shader{"../others/resource/shader/mvp.vs", "../others/resource/shader/mvp.fs"};
+        mc::low::Shader shader{"../others/resource/shader/phong.vert.vs", "../others/resource/shader/phong.frag.fs"};
         shader.Load();
         // objects
         mc::low::Transform gb_0;
@@ -28,6 +31,8 @@ namespace apps::camera
         // texture
         mc::low::Texture image{"../others/resource/texture/mc.png"};
         image.Load();
+        // material
+        mc::low::Material _mate_emerald{"../others/resource/material/emerald.material"};
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
 
@@ -56,7 +61,6 @@ namespace apps::camera
                                        -5.0f);
                 shader.Uniform("lightPos", gb_1.GetWorldPos());
                 shader.Uniform("lightColor", light_color);
-
                 // gb_0.SetLocalEuler(0.0f, static_cast<float>(now_time - init_time) * 10.0f, 0.0f);
                 // std::cout << "-->" << std::endl;
                 // gb_0.ShowVersion();
@@ -66,6 +70,16 @@ namespace apps::camera
             }
             {
                 // render update
+                // material
+                //                 vec3 ambient;
+                // vec3 diffuse;
+                // vec3 specular;
+                // float shininess;
+
+                shader.Uniform("material.ambient", _mate_emerald.GetAmbient());
+                shader.Uniform("material.diffuse", _mate_emerald.GetDiffuse());
+                shader.Uniform("material.specular", _mate_emerald.GetSpecular());
+                shader.Uniform("material.shininess", _mate_emerald.GetShininess());
                 // gb_0
                 shader.Uniform("ma_Model", gb_0.GetWorldMat());
                 glDrawElements(GL_TRIANGLES, model_0.GetEBOCount(), GL_UNSIGNED_INT, 0);
