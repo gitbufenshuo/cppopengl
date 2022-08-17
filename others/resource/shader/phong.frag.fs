@@ -32,8 +32,8 @@ void main() {
     // specular light
     vec3 viewDir = normalize(viewPos - io_FragPos);
     vec3 reflectDir = reflect(-lightDir, norm);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
-    vec3 light_spec = material.specular * spec * lightColor;
+    float specFactor = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+    vec3 light_spec = specFactor * material.specular * lightColor;
     // combination light -> Phone
     vec4 object_color = texture(ourTexture, io_UV);
     //
