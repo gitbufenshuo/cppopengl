@@ -1,52 +1,96 @@
 #include <iostream>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include <vector>
 
-#include <mc/app.h>
-#include <mc/apps.h>
+#include <mc/engine.h>
+#include <mc/gameobject.h>
+
+#include <mc/model.h>
+#include <mc/texture.h>
+#include <mc/shader.h>
+
+#include <mc/mesh_render.h>
+#include <mc/material.h>
+#include <mc/logic_support.h>
 
 void show_hello();
 
-void gl_context_init()
+using mlGB = mc::low::GameObject;
+using mlModel = mc::low::Model;
+using mlTexture = mc::low::Texture;
+using mlShader = mc::low::Shader;
+using mlRender = mc::low::MeshRender;
+using mlFilter = mc::low::MeshFilter;
+using mlMaterial = mc::low::Material;
+using mlBasicLG = mc::low::BasicLogicSupport;
+namespace
 {
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-}
-GLFWwindow *open_new_window()
-{
-    GLFWwindow *window = glfwCreateWindow(800, 800, "LearnOpenGL", NULL, NULL);
-    if (!window)
+    std::vector<mlGB *> GenSome(mlRender *render, mlFilter *filter)
     {
-        glfwTerminate();
-        throw "window_bad";
+
+        std::vector<mlGB *> res;
+        int row = 11;
+        int col = 11;
+        res.resize(row * col);
+
+        for (int row_idx = 0; row_idx < row; ++row_idx)
+        {
+            for (int col_idx = 0; col_idx < col; ++col_idx)
+            {
+                auto *one = new mlGB{};
+                one->SetMeshFilter(filter);
+                one->SetMeshRender(render);
+                one->GetTransform()->SetLocalEuler(10.0f, 10.0f, 10.0f);
+                one->GetTransform()->SetLocalTranslate(
+                    static_cast<float>(col_idx) * 1.5f - 5.0f * 1.5f,
+                    static_cast<float>(row_idx) * 1.5f - 5.0f * 1.5f,
+                    -20.0f);
+                one->AddLogicSupport(new mlBasicLG{one});
+                res[row_idx * col + col_idx] = one;
+            }
+        }
+        return res;
     }
-    glfwMakeContextCurrent(window);
-    return window;
-}
-void init_glad()
-{
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+
+    mlFilter *GetOneFilter()
     {
-        throw "glad_init_bad";
+        auto *model_0{new mlModel{"../others/resource/model/cube.model"}};
+        model_0->Upload();
+        auto *filter_0{new mlFilter{}};
+        filter_0->SetModel(model_0);
+        return filter_0;
+    }
+    mlRender *GetOneRender()
+    {
+        auto *shader{new mlShader{"../others/resource/shader/phong.vert.vs", "../others/resource/shader/phong.frag.fs"}};
+        shader->Load();
+
+        auto *image{new mlTexture{"../others/resource/texture/mc.jpeg"}};
+        image->Load();
+
+        auto *_mate_emerald_material{new mlMaterial{"../others/resource/material/emerald.material"}};
+        _mate_emerald_material->SetShader(shader);
+        _mate_emerald_material->SetTexture(image);
+
+        auto *render{new mlRender{}};
+        render->SetMaterial(_mate_emerald_material);
+        return render;
     }
 }
 
 int main()
 {
     show_hello();
-    gl_context_init();
-    auto _window = open_new_window();
-    init_glad();
     //
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    mc::App ins_init{_window, "init"};
-    mc::App ins_vao{_window, "vao"};
-    mc::App ins_math{_window, "glm"};
-    mc::App ins_xyzw{_window, "xyzw"};
-    mc::App ins_csv{_window, "csv"};
-    mc::App ins_camera{_window, "camera"};
-    ins_camera.Run(apps::camera::main_loop);
+    mc::low::Engine gogogo{800, 800, "Hello MC"};
+
+    {
+        auto list = GenSome(GetOneRender(), GetOneFilter());
+        for (auto one : list)
+        {
+            // 这个里面所有的 gameobject 都是一个 filter 和 render
+            gogogo.AddGameobject(one);
+        }
+    }
+
+    gogogo.Run();
 }

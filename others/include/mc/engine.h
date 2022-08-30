@@ -5,6 +5,7 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 
 #include <mc/gameobject.h>
 #include <mc/camera.h>
@@ -22,13 +23,26 @@ namespace mc::low
         double init_time{};
         int m_width{800};
         int m_height{800};
+        glm::vec3 m_light_color{1.0f, 1.0f, 1.0f};
+        glm::vec3 m_light_pos{0.0f, 0.0f, 0.0f};
 
     private:
         void update();
+        void logic_update();
+        void standard_render();
 
     public:
-        Engine(int width = 800, int height = 800);
+        Engine(int width = 800, int height = 800, const char *name = "HelloOpenGL");
         void Run();
+        void AddGameobject(GameObject *gb);
+        void SetLightColor(glm::vec3 color)
+        {
+            m_light_color = color;
+        }
+        void SetLightPos(glm::vec3 pos)
+        {
+            m_light_pos = pos;
+        }
     };
 }
 #endif

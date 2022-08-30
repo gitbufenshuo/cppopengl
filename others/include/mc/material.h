@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 
 #include <mc/shader.h>
+#include <mc/texture.h>
 
 namespace mc::low
 {
@@ -16,7 +17,9 @@ namespace mc::low
         glm::vec3 m_specular;
         float m_shininess;
         const char *m_file_name;
+
         Shader *m_shader;
+        Texture *m_texture;
 
     public:
         Material(const std::vector<float> &input) : m_ambient{input[0], input[1], input[2]},
@@ -37,6 +40,14 @@ namespace mc::low
         void SetShader(Shader *shader)
         {
             m_shader = shader;
+        }
+        Texture *GetTexture()
+        {
+            return m_texture;
+        }
+        void SetTexture(Texture *texture)
+        {
+            m_texture = texture;
         }
     };
 }

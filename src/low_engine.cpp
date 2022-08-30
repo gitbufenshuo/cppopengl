@@ -1,9 +1,11 @@
 #include <iostream>
+#include <utility>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include <mc/engine.h>
+#include <mc/gameobject.h>
 #include <mc/camera.h>
 
 namespace
@@ -34,66 +36,96 @@ namespace
         }
         glfwMakeContextCurrent(window);
         init_glad();
+        glEnable(GL_DEPTH_TEST);
+        glEnable(GL_CULL_FACE);
         return window;
     }
 }
 
 namespace mc::low
 {
-    Engine::Engine(int width, int height) : m_main_camera{new Camera{}}, m_width{width}, m_height{height}
+    Engine::Engine(int width, int height, const char *name) : m_main_camera{new Camera{}}, m_width{width}, m_height{height}
     {
-        m_window = open_new_window(m_width, m_height, "HelloWorld");
+        m_window = open_new_window(m_width, m_height, name);
+        now_time = glfwGetTime();
+        last_time = now_time;
+        init_time = now_time;
         std::cout << "<<<<<< Welcom to Engine >>>>>>" << std::endl;
     }
-
-    void Engine::update()
+    void Engine::logic_update()
     {
         now_time = glfwGetTime();
-        std::cout << "frame interval: " << now_time - last_time << std::endl;
+        double delta_time = now_time - last_time;
+        std::cout << "frame interval: " << delta_time << " framerate: " << 1.0 / (delta_time) << std::endl;
         last_time = now_time;
+        // 遍历各个 gameobject，执行 logicsupport 上的 Update 函数
+        for (auto &pair : m_gameobjects)
+        {
+            auto _gb = pair.second;
+            _gb->Update(delta_time);
+        }
+    }
+    void Engine::standard_render()
+    {
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        shader.Use();  // shader bind
-        model_0.Use(); // vao bind
-        image.Use();
-        shader.Uniform("ma_View", main_camera.GetViewMat());
-        shader.Uniform("ma_Proj", main_camera.GetProjMat());
+        // 遍历各个 gameobject, 画出来
+        for (auto &pair : m_gameobjects)
         {
-            // logic update
-            glm::sin(static_cast<float>(now_time - init_time));
-            gb_1.SetLocalTranslate(glm::sin(static_cast<float>(now_time - init_time)),
-                                   glm::cos(static_cast<float>(now_time - init_time)) * 10.0f,
-                                   1.0f);
-
-            shader.Uniform("lightPos", gb_1.GetWorldPos());
-            shader.Uniform("lightColor", light_color);
-            // gb_0.SetLocalEuler(0.0f, static_cast<float>(now_time - init_time) * 10.0f, 0.0f);
-            // std::cout << "-->" << std::endl;
-            // gb_0.ShowVersion();
-            // gb_1.ShowVersion();
-            // gb_0.Translate(0.005f, 0.0f, 0.0f);
-            // gb_0.SetLocalEuler(0.0f, 0.0f, static_cast<float>(now_time - init_time) * 10.0f);
+            auto _gb = pair.second;
+            auto mr = pair.second->GetMeshRender();
+            if (!mr)
+            {
+                // 没有 mesh render, 相当于不用渲染
+                continue;
+            }
+            auto _material = mr->GetMaterial();
+            if (!_material)
+            {
+                // 没有 材质，说明这个mesh render 设置不完整
+                continue;
+            }
+            auto _mesh_filter = _gb->GetMeshFilter();
+            if (!_mesh_filter)
+            {
+                // 没有模型
+                continue;
+            }
+            // model
+            auto _model = _mesh_filter->GetModel();
+            _model->Use();
+            // shader
+            auto _shader = _material->GetShader();
+            _shader->Use();
+            // texture
+            auto _texture = _material->GetTexture();
+            _texture->Use();
+            // 传一些 uniform
+            {
+                _shader->Uniform("ma_View", m_main_camera->GetViewMat());
+                _shader->Uniform("ma_Proj", m_main_camera->GetProjMat());
+                _shader->Uniform("lightPos", m_light_pos);
+                _shader->Uniform("lightColor", m_light_color);
+            }
+            {
+                _shader->Uniform("material.ambient", _material->GetAmbient());
+                _shader->Uniform("material.diffuse", _material->GetDiffuse());
+                _shader->Uniform("material.specular", _material->GetSpecular());
+                _shader->Uniform("material.shininess", _material->GetShininess());
+            }
+            {
+                _shader->Uniform("ma_Model", _gb->GetTransform()->GetWorldMat());
+            }
+            // 画
+            glDrawElements(GL_TRIANGLES, _model->GetEBOCount(), GL_UNSIGNED_INT, 0);
         }
-        {
-            // render update
-            // material
-            //                 vec3 ambient;
-            // vec3 diffuse;
-            // vec3 specular;
-            // float shininess;
-
-            shader.Uniform("material.ambient", _mate_emerald.GetAmbient());
-            shader.Uniform("material.diffuse", _mate_emerald.GetDiffuse());
-            shader.Uniform("material.specular", _mate_emerald.GetSpecular());
-            shader.Uniform("material.shininess", _mate_emerald.GetShininess());
-            // gb_0
-            shader.Uniform("ma_Model", gb_0.GetWorldMat());
-            glDrawElements(GL_TRIANGLES, model_0.GetEBOCount(), GL_UNSIGNED_INT, 0);
-            // gb_1
-            shader.Uniform("ma_Model", gb_1.GetWorldMat());
-            glDrawElements(GL_TRIANGLES, model_0.GetEBOCount(), GL_UNSIGNED_INT, 0);
-        }
-        glfwSwapBuffers(window);
+    }
+    void Engine::update()
+    {
+        logic_update();
+        standard_render();
+        //
+        glfwSwapBuffers(m_window);
         glfwPollEvents();
     }
 
@@ -104,5 +136,11 @@ namespace mc::low
             update();
         }
         glfwTerminate();
+    }
+    void Engine::AddGameobject(GameObject *game_object)
+    {
+        game_object->SetID(m_next_id++);
+        m_gameobjects.insert(std::pair{game_object->GetID(), game_object});
+        std::cout << "[Engine::AddGameobject] " << game_object->GetID() << std::endl;
     }
 }
