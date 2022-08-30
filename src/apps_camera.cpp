@@ -24,12 +24,12 @@ namespace apps::camera
         shader.Load();
         // objects
         mc::low::Transform gb_0;
-        gb_0.Translate(0.0f, -1.0f, -2.0f);
+        gb_0.Translate(0.0f, 0.0f, -2.0f);
         mc::low::Transform gb_1;
-        gb_1.SetLocalTranslate(0.0f, 0.5f, -5.0f);
+        gb_1.SetLocalTranslate(0.0f, 0.5f, 1.0f);
         gb_1.SetLocalScale(0.1f, 0.1f, 0.1f);
         // texture
-        mc::low::Texture image{"../others/resource/texture/mc.png"};
+        mc::low::Texture image{"../others/resource/texture/mc.jpeg"};
         image.Load();
         // material
         mc::low::Material _mate_emerald{"../others/resource/material/emerald.material"};
@@ -58,7 +58,8 @@ namespace apps::camera
                 glm::sin(static_cast<float>(now_time - init_time));
                 gb_1.SetLocalTranslate(glm::sin(static_cast<float>(now_time - init_time)),
                                        glm::cos(static_cast<float>(now_time - init_time)) * 10.0f,
-                                       -5.0f);
+                                       1.0f);
+
                 shader.Uniform("lightPos", gb_1.GetWorldPos());
                 shader.Uniform("lightColor", light_color);
                 // gb_0.SetLocalEuler(0.0f, static_cast<float>(now_time - init_time) * 10.0f, 0.0f);

@@ -37,5 +37,7 @@ void main() {
     // combination light -> Phone
     vec4 object_color = texture(ourTexture, io_UV);
     //
-    FragColor = vec4((light_ambient + light_diffuse + light_spec) * object_color.rgb, object_color.a);
+    vec3 ocolor = (light_ambient + light_diffuse + light_spec) * object_color.rgb;
+
+    FragColor = vec4(ocolor, object_color.a);
 }

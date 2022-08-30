@@ -4,6 +4,8 @@
 #include <vector>
 #include <glm/glm.hpp>
 
+#include <mc/shader.h>
+
 namespace mc::low
 {
     class Material
@@ -14,6 +16,7 @@ namespace mc::low
         glm::vec3 m_specular;
         float m_shininess;
         const char *m_file_name;
+        Shader *m_shader;
 
     public:
         Material(const std::vector<float> &input) : m_ambient{input[0], input[1], input[2]},
@@ -27,6 +30,14 @@ namespace mc::low
         const glm::vec3 &GetDiffuse() { return m_diffuse; }
         const glm::vec3 &GetSpecular() { return m_specular; }
         float GetShininess() { return m_shininess; }
+        Shader *GetShader()
+        {
+            return m_shader;
+        }
+        void SetShader(Shader *shader)
+        {
+            m_shader = shader;
+        }
     };
 }
 #endif

@@ -30,24 +30,17 @@ namespace apps::math
         }
         void testPerspective()
         {
-            glm::mat4 proj = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 0.2f);
-            for (float x = -1.0f; x <= 1.0; x += 0.1f)
+            glm::mat4 proj = glm::perspective(glm::radians(45.0f), 1.0f, 1.0f, 100.0f);
+            showMat(proj);
+            for (float z = -1.1f; z >= -99.0f; z -= 0.5f)
             {
-                for (float y = -1.0f; y <= 1.0; y += 0.1f)
-                {
-                    glm::vec4 my_vec(x, y, -0.2f, 1.0f);
-                    my_vec = proj * my_vec;
-                    std::cout << " -- -- -- " << x << " " << y << std::endl;
-                    std::cout << "        " << my_vec.x << " "
-                              << my_vec.y << " "
-                              << my_vec.z << " "
-                              << my_vec.w << std::endl;
-                    auto w = my_vec.w;
-                    std::cout << "        " << my_vec.x / w << " "
-                              << my_vec.y / w << " "
-                              << my_vec.z / w << " "
-                              << std::endl;
-                }
+
+                glm::vec4 my_vec(0.0f, 0.0f, z, 1.0f);
+                my_vec = proj * my_vec;
+                std::cout << z << " xyzw:[" << my_vec.x << " "
+                          << my_vec.y << " "
+                          << my_vec.z << " "
+                          << my_vec.w << std::endl;
             }
         }
         void testVec3Mul()
@@ -104,10 +97,10 @@ namespace apps::math
     // -Wno-unused-function
     void main_loop(GLFWwindow *window)
     {
-        testMat();
+        // testMat();
         // testQuaternion();
         // testTranslate();
         // testVec3Mul();
-        // testPerspective();
+        testPerspective();
     }
 }
