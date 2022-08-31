@@ -9,7 +9,7 @@ namespace mc::low
     {
         m_gameobject = gameobject;
     }
-    void MeshRender::SetMaterial(Material *material)
+    void MeshRender::SetMaterial(MaterialP material)
     {
         m_material = material;
     }

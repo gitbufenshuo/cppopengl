@@ -3,6 +3,8 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <unordered_map>
+#include <utility>
 
 #include <mc/csv.h>
 
@@ -105,6 +107,54 @@ namespace mc::tools
             while (std::getline(row_stream, col, ','))
             {
                 data.push_back(sto<T>(col));
+            }
+        }
+    }
+    template <typename T, typename U, typename W>
+    void CSVReader<T, U, W>::ReadMultiMaterial(const char *file_path, std::unordered_map<int, T> &m_data)
+    {
+        std::ifstream t(file_path);
+        //
+        std::string row;
+        std::string col;
+        //
+        int key = -1;
+        std::string m_name;
+        std::vector<float> _data_holder;
+        _data_holder.reserve(10);
+        //
+        while (std::getline(t, row))
+        {
+            if (row.size() <= 1)
+            {
+                continue; // 空行
+            }
+            if (row[0] == '#')
+            {
+                if (key > -1)
+                {
+                    m_data.insert(std::pair{key, T{new W{_data_holder, m_name}}});
+                }
+                _data_holder.resize(0);
+                ++key;
+                std::stringstream row_stream{row};
+                int loop = 0;
+                while (std::getline(row_stream, col, '='))
+                {
+                    if (loop == 1)
+                    {
+                        m_name = col;
+                        break;
+                    }
+                    // data.push_back(sto<T>(col));
+                    loop++;
+                }
+                continue; // 注释行
+            }
+            std::stringstream row_stream{row};
+            while (std::getline(row_stream, col, ','))
+            {
+                _data_holder.push_back(sto<U>(col));
             }
         }
     }

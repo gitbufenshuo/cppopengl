@@ -13,6 +13,7 @@ ${MC_LOW_DIR}logic_support.cpp
 ${MC_LOW_DIR}shader_store.cpp
 ${MC_LOW_DIR}model_store.cpp
 ${MC_LOW_DIR}texture_store.cpp
+${MC_LOW_DIR}material_store.cpp
 )
 set (TOOLS_CODE tools_image.cpp)
 set (APPS_CODE app.cpp apps_init.cpp apps_vao.cpp apps_xyzw.cpp apps_math.cpp apps_csv.cpp apps_camera.cpp)

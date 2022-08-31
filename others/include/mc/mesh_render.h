@@ -4,6 +4,7 @@
 #include <mc/gameobject.h>
 #include <mc/material.h>
 #include <mc/model_store.h>
+#include <mc/material_store.h>
 #include <mc/tools_bound.h>
 
 namespace mc::low
@@ -13,13 +14,13 @@ namespace mc::low
     {
         GameObject *m_gameobject;
         Bound m_bound;
-        Material *m_material;
+        MaterialP m_material;
         //
     public:
         MeshRender();
         void SetGameobject(GameObject *gameobject);
-        void SetMaterial(Material *material);
-        Material *GetMaterial()
+        void SetMaterial(MaterialP material);
+        MaterialP GetMaterial()
         {
             return m_material;
         }

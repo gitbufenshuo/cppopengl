@@ -22,6 +22,7 @@ using mlRender = mc::low::MeshRender;
 using mlFilter = mc::low::MeshFilter;
 using mlMaterial = mc::low::Material;
 using mlBasicLG = mc::low::BasicLogicSupport;
+using mlTranslateLG = mc::low::TranslateLogicSupport;
 namespace
 {
     bool rangeshader(int key, mlShader *_shader)
@@ -52,10 +53,26 @@ namespace
         auto &textruestore{gogogo.GetTextureStore()};
         textruestore.Register(image);
     }
-
-    std::vector<mlGB *> GenSome(mlRender *render, mlFilter *filter)
+    void LoadMaterial(mc::low::Engine &gogogo)
     {
+        auto &materialstore{gogogo.GetMaterialStore()};
+        materialstore.LoadFromFile("../others/resource/material/all.material");
+    }
+    mlRender *GetOneRender(mc::low::Engine &gogogo, int gid)
+    {
+        auto &materialstore{gogogo.GetMaterialStore()};
+        int mat_count = materialstore.GetCount();
+        auto spMat{materialstore.Get(gid % mat_count)};
 
+        spMat->SetShader(gogogo.GetShaderStore().Get(1));
+        spMat->SetTexture(gogogo.GetTextureStore().Get(1));
+
+        auto *render{new mlRender{}};
+        render->SetMaterial(spMat);
+        return render;
+    }
+    std::vector<mlGB *> GenSome(mc::low::Engine &gogogo, mlFilter *filter)
+    {
         std::vector<mlGB *> res;
         int row = 11;
         int col = 11;
@@ -67,13 +84,13 @@ namespace
             {
                 auto *one = new mlGB{};
                 one->SetMeshFilter(filter);
-                one->SetMeshRender(render);
+                one->SetMeshRender(GetOneRender(gogogo, col_idx + row_idx));
                 one->GetTransform()->SetLocalEuler(10.0f, 10.0f, 10.0f);
                 one->GetTransform()->SetLocalTranslate(
                     static_cast<float>(col_idx) * 1.5f - 5.0f * 1.5f,
                     static_cast<float>(row_idx) * 1.5f - 5.0f * 1.5f,
                     -20.0f);
-                one->AddLogicSupport(new mlBasicLG{one});
+                one->AddLogicSupport(new mlTranslateLG{one, 30.5f});
                 res[row_idx * col + col_idx] = one;
             }
         }
@@ -87,17 +104,7 @@ namespace
         filter_0->SetModel(modelstore.Get(1));
         return filter_0;
     }
-    mlRender *GetOneRender(mc::low::Engine &gogogo)
-    {
 
-        auto *_mate_emerald_material{new mlMaterial{"../others/resource/material/emerald.material"}};
-        _mate_emerald_material->SetShader(gogogo.GetShaderStore().Get(1));
-        _mate_emerald_material->SetTexture(gogogo.GetTextureStore().Get(1));
-
-        auto *render{new mlRender{}};
-        render->SetMaterial(_mate_emerald_material);
-        return render;
-    }
 }
 
 int main()
@@ -109,7 +116,8 @@ int main()
         LoadShader(gogogo);
         LoadModel(gogogo);
         LoadTexture(gogogo);
-        auto list = GenSome(GetOneRender(gogogo), GetOneFilter(gogogo));
+        LoadMaterial(gogogo);
+        auto list = GenSome(gogogo, GetOneFilter(gogogo));
         for (auto one : list)
         {
             // 这个里面所有的 gameobject 都是一个 filter 和 render
