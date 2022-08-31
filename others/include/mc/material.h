@@ -4,8 +4,8 @@
 #include <vector>
 #include <glm/glm.hpp>
 
-#include <mc/shader.h>
 #include <mc/texture.h>
+#include <mc/shader_store.h>
 
 namespace mc::low
 {
@@ -18,7 +18,7 @@ namespace mc::low
         float m_shininess;
         const char *m_file_name;
 
-        Shader *m_shader;
+        ShaderP m_shader;
         Texture *m_texture;
 
     public:
@@ -33,11 +33,11 @@ namespace mc::low
         const glm::vec3 &GetDiffuse() { return m_diffuse; }
         const glm::vec3 &GetSpecular() { return m_specular; }
         float GetShininess() { return m_shininess; }
-        Shader *GetShader()
+        ShaderP GetShader()
         {
             return m_shader;
         }
-        void SetShader(Shader *shader)
+        void SetShader(ShaderP shader)
         {
             m_shader = shader;
         }

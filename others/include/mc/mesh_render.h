@@ -3,7 +3,7 @@
 
 #include <mc/gameobject.h>
 #include <mc/material.h>
-#include <mc/model.h>
+#include <mc/model_store.h>
 #include <mc/tools_bound.h>
 
 namespace mc::low
@@ -27,14 +27,14 @@ namespace mc::low
 
     class MeshFilter
     {
-        Model *m_model;
+        ModelP m_model;
 
     public:
-        void SetModel(Model *model)
+        void SetModel(ModelP model)
         {
             m_model = model;
         }
-        Model *GetModel()
+        ModelP GetModel()
         {
             return m_model;
         }

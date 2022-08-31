@@ -24,6 +24,28 @@ using mlMaterial = mc::low::Material;
 using mlBasicLG = mc::low::BasicLogicSupport;
 namespace
 {
+    bool rangeshader(int key, mlShader *_shader)
+    {
+        std::cout << key << " " << _shader << std::endl;
+        return true;
+    }
+    void LoadShader(mc::low::Engine &gogogo)
+    {
+        auto *shader{new mlShader{"../others/resource/shader/phong.vert.vs", "../others/resource/shader/phong.frag.fs"}};
+        shader->Load();
+        auto &shaderstore = gogogo.GetShaderStore();
+        shaderstore.Register(shader);
+        //
+        shaderstore.Range(rangeshader);
+    }
+    void LoadModel(mc::low::Engine &gogogo)
+    {
+        auto *model_0{new mlModel{"../others/resource/model/cube.model"}};
+        model_0->Upload();
+        auto &modelstore = gogogo.GetModelStore();
+        modelstore.Register(model_0);
+    }
+
     std::vector<mlGB *> GenSome(mlRender *render, mlFilter *filter)
     {
 
@@ -51,24 +73,21 @@ namespace
         return res;
     }
 
-    mlFilter *GetOneFilter()
+    mlFilter *GetOneFilter(mc::low::Engine &gogogo)
     {
-        auto *model_0{new mlModel{"../others/resource/model/cube.model"}};
-        model_0->Upload();
+        auto &modelstore{gogogo.GetModelStore()};
         auto *filter_0{new mlFilter{}};
-        filter_0->SetModel(model_0);
+        filter_0->SetModel(modelstore.Get(1));
         return filter_0;
     }
-    mlRender *GetOneRender()
+    mlRender *GetOneRender(mc::low::Engine &gogogo)
     {
-        auto *shader{new mlShader{"../others/resource/shader/phong.vert.vs", "../others/resource/shader/phong.frag.fs"}};
-        shader->Load();
 
         auto *image{new mlTexture{"../others/resource/texture/mc.jpeg"}};
         image->Load();
 
         auto *_mate_emerald_material{new mlMaterial{"../others/resource/material/emerald.material"}};
-        _mate_emerald_material->SetShader(shader);
+        _mate_emerald_material->SetShader(gogogo.GetShaderStore().Get(1));
         _mate_emerald_material->SetTexture(image);
 
         auto *render{new mlRender{}};
@@ -82,9 +101,10 @@ int main()
     show_hello();
     //
     mc::low::Engine gogogo{800, 800, "Hello MC"};
-
     {
-        auto list = GenSome(GetOneRender(), GetOneFilter());
+        LoadShader(gogogo);
+        LoadModel(gogogo);
+        auto list = GenSome(GetOneRender(gogogo), GetOneFilter(gogogo));
         for (auto one : list)
         {
             // 这个里面所有的 gameobject 都是一个 filter 和 render

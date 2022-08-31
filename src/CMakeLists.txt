@@ -1,14 +1,17 @@
+set (MC_LOW_DIR mc/low/)
 set (LOW_CODE 
-low_transform.cpp 
-low_shader.cpp 
-low_camera.cpp 
-low_model.cpp 
-low_texture.cpp 
-low_material.cpp 
-low_engine.cpp 
-low_mesh_render.cpp
-low_gameobject.cpp
-low_logic_support.cpp
+${MC_LOW_DIR}transform.cpp 
+${MC_LOW_DIR}shader.cpp 
+${MC_LOW_DIR}camera.cpp 
+${MC_LOW_DIR}model.cpp 
+${MC_LOW_DIR}texture.cpp 
+${MC_LOW_DIR}material.cpp 
+${MC_LOW_DIR}engine.cpp 
+${MC_LOW_DIR}mesh_render.cpp
+${MC_LOW_DIR}gameobject.cpp
+${MC_LOW_DIR}logic_support.cpp
+${MC_LOW_DIR}shader_store.cpp
+${MC_LOW_DIR}model_store.cpp
 )
 set (TOOLS_CODE tools_image.cpp)
 set (APPS_CODE app.cpp apps_init.cpp apps_vao.cpp apps_xyzw.cpp apps_math.cpp apps_csv.cpp apps_camera.cpp)
