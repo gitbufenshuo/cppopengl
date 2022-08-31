@@ -4,7 +4,7 @@
 #include <vector>
 #include <glm/glm.hpp>
 
-#include <mc/texture.h>
+#include <mc/texture_store.h>
 #include <mc/shader_store.h>
 
 namespace mc::low
@@ -19,7 +19,7 @@ namespace mc::low
         const char *m_file_name;
 
         ShaderP m_shader;
-        Texture *m_texture;
+        TextureP m_texture;
 
     public:
         Material(const std::vector<float> &input) : m_ambient{input[0], input[1], input[2]},
@@ -41,11 +41,11 @@ namespace mc::low
         {
             m_shader = shader;
         }
-        Texture *GetTexture()
+        TextureP GetTexture()
         {
             return m_texture;
         }
-        void SetTexture(Texture *texture)
+        void SetTexture(TextureP texture)
         {
             m_texture = texture;
         }

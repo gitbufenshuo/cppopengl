@@ -45,6 +45,13 @@ namespace
         auto &modelstore = gogogo.GetModelStore();
         modelstore.Register(model_0);
     }
+    void LoadTexture(mc::low::Engine &gogogo)
+    {
+        auto *image{new mlTexture{"../others/resource/texture/mc.jpeg"}};
+        image->Load();
+        auto &textruestore{gogogo.GetTextureStore()};
+        textruestore.Register(image);
+    }
 
     std::vector<mlGB *> GenSome(mlRender *render, mlFilter *filter)
     {
@@ -83,12 +90,9 @@ namespace
     mlRender *GetOneRender(mc::low::Engine &gogogo)
     {
 
-        auto *image{new mlTexture{"../others/resource/texture/mc.jpeg"}};
-        image->Load();
-
         auto *_mate_emerald_material{new mlMaterial{"../others/resource/material/emerald.material"}};
         _mate_emerald_material->SetShader(gogogo.GetShaderStore().Get(1));
-        _mate_emerald_material->SetTexture(image);
+        _mate_emerald_material->SetTexture(gogogo.GetTextureStore().Get(1));
 
         auto *render{new mlRender{}};
         render->SetMaterial(_mate_emerald_material);
@@ -104,6 +108,7 @@ int main()
     {
         LoadShader(gogogo);
         LoadModel(gogogo);
+        LoadTexture(gogogo);
         auto list = GenSome(GetOneRender(gogogo), GetOneFilter(gogogo));
         for (auto one : list)
         {
