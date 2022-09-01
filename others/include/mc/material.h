@@ -14,6 +14,30 @@ namespace mc::low
 {
     class Material
     {
+    public:
+        // types
+        class MaterialData
+        {
+        public:
+            struct Meta
+            {
+                unsigned int location;
+                int m_type; // 0->f; 1->vec3; 2->mat4
+                union
+                {
+                    float u_f;
+                    glm::vec3 u_vec3;
+                    glm::mat4 u_mat4;
+                };
+            };
+
+        public:
+            unsigned int GetLocationByName(const char *name);
+            void Set(unsigned int location, const glm::vec3 &input);
+            void Set(unsigned int location, float input);
+            void Set(unsigned int location, const glm::mat4 &input);
+        };
+
     private:
         glm::vec3 m_ambient;
         glm::vec3 m_diffuse;
@@ -34,6 +58,8 @@ namespace mc::low
         {
         }
         Material(const char *file_name);
+
+    public:
         const glm::vec3 &GetAmbient() { return m_ambient; }
         const glm::vec3 &GetDiffuse() { return m_diffuse; }
         const glm::vec3 &GetSpecular() { return m_specular; }
@@ -54,6 +80,7 @@ namespace mc::low
         {
             m_texture = texture;
         }
+        void PostUniformDataToGL();
     };
 }
 #endif

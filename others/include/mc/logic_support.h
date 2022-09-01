@@ -20,6 +20,7 @@ namespace mc::low
 
     public:
         virtual void Update(double delta_time) = 0;
+        virtual void RenderUpdate(double delta_time) = 0;
     };
 
     class BasicLogicSupport : public LogicSupport
@@ -34,6 +35,7 @@ namespace mc::low
 
     public:
         void Update(double delta_time) override;
+        void RenderUpdate(double delta_time) override;
     };
 
     class TranslateLogicSupport : public BasicLogicSupport
@@ -56,6 +58,7 @@ namespace mc::low
 
     public:
         void Update(double delta_time) override;
+        void RenderUpdate(double delta_time) override;
     };
 }
 #endif

@@ -17,6 +17,10 @@ namespace mc::low
         sum_time += dt;
         m_gb->GetTransform()->SetLocalEuler(sum_time * id * m_speed, sum_time * 65.0f, sum_time * 75.0f);
     }
+    void BasicLogicSupport::RenderUpdate(double delta_time)
+    {
+    }
+
     // TranslateLogicSupport
     void TranslateLogicSupport::Update(double delta_time)
     {
@@ -45,5 +49,8 @@ namespace mc::low
                 glm::sin(sum_time),
                 0.0f);
         }
+    }
+    void CameraLogicSupport::RenderUpdate(double delta_time)
+    {
     }
 }
