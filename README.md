@@ -13,6 +13,14 @@ opengl
 
 暂无
 
+```bash
+# for windows
+cd others/study/glad/src
+gcc -c glad.c -fPIC -o glad.o -I../../include
+gcc -shared glad.o -o glad.dll
+mv glad.dll ../../lib/
+```
+
 #### 使用说明
 
 暂无

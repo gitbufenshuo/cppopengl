@@ -12,8 +12,6 @@
 #include <mc/material.h>
 #include <mc/logic_support.h>
 
-void show_hello();
-
 using mlGB = mc::low::GameObject;
 using mlModel = mc::low::Model;
 using mlTexture = mc::low::Texture;
@@ -84,13 +82,13 @@ namespace
             {
                 auto *one = new mlGB{};
                 one->SetMeshFilter(filter);
-                one->SetMeshRender(GetOneRender(gogogo, col_idx + row_idx));
+                one->SetMeshRender(GetOneRender(gogogo, col_idx + row_idx * col));
                 one->GetTransform()->SetLocalEuler(10.0f, 10.0f, 10.0f);
                 one->GetTransform()->SetLocalTranslate(
                     static_cast<float>(col_idx) * 1.5f - 5.0f * 1.5f,
                     static_cast<float>(row_idx) * 1.5f - 5.0f * 1.5f,
                     -20.0f);
-                one->AddLogicSupport(new mlTranslateLG{one, 30.5f});
+                one->AddLogicSupport(new mlTranslateLG{one, 1.5f});
                 res[row_idx * col + col_idx] = one;
             }
         }
@@ -109,7 +107,6 @@ namespace
 
 int main()
 {
-    show_hello();
     //
     mc::low::Engine gogogo{800, 800, "Hello MC"};
     {

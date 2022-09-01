@@ -23,6 +23,6 @@ namespace mc::low
         m_gb->GetTransform()->SetLocalTranslate(
             glm::sin(sum_time) + m_init_pos.x,
             glm::sin(sum_time) + m_init_pos.y,
-            glm::sin(sum_time * id) + m_init_pos.z);
+            glm::sin(sum_time) + m_init_pos.z);
     }
 }

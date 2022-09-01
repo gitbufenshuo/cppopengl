@@ -10,9 +10,14 @@ SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g2 -ggdb")
 SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
 
 set (INCLUDE_DIR ${PROJECT_SOURCE_DIR}/others/include)
-set (GLFW_LIB ${PROJECT_SOURCE_DIR}/others/lib/libglfw.3.dylib)
-set (GLAD_LIB ${PROJECT_SOURCE_DIR}/others/lib/libglad.dylib)
-set (SELF_LIB ${PROJECT_SOURCE_DIR}/others/lib/libself.dylib)
+
+if (APPLE)
+    set (GLFW_LIB ${PROJECT_SOURCE_DIR}/others/lib/libglfw.3.dylib)
+    set (GLAD_LIB ${PROJECT_SOURCE_DIR}/others/lib/libglad.dylib)
+else()
+    set (GLFW_LIB ${PROJECT_SOURCE_DIR}/others/lib/glfw3.dll)
+    set (GLAD_LIB ${PROJECT_SOURCE_DIR}/others/lib/glad.dll)
+endif()
 
 add_subdirectory (src)
 
