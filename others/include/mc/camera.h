@@ -31,6 +31,8 @@ namespace mc::low
         float m_fov{45.0f};      // fov in degree
         bool m_proj_dirty{true}; // 是否需要更新 m_view_mat
         glm::mat4 m_proj_mat;    // projection matrix
+
+        unsigned int m_camera_version{0};
     };
 }
 

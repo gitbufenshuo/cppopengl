@@ -6,12 +6,13 @@ namespace mc::low
     }
     void Camera::updateViewMat()
     {
-        if (!m_view_dirty)
+        if (m_camera_version == m_transform.GetSelfVersion())
         {
             return;
         }
-        m_view_dirty = false;
-        //
+        
+        m_camera_version = m_transform.GetSelfVersion();
+        
         auto camera_world_mat = m_transform.GetWorldMat();
         glm::vec4 _pos{0.0f, 0.0f, 0.0f, 1.0f};
         glm::vec4 _target{0.0f, 0.0f, -1.0f, 1.0f};
