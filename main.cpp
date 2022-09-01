@@ -89,7 +89,7 @@ namespace
                     static_cast<float>(col_idx) * 1.5f - 5.0f * 1.5f,
                     static_cast<float>(row_idx) * 1.5f - 5.0f * 1.5f,
                     -20.0f);
-                one->AddLogicSupport(new mlTranslateLG{one, 1.5f});
+                one->AddLogicSupport(new mlCameraLG{one, 1.5f});
                 res[row_idx * col + col_idx] = one;
             }
         }
@@ -103,7 +103,7 @@ namespace
         filter_0->SetModel(modelstore.Get(1));
         return filter_0;
     }
-    
+
 }
 
 int main()
