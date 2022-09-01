@@ -61,7 +61,7 @@ namespace mc::low
     unsigned int Shader::compile(GLenum shader_type, std::string_view file_name)
     {
 
-        std::ifstream t(file_name);
+        std::ifstream t(file_name.data());
         std::stringstream buffer;
         buffer << t.rdbuf();
         auto s = buffer.str();
