@@ -9,6 +9,9 @@ namespace mc::low
     {
     public:
         Camera();
+
+    public:
+        Transform *GetTransform();
         const glm::mat4 &GetViewMat();
         const glm::mat4 &GetProjMat();
 

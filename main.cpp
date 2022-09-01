@@ -21,6 +21,7 @@ using mlFilter = mc::low::MeshFilter;
 using mlMaterial = mc::low::Material;
 using mlBasicLG = mc::low::BasicLogicSupport;
 using mlTranslateLG = mc::low::TranslateLogicSupport;
+using mlCameraLG = mc::low::CameraLogicSupport;
 namespace
 {
     bool rangeshader(int key, mlShader *_shader)
@@ -80,7 +81,7 @@ namespace
         {
             for (int col_idx = 0; col_idx < col; ++col_idx)
             {
-                auto *one = new mlGB{};
+                auto *one = new mlGB{&gogogo};
                 one->SetMeshFilter(filter);
                 one->SetMeshRender(GetOneRender(gogogo, col_idx + row_idx * col));
                 one->GetTransform()->SetLocalEuler(10.0f, 10.0f, 10.0f);
@@ -88,7 +89,7 @@ namespace
                     static_cast<float>(col_idx) * 1.5f - 5.0f * 1.5f,
                     static_cast<float>(row_idx) * 1.5f - 5.0f * 1.5f,
                     -20.0f);
-                one->AddLogicSupport(new mlTranslateLG{one, 1.5f});
+                one->AddLogicSupport(new mlCameraLG{one, 1.5f});
                 res[row_idx * col + col_idx] = one;
             }
         }

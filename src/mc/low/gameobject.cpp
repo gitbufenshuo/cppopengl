@@ -1,4 +1,5 @@
 #include <mc/gameobject.h>
+#include <mc/engine.h>
 
 namespace mc::low
 {
@@ -24,7 +25,7 @@ namespace mc::low
         return m_transform;
     }
 
-    GameObject::GameObject() : m_transform{new Transform{}}
+    GameObject::GameObject(Engine *engine) : m_transform{new Transform{}}, m_engine{engine}
     {
     }
     void GameObject::SetID(int id)

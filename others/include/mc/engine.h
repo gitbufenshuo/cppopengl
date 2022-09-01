@@ -40,7 +40,10 @@ namespace mc::low
         void standard_render();
 
     public:
-        Engine(int width = 800, int height = 800, const char *name = "HelloOpenGL");
+        Camera *GetCamera()
+        {
+            return m_main_camera;
+        }
         void Run();
         void AddGameobject(GameObject *gb);
         ShaderStore &GetShaderStore()
@@ -68,6 +71,9 @@ namespace mc::low
         {
             m_light_pos = pos;
         }
+
+    public:
+        Engine(int width = 800, int height = 800, const char *name = "HelloOpenGL");
     };
 }
 #endif

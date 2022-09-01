@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 
 #include <mc/gameobject.h>
+#include <mc/transform.h>
 
 namespace mc::low
 {
@@ -39,6 +40,19 @@ namespace mc::low
     {
     public:
         TranslateLogicSupport(GameObject *gb = nullptr, float speed = 1.0f) : BasicLogicSupport{gb, speed} {}
+
+    public:
+        void Update(double delta_time) override;
+    };
+
+    class CameraLogicSupport : public LogicSupport
+    {
+        Transform *m_camera_transform;
+        float sum_time{0.0f};
+        float m_speed{0.0f};
+
+    public:
+        CameraLogicSupport(GameObject *gb = nullptr, float speed = 1.0f);
 
     public:
         void Update(double delta_time) override;

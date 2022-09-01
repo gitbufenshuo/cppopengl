@@ -19,7 +19,6 @@ namespace mc::low
 
         _pos = camera_world_mat * _pos;
         _target = camera_world_mat * _target;
-        _up = camera_world_mat * _up;
 
         m_view_mat = glm::lookAt(glm::vec3(_pos.x, _pos.y, _pos.z),
                                  glm::vec3(_target.x, _target.y, _target.z),
@@ -52,6 +51,10 @@ namespace mc::low
             updateProjMat();
         }
         return m_proj_mat;
+    }
+    Transform *Camera::GetTransform()
+    {
+        return &m_transform;
     }
 
 }
