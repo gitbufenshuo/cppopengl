@@ -124,7 +124,7 @@ namespace mc::low
     {
         logic_update();
         standard_render();
-        //
+        
         glfwSwapBuffers(m_window);
         glfwPollEvents();
     }
