@@ -19,6 +19,7 @@ namespace mc::low
         glm::vec3 GetWorldPos();
         void Translate(float x = 0.0f, float y = 0.0f, float z = 0.0f);
         void ShowVersion();
+        unsigned int GetSelfVersion();
         void SetLocalEuler(float x, float y, float z);
         void SetLocalTranslate(float x, float y, float z);
         void SetLocalScale(float x, float y, float z);

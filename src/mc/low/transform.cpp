@@ -114,6 +114,10 @@ namespace mc::low
         std::cout << m_world_self_version << " ";
         std::cout << m_world_up_version << std::endl;
     }
+    unsigned int Transform::GetSelfVersion()
+    {
+        return m_world_self_version;
+    }
     void Transform::SetLocalEuler(float x, float y, float z)
     {
         auto cos_x_2 = glm::cos(glm::radians(x / 2.0f));
