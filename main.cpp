@@ -15,6 +15,7 @@
 
 // game headers
 #include <game/phong_spot.h>
+#include <game/blinn_phong_point.h>
 //
 
 using mlGB = mc::low::GameObject;
@@ -49,6 +50,12 @@ namespace
             auto *spot_phong{new mlShader{"../others/resource/shader/phong.spot.vert.vs", "../others/resource/shader/phong.spot.frag.fs"}};
             spot_phong->Load();
             shaderstore.Register(spot_phong);
+        }
+        {
+            // spot phong
+            auto *blinn_phong{new mlShader{"../others/resource/shader/blinnPhong.vert.vs", "../others/resource/shader/blinnPhong.frag.fs"}};
+            blinn_phong->Load();
+            shaderstore.Register(blinn_phong);
         }
         shaderstore.Range(rangeshader);
     }
@@ -99,13 +106,23 @@ namespace
                 materialstore.Register(one);
             }
         }
+        {
+            // 加载 blinn phong point 材质
+            auto list = game::MaterialBlinnPhongPoint::LoadSurfaceDataFromFile("../others/resource/material/blinnPhongPoint.material");
+            for (auto one : list)
+            {
+                one->SetShader(gogogo.GetShaderStore().Get(3));
+                one->AddTexture(gogogo.GetTextureStore().Get(1));
+                materialstore.Register(one);
+            }
+        }
     }
     mlRender *GetOneRender(mc::low::Engine &gogogo, int gid)
     {
         auto &materialstore{gogogo.GetMaterialStore()};
         int mat_count = materialstore.GetCount();
         assert(mat_count);
-        auto spMat{materialstore.Get(mat_count / 2 + 1)}; // 使用 spot phong
+        auto spMat{materialstore.Get(mat_count - 1 )}; //   mat_count/2 + 1 是spot phong
 
         auto *render{new mlRender{}};
         render->SetMaterial(spMat);
