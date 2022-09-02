@@ -61,7 +61,7 @@ namespace mc::low
 当前的`key`都是 `int` 类型, 不用 `string` 是因为后期这种绑定关系都是场景加载的一部分。
 暂时就凑合用。
 
-<image src="store.jpg">
+![test](store.jpg)
 
 上图可以看出，任意两个`Material`
 
