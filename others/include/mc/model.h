@@ -8,9 +8,11 @@ namespace mc::low
     {
     public:
         Model(const char *file_name);
+        Model();
         void Upload();
         void Use();
         int GetEBOCount() const;
+        static Model *GenerateHugeQuad(int edge);
 
     private:
         unsigned int m_vao{};

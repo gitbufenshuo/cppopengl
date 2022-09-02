@@ -1,3 +1,4 @@
+#include <cassert> // for assert()
 #include <vector>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -7,10 +8,15 @@
 
 namespace mc::low
 {
+    // constructors
     Model::Model(const char *file_name) : m_file_name{file_name}
     {
         mc::tools::CSVReader<float, int, int>::Read(m_file_name, m_v_data, m_e_data, m_s_data);
     }
+    Model::Model()
+    {
+    }
+    // normal method
     void Model::Upload()
     {
         if (m_uploaded)
@@ -53,5 +59,15 @@ namespace mc::low
     int Model::GetEBOCount() const
     {
         return static_cast<int>(m_e_data.size());
+    }
+    // 生成一个巨大的多顶点quad, 正方形，边长的点数是edge
+    // 确保 edge 是奇数且 >= 3
+    Model *Model::GenerateHugeQuad(int edge)
+    {
+        assert(!(edge < 3 || edge % 2 == 0) && "确保 edge 是奇数且 >= 3");
+        // 首先 总的顶点数是 edge * edge
+        auto *res{new Model};
+        res->m_v_data.resize(edge * edge);
+        return res;
     }
 }
