@@ -32,15 +32,4 @@ namespace mc::low
             break;
         }
     }
-    void MaterialStore::LoadFromFile(const char *file_name, Material::MaterialType ma_type)
-    {
-        switch (ma_type)
-        {
-        case Material::MaterialType::PHONG:
-            mc::tools::CSVReader<MaterialP, float, MaterialPhong>::ReadMultiMaterial(file_name, m_store);
-            break;
-        default:
-            break;
-        }
-    }
 }

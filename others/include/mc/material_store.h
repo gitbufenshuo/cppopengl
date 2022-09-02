@@ -5,6 +5,7 @@
 #include <memory>
 
 #include <mc/material.h>
+#include <mc/csv.h>
 
 namespace mc::low
 {
@@ -28,7 +29,27 @@ namespace mc::low
         MaterialP Get(int key);
         int GetCount();
         void Range(RangeMaterialStoreFunc rf);
-        void LoadFromFile(const char *file_name, Material::MaterialType ma_type);
+        template <typename T>
+        void LoadFromFile(const char *file_name, Material::MaterialType ma_type)
+        {
+            switch (ma_type)
+            {
+            case Material::MaterialType::PHONG:
+                mc::tools::CSVReader<MaterialP, float, T>::ReadMultiMaterial(file_name, m_store);
+                break;
+            case Material::MaterialType::PHONG_SPOT:
+                mc::tools::CSVReader<MaterialP, float, T>::ReadMultiMaterial(file_name, m_store);
+                break;
+
+            default:
+                break;
+            }
+            // set ma_type
+            for (auto &pair : m_store)
+            {
+                (pair.second)->SetType(ma_type);
+            }
+        }
     };
 }
 #endif

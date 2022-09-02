@@ -18,6 +18,12 @@ namespace mc::low
         //
     public:
         MeshRender();
+
+    public:
+        Bound GetBound()
+        {
+            return m_bound;
+        }
         void SetGameobject(GameObject *gameobject);
         void SetMaterial(MaterialP material);
         MaterialP GetMaterial()

@@ -169,7 +169,6 @@ namespace mc::low
         auto &mat{GetWorldMat()};
         auto res{mat * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)};
         auto cast_res{static_cast<glm::vec3>(res)};
-        showVec(cast_res);
         return cast_res;
     }
 }

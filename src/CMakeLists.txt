@@ -1,4 +1,5 @@
 set (MC_LOW_DIR mc/low/)
+set(GAME_DIR game/)
 set (LOW_CODE 
 ${MC_LOW_DIR}transform.cpp 
 ${MC_LOW_DIR}shader.cpp 
@@ -17,7 +18,8 @@ ${MC_LOW_DIR}material_store.cpp
 )
 set (TOOLS_CODE tools_image.cpp)
 set (APPS_CODE app.cpp apps_init.cpp apps_vao.cpp apps_xyzw.cpp apps_math.cpp apps_csv.cpp apps_camera.cpp)
+set(GAME_CODE ${GAME_DIR}phong_spot.cpp)
 
 add_compile_options(-Wno-unused-function)
-add_library(src ${APPS_CODE} ${LOW_CODE} ${TOOLS_CODE})
+add_library(src ${APPS_CODE} ${LOW_CODE} ${TOOLS_CODE} ${GAME_CODE})
 target_include_directories(src PUBLIC ${INCLUDE_DIR})

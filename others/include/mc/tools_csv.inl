@@ -133,7 +133,10 @@ namespace mc::tools
             {
                 if (key > -1)
                 {
-                    m_data.insert(std::pair{key, T{new W{_data_holder, m_name}}});
+                    m_data.insert(std::pair{key, T{new W{
+                                                     _data_holder,
+                                                     m_name,
+                                                 }}});
                 }
                 _data_holder.resize(0);
                 ++key;

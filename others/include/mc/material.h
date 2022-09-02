@@ -21,7 +21,8 @@ namespace mc::low
         // types
         enum MaterialType
         {
-            PHONG
+            PHONG,
+            PHONG_SPOT
         };
 
     public:
@@ -30,13 +31,17 @@ namespace mc::low
         virtual void AddTexture(TextureP texture) = 0;
         virtual ~Material() = default;
 
-    private:
+    protected:
         MaterialType m_type{MaterialType::PHONG};
 
     public:
         MaterialType GetType()
         {
             return m_type;
+        }
+        void SetType(MaterialType ma_type)
+        {
+            m_type = ma_type;
         }
     };
 }
