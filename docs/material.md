@@ -68,3 +68,34 @@ namespace mc::low
 - 1. 可以引用相同的 `shader` 和 `texture`。
 
 - 2. 也可以引用不同的 `shader` 和 `texture`。
+
+
+# 实际新建一个`Material`详细步骤
+
+- 1. 在 `others/include/game/`目录下新建一个 header 文件，代表你的`Material`, 例如
+`phong_spot.h`
+
+- 2. 将前面讲的三个虚函数实现。参照 `phong_spot.cpp`，注意，将相应cpp代码放到 `src/game/`下。
+
+- 3. 给自己的class新建一个静态方法，用于读取文件
+参照 `phong_spot.cpp` 中的写法
+
+- 4. 在实际使用的时候，也就是`main.cpp`中，需要先试用上述静态方法，读取资源，然后最重要的一步就是注册到 `Store`：
+
+```cpp
+{
+    // 从文件 加载 phong 材质， spot light
+    auto list = game::MaterialPhongSpot::LoadSurfaceDataFromFile("../others/resource/material/all.material");
+    // 注册到 engine 中
+    for (auto one : list)
+    {
+        one->SetShader(gogogo.GetShaderStore().Get(2)); // 设置一下关联的shader 2
+        one->AddTexture(gogogo.GetTextureStore().Get(1));
+        materialstore.Register(one);
+    }
+}
+```
+注意，妥善调用`SetShader`和`AddTexture`。
+
+- 5. gameobject 如何使用上述`Material`呢，参照 `main.cpp`中的`GetOneRender函数`。参照下图:
+![test](gameobject.png)
