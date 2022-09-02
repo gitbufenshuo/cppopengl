@@ -12,75 +12,32 @@
 
 namespace mc::low
 {
+    class Engine;
+    class GameObject;
+
     class Material
     {
     public:
         // types
-        class MaterialData
+        enum MaterialType
         {
-        public:
-            struct Meta
-            {
-                unsigned int location;
-                int m_type; // 0->f; 1->vec3; 2->mat4
-                union
-                {
-                    float u_f;
-                    glm::vec3 u_vec3;
-                    glm::mat4 u_mat4;
-                };
-            };
-
-        public:
-            unsigned int GetLocationByName(const char *name);
-            void Set(unsigned int location, const glm::vec3 &input);
-            void Set(unsigned int location, float input);
-            void Set(unsigned int location, const glm::mat4 &input);
+            PHONG
         };
 
+    public:
+        virtual void PostUniform(Engine *eg, GameObject *gb) = 0;
+        virtual void SetShader(ShaderP shader) = 0;
+        virtual void AddTexture(TextureP texture) = 0;
+        virtual ~Material() = default;
+
     private:
-        glm::vec3 m_ambient;
-        glm::vec3 m_diffuse;
-        glm::vec3 m_specular;
-        float m_shininess;
-        const char *m_file_name;
-        std::string m_m_name; // 材质名字
-
-        ShaderP m_shader;
-        TextureP m_texture;
+        MaterialType m_type{MaterialType::PHONG};
 
     public:
-        Material(const std::vector<float> &input, std::string_view name) : m_ambient{input[0], input[1], input[2]},
-                                                                           m_diffuse{input[3], input[4], input[5]},
-                                                                           m_specular{input[6], input[7], input[8]},
-                                                                           m_shininess{input[9] * 128.0f},
-                                                                           m_m_name{name}
+        MaterialType GetType()
         {
+            return m_type;
         }
-        Material(const char *file_name);
-
-    public:
-        const glm::vec3 &GetAmbient() { return m_ambient; }
-        const glm::vec3 &GetDiffuse() { return m_diffuse; }
-        const glm::vec3 &GetSpecular() { return m_specular; }
-        float GetShininess() { return m_shininess; }
-        ShaderP GetShader()
-        {
-            return m_shader;
-        }
-        void SetShader(ShaderP shader)
-        {
-            m_shader = shader;
-        }
-        TextureP GetTexture()
-        {
-            return m_texture;
-        }
-        void SetTexture(TextureP texture)
-        {
-            m_texture = texture;
-        }
-        void PostUniformDataToGL();
     };
 }
 #endif

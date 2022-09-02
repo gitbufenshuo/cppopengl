@@ -24,7 +24,6 @@ namespace mc::low
     // TranslateLogicSupport
     void TranslateLogicSupport::Update(double delta_time)
     {
-        float id = static_cast<float>(m_gb->GetID());
         this->BasicLogicSupport::Update(delta_time); // 强制调用基类的虚函数
         m_gb->GetTransform()->SetLocalTranslate(
             glm::sin(sum_time) + m_init_pos.x,
@@ -45,8 +44,8 @@ namespace mc::low
         if (gid == 1)
         {
             m_camera_transform->SetLocalTranslate(
-                glm::sin(sum_time),
-                glm::sin(sum_time),
+                glm::sin(sum_time) * m_speed,
+                glm::sin(sum_time) * m_speed,
                 0.0f);
         }
     }

@@ -1,6 +1,7 @@
 #include <utility>
 
 #include <mc/material_store.h>
+#include <mc/material_phong.h>
 #include <mc/csv.h>
 
 namespace mc::low
@@ -31,8 +32,15 @@ namespace mc::low
             break;
         }
     }
-    void MaterialStore::LoadFromFile(const char *file_name)
+    void MaterialStore::LoadFromFile(const char *file_name, Material::MaterialType ma_type)
     {
-        mc::tools::CSVReader<MaterialP, float, Material>::ReadMultiMaterial(file_name, m_store);
+        switch (ma_type)
+        {
+        case Material::MaterialType::PHONG:
+            mc::tools::CSVReader<MaterialP, float, MaterialPhong>::ReadMultiMaterial(file_name, m_store);
+            break;
+        default:
+            break;
+        }
     }
 }

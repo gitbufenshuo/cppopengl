@@ -67,9 +67,17 @@ namespace mc::low
         {
             m_light_color = color;
         }
+        glm::vec3 GetLightColor()
+        {
+            return m_light_color;
+        }
         void SetLightPos(glm::vec3 pos)
         {
             m_light_pos = pos;
+        }
+        glm::vec3 GetLightPos()
+        {
+            return m_light_pos;
         }
 
     public:

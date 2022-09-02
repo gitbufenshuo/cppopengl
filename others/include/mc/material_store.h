@@ -28,7 +28,7 @@ namespace mc::low
         MaterialP Get(int key);
         int GetCount();
         void Range(RangeMaterialStoreFunc rf);
-        void LoadFromFile(const char *file_name);
+        void LoadFromFile(const char *file_name, Material::MaterialType ma_type);
     };
 }
 #endif

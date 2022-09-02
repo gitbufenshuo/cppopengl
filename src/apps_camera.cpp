@@ -8,7 +8,7 @@
 #include <mc/shader.h>
 #include <mc/texture.h>
 #include <mc/transform.h>
-#include <mc/material.h>
+#include <mc/material_phong.h>
 
 namespace apps::camera
 {
@@ -32,7 +32,7 @@ namespace apps::camera
         mc::low::Texture image{"../others/resource/texture/mc.jpeg"};
         image.Load();
         // material
-        mc::low::Material _mate_emerald{"../others/resource/material/emerald.material"};
+        mc::low::MaterialPhong _mate_emerald{"../others/resource/material/emerald.material"};
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
 

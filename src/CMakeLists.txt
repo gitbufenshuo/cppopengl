@@ -5,7 +5,7 @@ ${MC_LOW_DIR}shader.cpp
 ${MC_LOW_DIR}camera.cpp 
 ${MC_LOW_DIR}model.cpp 
 ${MC_LOW_DIR}texture.cpp 
-${MC_LOW_DIR}material.cpp 
+${MC_LOW_DIR}material_phong.cpp 
 ${MC_LOW_DIR}engine.cpp 
 ${MC_LOW_DIR}mesh_render.cpp
 ${MC_LOW_DIR}gameobject.cpp

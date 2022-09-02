@@ -55,7 +55,7 @@ namespace
     void LoadMaterial(mc::low::Engine &gogogo)
     {
         auto &materialstore{gogogo.GetMaterialStore()};
-        materialstore.LoadFromFile("../others/resource/material/all.material");
+        materialstore.LoadFromFile("../others/resource/material/all.material", mlMaterial::MaterialType::PHONG);
     }
     mlRender *GetOneRender(mc::low::Engine &gogogo, int gid)
     {
@@ -64,7 +64,7 @@ namespace
         auto spMat{materialstore.Get(gid % mat_count)};
 
         spMat->SetShader(gogogo.GetShaderStore().Get(1));
-        spMat->SetTexture(gogogo.GetTextureStore().Get(1));
+        spMat->AddTexture(gogogo.GetTextureStore().Get(1));
 
         auto *render{new mlRender{}};
         render->SetMaterial(spMat);

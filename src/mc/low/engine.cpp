@@ -94,28 +94,8 @@ namespace mc::low
             // model
             auto _model = _mesh_filter->GetModel();
             _model->Use();
-            // shader
-            auto _shader = _material->GetShader();
-            _shader->Use();
-            // texture
-            auto _texture = _material->GetTexture();
-            _texture->Use();
-            // 传一些 uniform
-            {
-                _shader->Uniform("ma_View", m_main_camera->GetViewMat());
-                _shader->Uniform("ma_Proj", m_main_camera->GetProjMat());
-                _shader->Uniform("lightPos", m_light_pos);
-                _shader->Uniform("lightColor", m_light_color);
-            }
-            {
-                _shader->Uniform("material.ambient", _material->GetAmbient());
-                _shader->Uniform("material.diffuse", _material->GetDiffuse());
-                _shader->Uniform("material.specular", _material->GetSpecular());
-                _shader->Uniform("material.shininess", _material->GetShininess());
-            }
-            {
-                _shader->Uniform("ma_Model", _gb->GetTransform()->GetWorldMat());
-            }
+            // material tasks
+            _material->PostUniform(this, _gb);
             // 画
             glDrawElements(GL_TRIANGLES, _model->GetEBOCount(), GL_UNSIGNED_INT, 0);
         }
@@ -124,7 +104,7 @@ namespace mc::low
     {
         logic_update();
         standard_render();
-        
+
         glfwSwapBuffers(m_window);
         glfwPollEvents();
     }
