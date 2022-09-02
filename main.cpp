@@ -77,20 +77,35 @@ namespace
             当然可以合并这两个shader，本例只是用来展示自定义 shader 的写法，按道理来说，point light 和 spot light 两种 shader
             应该合并成一种 shader 里面。(learnopengl有示例)
         */
-
-        // 加载phong材质，用point light
-        // materialstore.LoadFromFile<mlMaterialPhong>("../others/resource/material/all.material", mlMaterial::MaterialType::PHONG);
-        // 加载phong材质，用spot light
-        materialstore.LoadFromFile<game::MaterialPhongSpot>("../others/resource/material/all.material", mlMaterial::MaterialType::PHONG_SPOT);
+        {
+            // 加载 phong 材质， point light
+            auto list = mlMaterialPhong::LoadSurfaceDataFromFile("../others/resource/material/all.material");
+            // 注册到 engine 中
+            for (auto one : list)
+            {
+                one->SetShader(gogogo.GetShaderStore().Get(1)); // 设置一下关联的shader 1
+                one->AddTexture(gogogo.GetTextureStore().Get(1));
+                materialstore.Register(one);
+            }
+        }
+        {
+            // 加载 phong 材质， spot light
+            auto list = game::MaterialPhongSpot::LoadSurfaceDataFromFile("../others/resource/material/all.material");
+            // 注册到 engine 中
+            for (auto one : list)
+            {
+                one->SetShader(gogogo.GetShaderStore().Get(2)); // 设置一下关联的shader 2
+                one->AddTexture(gogogo.GetTextureStore().Get(1));
+                materialstore.Register(one);
+            }
+        }
     }
     mlRender *GetOneRender(mc::low::Engine &gogogo, int gid)
     {
         auto &materialstore{gogogo.GetMaterialStore()};
         int mat_count = materialstore.GetCount();
         assert(mat_count);
-        auto spMat{materialstore.Get(gid % mat_count)};
-        spMat->SetShader(gogogo.GetShaderStore().Get(2)); // 这里用2号shader，就是spot phong
-        spMat->AddTexture(gogogo.GetTextureStore().Get(1));
+        auto spMat{materialstore.Get(mat_count / 2 + 1)}; // 使用 spot phong
 
         auto *render{new mlRender{}};
         render->SetMaterial(spMat);
@@ -112,7 +127,7 @@ namespace
 
                 one->SetMeshRender(GetOneRender(gogogo, col_idx + row_idx * col));
 
-                one->GetTransform()->SetLocalEuler(10.0f, 10.0f, 10.0f);
+                one->GetTransform()->SetLocalEuler(0.0f, 0.0f, 0.0f);
                 one->GetTransform()->SetLocalTranslate(
                     static_cast<float>(col_idx) * 1.5f - 5.0f * 1.5f,
                     static_cast<float>(row_idx) * 1.5f - 5.0f * 1.5f,

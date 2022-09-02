@@ -77,10 +77,10 @@ namespace apps::camera
                 // vec3 specular;
                 // float shininess;
 
-                shader.Uniform("material.ambient", _mate_emerald.GetAmbient());
-                shader.Uniform("material.diffuse", _mate_emerald.GetDiffuse());
-                shader.Uniform("material.specular", _mate_emerald.GetSpecular());
-                shader.Uniform("material.shininess", _mate_emerald.GetShininess());
+                // shader.Uniform("material.ambient", _mate_emerald.GetAmbient());
+                // shader.Uniform("material.diffuse", _mate_emerald.GetDiffuse());
+                // shader.Uniform("material.specular", _mate_emerald.GetSpecular());
+                // shader.Uniform("material.shininess", _mate_emerald.GetShininess());
                 // gb_0
                 shader.Uniform("ma_Model", gb_0.GetWorldMat());
                 glDrawElements(GL_TRIANGLES, model_0.GetEBOCount(), GL_UNSIGNED_INT, 0);

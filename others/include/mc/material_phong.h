@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 #include <string_view>
+#include <unordered_map>
+#include <memory>
 
 #include <glm/glm.hpp>
 
@@ -39,10 +41,10 @@ namespace mc::low
         ~MaterialPhong() override {}
 
     public:
-        const glm::vec3 &GetAmbient() { return m_ambient; }
-        const glm::vec3 &GetDiffuse() { return m_diffuse; }
-        const glm::vec3 &GetSpecular() { return m_specular; }
-        float GetShininess() { return m_shininess; }
+        static std::vector<Material *> LoadSurfaceDataFromFile(const char *filename);
+
+    public:
+        // virtual
         void PostUniform(Engine *eg, GameObject *gb) override;
         void SetShader(ShaderP shader) override;
         void AddTexture(TextureP texture) override;

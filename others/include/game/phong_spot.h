@@ -16,14 +16,14 @@ namespace game
         {
             glm::vec3 position;
             glm::vec3 direction{0.0f, 0.0f, -1.0f};
-            float cutOff{0.976f};
-            float outerCutOff{0.888f};
+            float cutOff{0.999f};
+            float outerCutOff{0.9f};
 
             float constant{1.0f};
             float linear{0.009f};
             float quadratic{0.0032f};
 
-            glm::vec3 ambient{0.2f, 0.2f, 0.2f};
+            glm::vec3 ambient{0.1f, 0.1f, 0.1f};
             glm::vec3 diffuse{1.0f, 1.0f, 1.0f};
             glm::vec3 specular{0.1f, 0.1f, 0.1f};
         };
@@ -57,6 +57,9 @@ namespace game
         }
         MaterialPhongSpot(const char *file_name);
         ~MaterialPhongSpot() override {}
+
+    public:
+        static std::vector<Material *> LoadSurfaceDataFromFile(const char *filename);
 
     public:
         void PostUniform(Engine *eg, GameObject *gb) override;

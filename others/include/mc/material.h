@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 #include <string_view>
+#include <unordered_map>
+#include <memory>
 
 #include <glm/glm.hpp>
 
@@ -18,31 +20,10 @@ namespace mc::low
     class Material
     {
     public:
-        // types
-        enum MaterialType
-        {
-            PHONG,
-            PHONG_SPOT
-        };
-
-    public:
         virtual void PostUniform(Engine *eg, GameObject *gb) = 0;
         virtual void SetShader(ShaderP shader) = 0;
         virtual void AddTexture(TextureP texture) = 0;
         virtual ~Material() = default;
-
-    protected:
-        MaterialType m_type{MaterialType::PHONG};
-
-    public:
-        MaterialType GetType()
-        {
-            return m_type;
-        }
-        void SetType(MaterialType ma_type)
-        {
-            m_type = ma_type;
-        }
     };
 }
 #endif

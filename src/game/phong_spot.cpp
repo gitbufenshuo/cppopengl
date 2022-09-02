@@ -1,6 +1,13 @@
+#include <vector>
+#include <memory>
+#include <string>
+#include <sstream>
 #include <iostream>
+#include <fstream>
+#include <utility>
 
 #include <mc/csv.h>
+#include <mc/material.h>
 
 #include <game/phong_spot.h>
 
@@ -62,6 +69,59 @@ namespace game
     void MaterialPhongSpot::AddTexture(TextureP texture)
     {
         m_texture = texture;
+    }
+    // static
+    std::vector<mc::low::Material *> MaterialPhongSpot::LoadSurfaceDataFromFile(const char *filename)
+    {
+        std::vector<mc::low::Material *> temp_store;
+        std::ifstream t(filename);
+        //
+        std::string row;
+        std::string col;
+        //
+        int key = -1;
+        std::string m_name;
+        std::vector<float> _data_holder;
+        _data_holder.reserve(10);
+        //
+        while (std::getline(t, row))
+        {
+            if (row.size() <= 1)
+            {
+                continue; // 空行
+            }
+            if (row[0] == '#')
+            {
+                if (key > -1)
+                {
+                    temp_store.push_back(new MaterialPhongSpot{
+                        _data_holder,
+                        m_name,
+                    });
+                }
+                _data_holder.resize(0);
+                ++key;
+                std::stringstream row_stream{row};
+                int loop = 0;
+                while (std::getline(row_stream, col, '='))
+                {
+                    if (loop == 1)
+                    {
+                        m_name = col;
+                        break;
+                    }
+                    // data.push_back(sto<T>(col));
+                    loop++;
+                }
+                continue; // 注释行
+            }
+            std::stringstream row_stream{row};
+            while (std::getline(row_stream, col, ','))
+            {
+                _data_holder.push_back(std::stof(col));
+            }
+        }
+        return temp_store;
     }
 
 }

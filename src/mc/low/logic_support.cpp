@@ -46,7 +46,7 @@ namespace mc::low
             m_camera_transform->SetLocalTranslate(
                 glm::sin(sum_time) * m_speed,
                 glm::sin(sum_time) * m_speed,
-                glm::sin(sum_time) * m_speed);
+                0.0f);
         }
     }
     void CameraLogicSupport::RenderUpdate(double delta_time)
