@@ -104,16 +104,21 @@ namespace
                 one->SetShader(gogogo.GetShaderStore().Get(2)); // 设置一下关联的shader 2
                 one->AddTexture(gogogo.GetTextureStore().Get(1));
                 materialstore.Register(one);
+                one->ShowMe();
             }
         }
         {
             // 加载 blinn phong point 材质
+            int count = 0;
             auto list = game::MaterialBlinnPhongPoint::LoadSurfaceDataFromFile("../others/resource/material/blinnPhongPoint.material");
             for (auto one : list)
             {
+                ++count;
                 one->SetShader(gogogo.GetShaderStore().Get(3));
                 one->AddTexture(gogogo.GetTextureStore().Get(1));
                 materialstore.Register(one);
+                one->ShowMe();
+                std::cout << count << " MaterialBlinnPhongPoint one->ShowMe()" << std::endl;
             }
         }
     }

@@ -70,6 +70,10 @@ namespace game
     {
         m_texture = texture;
     }
+    void MaterialPhongSpot::ShowMe()
+    {
+        std::cout << "I am MaterialPhongSpot" << std::endl;
+    }
     // static
     std::vector<mc::low::Material *> MaterialPhongSpot::LoadSurfaceDataFromFile(const char *filename)
     {

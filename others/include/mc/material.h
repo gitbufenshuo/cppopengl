@@ -23,6 +23,7 @@ namespace mc::low
         virtual void PostUniform(Engine *eg, GameObject *gb) = 0;
         virtual void SetShader(ShaderP shader) = 0;
         virtual void AddTexture(TextureP texture) = 0;
+        virtual void ShowMe() = 0;
         virtual ~Material() = default;
     };
 }

@@ -48,6 +48,7 @@ namespace mc::low
         void PostUniform(Engine *eg, GameObject *gb) override;
         void SetShader(ShaderP shader) override;
         void AddTexture(TextureP texture) override;
+        void ShowMe() override;
     };
 }
 #endif

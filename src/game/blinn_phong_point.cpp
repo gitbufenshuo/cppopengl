@@ -63,6 +63,10 @@ namespace game
     {
         m_texture = texture;
     }
+    void MaterialBlinnPhongPoint::ShowMe()
+    {
+        std::cout << "I am MaterialBlinnPhongPoint" << std::endl;
+    }
     std::vector<mc::low::Material *> MaterialBlinnPhongPoint::LoadSurfaceDataFromFile(const char *filename)
     {
         std::vector<Material *> temp_store;

@@ -64,6 +64,10 @@ namespace mc::low
     {
         m_texture = texture;
     }
+    void MaterialPhong::ShowMe()
+    {
+        std::cout << "I am MaterialPhong" << std::endl;
+    }
     std::vector<Material *> MaterialPhong::LoadSurfaceDataFromFile(const char *filename)
     {
         std::vector<Material *> temp_store;

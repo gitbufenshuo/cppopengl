@@ -30,15 +30,15 @@ void main() {
     float diffFactor = max(dot(norm, lightDir), 0.0);
     vec3 light_diffuse = diffFactor * material.diffuse * lightColor;
     // specular light
-    vec3 spelightDir   = normalize(lightPos - io_FragPos);
-    vec3 viewDir    = normalize(viewPos - io_FragPos);
+    vec3 spelightDir = normalize(lightPos - io_FragPos);
+    vec3 viewDir = normalize(viewPos - io_FragPos);
     vec3 halfwayDir = normalize(spelightDir + viewDir);
-    float specFactor = pow(max(dot(norm, halfwayDir), 0.0), material.shininess*3.0f);
+    float specFactor = pow(max(dot(norm, halfwayDir), 0.0), material.shininess * 3.0f);
     vec3 light_spec = material.specular * lightColor * specFactor;
     // combination light -> Phone
     vec4 object_color = texture(ourTexture, io_UV);
     //
     vec3 ocolor = (light_ambient + light_diffuse + light_spec) * object_color.rgb;
-
+    // ocolor = vec3(0.0);
     FragColor = vec4(ocolor, object_color.a);
 }
