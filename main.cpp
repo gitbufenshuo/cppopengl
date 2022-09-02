@@ -122,7 +122,7 @@ namespace
         auto &materialstore{gogogo.GetMaterialStore()};
         int mat_count = materialstore.GetCount();
         assert(mat_count);
-        auto spMat{materialstore.Get(mat_count - 1 )}; //   mat_count/2 + 1 是spot phong
+        auto spMat{materialstore.Get(mat_count)}; //   mat_count/2 + 1 是spot phong
 
         auto *render{new mlRender{}};
         render->SetMaterial(spMat);

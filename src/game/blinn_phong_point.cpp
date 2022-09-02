@@ -31,7 +31,7 @@ namespace game
         m_specular.y = data[7];
         m_specular.z = data[8];
         //
-        m_shininess = data[9] * 360.0f;
+        m_shininess = data[9] * 128.0f;
     }
     // virtual
     void MaterialBlinnPhongPoint::SetShader(ShaderP shader)

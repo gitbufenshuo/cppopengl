@@ -28,7 +28,7 @@ namespace game
         MaterialBlinnPhongPoint(const std::vector<float> &input, std::string_view name) : m_ambient{input[0], input[1], input[2]},
                                                                                 m_diffuse{input[3], input[4], input[5]},
                                                                                 m_specular{input[6], input[7], input[8]},
-                                                                                m_shininess{input[9] * 360.0f},
+                                                                                m_shininess{input[9] * 128.0f},
                                                                                 m_m_name{name}
         {
         }
