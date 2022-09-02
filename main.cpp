@@ -16,6 +16,7 @@
 // game headers
 #include <game/phong_spot.h>
 #include <game/blinn_phong_point.h>
+#include <game/function_chart.h>
 //
 
 using mlGB = mc::low::GameObject;
@@ -57,14 +58,29 @@ namespace
             blinn_phong->Load();
             shaderstore.Register(blinn_phong);
         }
+        {
+            // function chart
+            auto *function_chart{new mlShader{"../others/resource/shader/function_chart.vert.vs", "../others/resource/shader/function_chart.frag.fs"}};
+            function_chart->Load();
+            shaderstore.Register(function_chart);
+        }
         shaderstore.Range(rangeshader);
     }
     void LoadModel(mc::low::Engine &gogogo)
     {
-        auto *model_0{new mlModel{"../others/resource/model/cube.model"}};
-        model_0->Upload();
         auto &modelstore = gogogo.GetModelStore();
-        modelstore.Register(model_0);
+        {
+            // load from file
+            auto *model_0{new mlModel{"../others/resource/model/cube.model"}};
+            model_0->Upload();
+            modelstore.Register(model_0);
+        }
+        {
+            // load from program
+            auto *model_0{mlModel::GenerateHugeQuad(101)};
+            model_0->Upload();
+            modelstore.Register(model_0);
+        }
     }
     void LoadTexture(mc::low::Engine &gogogo)
     {
@@ -118,8 +134,14 @@ namespace
                 one->AddTexture(gogogo.GetTextureStore().Get(1));
                 materialstore.Register(one);
                 one->ShowMe();
-                std::cout << count << " MaterialBlinnPhongPoint one->ShowMe()" << std::endl;
             }
+        }
+        {
+            // 加载 function chart 材质
+            auto *one{new game::MaterialFunctionChart};
+            one->SetShader(gogogo.GetShaderStore().Get(4));
+            materialstore.Register(one);
+            one->ShowMe();
         }
     }
     mlRender *GetOneRender(mc::low::Engine &gogogo, int gid)
@@ -136,8 +158,8 @@ namespace
     std::vector<mlGB *> GenSome(mc::low::Engine &gogogo, mlFilter *filter)
     {
         std::vector<mlGB *> res;
-        int row = 11;
-        int col = 11;
+        int row = 1;
+        int col = 1;
         res.resize(row * col);
 
         for (int row_idx = 0; row_idx < row; ++row_idx)
@@ -150,11 +172,8 @@ namespace
                 one->SetMeshRender(GetOneRender(gogogo, col_idx + row_idx * col));
 
                 one->GetTransform()->SetLocalEuler(0.0f, 0.0f, 0.0f);
-                one->GetTransform()->SetLocalTranslate(
-                    static_cast<float>(col_idx) * 1.5f - 5.0f * 1.5f,
-                    static_cast<float>(row_idx) * 1.5f - 5.0f * 1.5f,
-                    -20.0f);
-                one->AddLogicSupport(new mlCameraLG{one, 1.5f});
+                one->GetTransform()->SetLocalTranslate(0.0f, -3.0f, -3.0f);
+
                 res[row_idx * col + col_idx] = one;
             }
         }
@@ -165,7 +184,7 @@ namespace
     {
         auto &modelstore{gogogo.GetModelStore()};
         auto *filter_0{new mlFilter{}};
-        filter_0->SetModel(modelstore.Get(1));
+        filter_0->SetModel(modelstore.Get(2));
         return filter_0;
     }
 

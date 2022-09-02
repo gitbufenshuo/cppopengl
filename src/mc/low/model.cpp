@@ -67,7 +67,50 @@ namespace mc::low
         assert(!(edge < 3 || edge % 2 == 0) && "确保 edge 是奇数且 >= 3");
         // 首先 总的顶点数是 edge * edge
         auto *res{new Model};
-        res->m_v_data.resize(edge * edge);
+        res->m_v_data.reserve(edge * edge);
+        // x z
+        float min = -static_cast<float>(edge / 2);
+        for (int x = min; x <= -min; x += 1.0f)
+        {
+            for (int z = min; z <= -min; z += 1.0f)
+            {
+                res->m_v_data.push_back(x);
+                res->m_v_data.push_back(z);
+            }
+        }
+        int totallen = static_cast<int>(res->m_v_data.size());
+        // ebo
+        res->m_e_data.reserve((edge - 1) * (edge - 1) * 3);
+        for (int index = 0; index < totallen; ++index)
+        {
+            if (index % 2 == 1)
+            {
+                continue;
+            }
+            if (((index / 2) + 1) % edge == 0)
+            {
+                continue;
+            }
+            if ((index / 2) >= (edge * (edge - 1)))
+            {
+                break;
+            }
+            // append ebo
+            res->m_e_data.push_back(index / 2);
+            res->m_e_data.push_back(index / 2 + edge);
+            res->m_e_data.push_back(index / 2 + edge + 1);
+            //
+            // res->m_e_data.push_back(index / 2);
+            // res->m_e_data.push_back(index / 2 + edge + 1);
+            // res->m_e_data.push_back(index / 2 + 1);
+        }
+        res->m_s_data.push_back(2);
+        // std::cout << "GenerateHugeQuad:: ebo size " << res->m_e_data.size() << " " << res->m_e_data[res->m_e_data.size() - 1] << std::endl;
+        // std::cout << "GenerateHugeQuad:: vdata size " << res->m_v_data.size() << " " << res->m_v_data[0] << std::endl;
+        for (int index = 0; index < 3; ++index)
+        {
+            std::cout << "GenerateHugeQuad index: " << index << " -> " << res->m_v_data[res->m_e_data[index] * 2] << ", " << res->m_v_data[res->m_e_data[index] * 2 + 1] << std::endl;
+        }
         return res;
     }
 }

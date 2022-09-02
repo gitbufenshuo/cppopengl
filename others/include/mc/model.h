@@ -12,6 +12,8 @@ namespace mc::low
         void Upload();
         void Use();
         int GetEBOCount() const;
+
+    public:
         static Model *GenerateHugeQuad(int edge);
 
     private:

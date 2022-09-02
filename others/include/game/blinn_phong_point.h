@@ -1,3 +1,5 @@
+#ifndef GAME_BLINN_PHONG_POINT_H
+#define GAME_BLINN_PHONG_POINT_H
 
 #include <mc/material.h>
 #include <mc/texture_store.h>
@@ -47,3 +49,4 @@ namespace game
         void ShowMe() override;
     };
 }
+#endif

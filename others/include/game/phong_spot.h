@@ -1,3 +1,5 @@
+#ifndef GAME_PHONG_SPOT_H
+#define GAME_PHONG_SPOT_H
 #include <mc/material.h>
 #include <mc/texture_store.h>
 #include <mc/shader_store.h>
@@ -69,3 +71,4 @@ namespace game
     };
 
 }
+#endif

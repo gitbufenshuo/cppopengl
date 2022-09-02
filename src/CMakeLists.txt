@@ -21,6 +21,7 @@ set (APPS_CODE app.cpp apps_init.cpp apps_vao.cpp apps_xyzw.cpp apps_math.cpp ap
 set(GAME_CODE 
 ${GAME_DIR}phong_spot.cpp
 ${GAME_DIR}blinn_phong_point.cpp
+${GAME_DIR}function_chart.cpp
 )
 
 add_compile_options(-Wno-unused-function)

@@ -37,7 +37,7 @@ namespace
         glfwMakeContextCurrent(window);
         init_glad();
         glEnable(GL_DEPTH_TEST);
-        glEnable(GL_CULL_FACE);
+        // glEnable(GL_CULL_FACE);
         return window;
     }
 }
