@@ -23,4 +23,4 @@ mv glad.dll ../../lib/
 
 #### 使用说明
 
-暂无
+- Material 概念和 自定义 Material [点击查看](docs/material.md)
