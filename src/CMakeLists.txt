@@ -1,5 +1,6 @@
 set (MC_LOW_DIR mc/low/)
 set(GAME_DIR game/)
+set(EXAMPLE_DIR example/)
 set (LOW_CODE 
 ${MC_LOW_DIR}transform.cpp 
 ${MC_LOW_DIR}shader.cpp 
@@ -23,8 +24,13 @@ ${GAME_DIR}material/phong_spot.cpp
 ${GAME_DIR}material/blinn_phong_point.cpp
 ${GAME_DIR}material/function_chart.cpp
 ${GAME_DIR}logic/function_draw.cpp
+
+)
+
+set(EXAMPLE_CODE
+${EXAMPLE_DIR}function_chart/main.cpp
 )
 
 add_compile_options(-Wno-unused-function)
-add_library(src ${APPS_CODE} ${LOW_CODE} ${TOOLS_CODE} ${GAME_CODE})
+add_library(src ${APPS_CODE} ${LOW_CODE} ${TOOLS_CODE} ${GAME_CODE} ${EXAMPLE_CODE})
 target_include_directories(src PUBLIC ${INCLUDE_DIR})
