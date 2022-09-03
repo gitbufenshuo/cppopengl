@@ -1,5 +1,8 @@
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 #include <mc/material.h>
-#include <game/function_chart.h>
+#include <game/material/function_chart.h>
 
 namespace game
 {

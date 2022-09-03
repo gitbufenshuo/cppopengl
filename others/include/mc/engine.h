@@ -25,6 +25,7 @@ namespace mc::low
         double now_time{};
         double last_time{};
         double init_time{};
+        double delta_time{};
         int m_width{800};
         int m_height{800};
         glm::vec3 m_light_color{1.0f, 1.0f, 1.0f};
@@ -82,6 +83,10 @@ namespace mc::low
 
     public:
         Engine(int width = 800, int height = 800, const char *name = "HelloOpenGL");
+
+    public:
+        // gl 相关操作，这样用户代码可以不用引用 gl 相关header
+        static void S_GL_EnableFaceCull(bool zhi); // 是否打开 face cull
     };
 }
 #endif

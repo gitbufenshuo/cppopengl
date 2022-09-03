@@ -9,7 +9,7 @@
 
 #include <mc/csv.h>
 #include <mc/material.h>
-#include <game/blinn_phong_point.h>
+#include <game/material/blinn_phong_point.h>
 
 namespace game
 {

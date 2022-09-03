@@ -37,7 +37,7 @@ namespace
         glfwMakeContextCurrent(window);
         init_glad();
         glEnable(GL_DEPTH_TEST);
-        // glEnable(GL_CULL_FACE);
+        glEnable(GL_CULL_FACE);
         return window;
     }
 }
@@ -55,7 +55,7 @@ namespace mc::low
     void Engine::logic_update()
     {
         now_time = glfwGetTime();
-        double delta_time = now_time - last_time;
+        delta_time = now_time - last_time;
         std::cout << "frame interval: " << delta_time << " framerate: " << 1.0 / (delta_time) << std::endl;
         last_time = now_time;
         // 遍历各个 gameobject，执行 logicsupport 上的 Update 函数
@@ -96,8 +96,12 @@ namespace mc::low
             _model->Use();
             // material tasks
             _material->PostUniform(this, _gb);
+            // 在画之前，遍历 logic_support
+            _gb->BeforeRenderUpdate(delta_time);
             // 画
             glDrawElements(GL_TRIANGLES, _model->GetEBOCount(), GL_UNSIGNED_INT, 0);
+            // 在画之后，遍历 logic_support
+            _gb->AfterRenderUpdate(delta_time);
         }
     }
     void Engine::update()
@@ -122,5 +126,17 @@ namespace mc::low
         game_object->SetID(m_next_id++);
         m_gameobjects.insert(std::pair{game_object->GetID(), game_object});
         std::cout << "[Engine::AddGameobject] " << game_object->GetID() << std::endl;
+    }
+    // static
+    void Engine::S_GL_EnableFaceCull(bool zhi)
+    {
+        if (zhi)
+        {
+            glEnable(GL_CULL_FACE);
+        }
+        else
+        {
+            glDisable(GL_CULL_FACE);
+        }
     }
 }

@@ -47,4 +47,19 @@ namespace mc::low
             onelg->Update(delta_time);
         }
     }
+    void GameObject::BeforeRenderUpdate(double delta_time)
+    {
+        for (auto onelg : lg_list)
+        {
+            onelg->BeforeRenderUpdate(delta_time);
+        }
+    }
+    void GameObject::AfterRenderUpdate(double delta_time)
+    {
+        for (auto onelg : lg_list)
+        {
+            onelg->AfterRenderUpdate(delta_time);
+        }
+    }
+
 }

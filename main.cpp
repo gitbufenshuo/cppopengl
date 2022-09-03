@@ -14,9 +14,10 @@
 #include <mc/logic_support.h>
 
 // game headers
-#include <game/phong_spot.h>
-#include <game/blinn_phong_point.h>
-#include <game/function_chart.h>
+#include <game/material/phong_spot.h>
+#include <game/material/blinn_phong_point.h>
+#include <game/material/function_chart.h>
+#include <game/logic/function_draw.h>
 //
 
 using mlGB = mc::low::GameObject;
@@ -172,8 +173,8 @@ namespace
                 one->SetMeshRender(GetOneRender(gogogo, col_idx + row_idx * col));
 
                 one->GetTransform()->SetLocalEuler(0.0f, 0.0f, 0.0f);
-                one->GetTransform()->SetLocalTranslate(0.0f, -3.0f, -3.0f);
-
+                one->GetTransform()->SetLocalTranslate(0.0f, 0.0f, -20.0f);
+                one->AddLogicSupport(new game::FunctionDraw{one});
                 res[row_idx * col + col_idx] = one;
             }
         }

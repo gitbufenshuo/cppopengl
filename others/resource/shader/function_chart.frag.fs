@@ -2,9 +2,9 @@
 
 out vec4 FragColor;
 
-in float io_tou_x;
+in vec3 io_color;
+in float io_height;
 
 void main() {
-
-    FragColor = vec4(io_tou_x + 0.5, io_tou_x, io_tou_x, 1.0f);
+    FragColor = vec4(io_height, io_height, io_height, 1.0f);
 }

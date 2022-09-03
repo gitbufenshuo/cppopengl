@@ -9,7 +9,7 @@
 #include <mc/csv.h>
 #include <mc/material.h>
 
-#include <game/phong_spot.h>
+#include <game/material/phong_spot.h>
 
 namespace game
 {

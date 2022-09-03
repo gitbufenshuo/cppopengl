@@ -36,6 +36,8 @@ namespace mc::low
         int GetID();
         void AddLogicSupport(LogicSupport *lg);
         void Update(double delta_time);
+        void BeforeRenderUpdate(double delta_time);
+        void AfterRenderUpdate(double delta_time);
         Engine *GetEngine()
         {
             return m_engine;

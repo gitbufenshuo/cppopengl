@@ -75,12 +75,12 @@ namespace mc::low
             for (int z = min; z <= -min; z += 1.0f)
             {
                 res->m_v_data.push_back(x);
-                res->m_v_data.push_back(z);
+                res->m_v_data.push_back(-z);
             }
         }
         int totallen = static_cast<int>(res->m_v_data.size());
         // ebo
-        res->m_e_data.reserve((edge - 1) * (edge - 1) * 3);
+        res->m_e_data.reserve((edge - 1) * (edge - 1) * 6);
         for (int index = 0; index < totallen; ++index)
         {
             if (index % 2 == 1)
@@ -100,9 +100,9 @@ namespace mc::low
             res->m_e_data.push_back(index / 2 + edge);
             res->m_e_data.push_back(index / 2 + edge + 1);
             //
-            // res->m_e_data.push_back(index / 2);
-            // res->m_e_data.push_back(index / 2 + edge + 1);
-            // res->m_e_data.push_back(index / 2 + 1);
+            res->m_e_data.push_back(index / 2);
+            res->m_e_data.push_back(index / 2 + edge + 1);
+            res->m_e_data.push_back(index / 2 + 1);
         }
         res->m_s_data.push_back(2);
         // std::cout << "GenerateHugeQuad:: ebo size " << res->m_e_data.size() << " " << res->m_e_data[res->m_e_data.size() - 1] << std::endl;

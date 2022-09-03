@@ -19,9 +19,10 @@ ${MC_LOW_DIR}material_store.cpp
 set (TOOLS_CODE tools_image.cpp)
 set (APPS_CODE app.cpp apps_init.cpp apps_vao.cpp apps_xyzw.cpp apps_math.cpp apps_csv.cpp apps_camera.cpp)
 set(GAME_CODE 
-${GAME_DIR}phong_spot.cpp
-${GAME_DIR}blinn_phong_point.cpp
-${GAME_DIR}function_chart.cpp
+${GAME_DIR}material/phong_spot.cpp
+${GAME_DIR}material/blinn_phong_point.cpp
+${GAME_DIR}material/function_chart.cpp
+${GAME_DIR}logic/function_draw.cpp
 )
 
 add_compile_options(-Wno-unused-function)
