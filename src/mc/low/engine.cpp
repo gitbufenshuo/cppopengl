@@ -50,13 +50,20 @@ namespace mc::low
         now_time = glfwGetTime();
         last_time = now_time;
         init_time = now_time;
+        glfwSetCursorPosCallback(m_window, mouse_callback);
+        glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         std::cout << "<<<<<< Welcom to Engine >>>>>>" << std::endl;
     }
     void Engine::logic_update()
     {
         now_time = glfwGetTime();
+        if (now_time - s_cursor_time > 0.01)
+        {
+            s_c_xdiff = 0.0;
+            s_c_ydiff = 0.0;
+        }
         delta_time = now_time - last_time;
-        std::cout << "frame interval: " << delta_time << " framerate: " << 1.0 / (delta_time) << std::endl;
+        // std::cout << "frame interval: " << delta_time << " framerate: " << 1.0 / (delta_time) << std::endl;
         last_time = now_time;
         // 遍历各个 gameobject，执行 logicsupport 上的 Update 函数
         for (auto &pair : m_gameobjects)
@@ -128,6 +135,7 @@ namespace mc::low
         std::cout << "[Engine::AddGameobject] " << game_object->GetID() << std::endl;
     }
     // static
+    // static for gl op
     void Engine::S_GL_EnableFaceCull(bool zhi)
     {
         if (zhi)

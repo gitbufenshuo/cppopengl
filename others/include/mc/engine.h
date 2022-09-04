@@ -34,6 +34,13 @@ namespace mc::low
         ModelStore m_model_store;       // 这东西不用指针
         TextureStore m_texture_store;   // 这东西不用指针
         MaterialStore m_material_store; // 这东西不用指针
+    public:
+        // static
+        static double s_cursor_time;
+        static double s_cursor_XPOS;
+        static double s_cursor_YPOS;
+        static double s_c_xdiff;
+        static double s_c_ydiff;
 
     private:
         void update();
@@ -85,6 +92,7 @@ namespace mc::low
         Engine(int width = 800, int height = 800, const char *name = "HelloOpenGL");
 
     public:
+        static void mouse_callback(GLFWwindow *window, double xpos, double ypos);
         // gl 相关操作，这样用户代码可以不用引用 gl 相关header
         static void S_GL_EnableFaceCull(bool zhi); // 是否打开 face cull
     };

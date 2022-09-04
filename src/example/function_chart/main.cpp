@@ -18,6 +18,7 @@
 #include <game/material/blinn_phong_point.h>
 #include <game/material/function_chart.h>
 #include <game/logic/function_draw.h>
+#include <game/logic/camera_logic.h>
 #include <game/example/example_list.h>
 //
 
@@ -29,9 +30,6 @@ using mlRender = mc::low::MeshRender;
 using mlFilter = mc::low::MeshFilter;
 using mlMaterial = mc::low::Material;
 using mlMaterialPhong = mc::low::MaterialPhong;
-using mlBasicLG = mc::low::BasicLogicSupport;
-using mlTranslateLG = mc::low::TranslateLogicSupport;
-using mlCameraLG = mc::low::CameraLogicSupport;
 namespace
 {
     bool rangeshader(int key, mlShader *_shader)
@@ -176,6 +174,7 @@ namespace
                 one->GetTransform()->SetLocalEuler(0.0f, 0.0f, 0.0f);
                 one->GetTransform()->SetLocalTranslate(0.0f, 0.0f, -20.0f);
                 one->AddLogicSupport(new game::FunctionDraw{one});
+                one->AddLogicSupport(new game::CamereLogic{one});
                 res[row_idx * col + col_idx] = one;
             }
         }
