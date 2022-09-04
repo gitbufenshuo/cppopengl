@@ -13,6 +13,7 @@
 #include <mc/model_store.h>
 #include <mc/texture_store.h>
 #include <mc/material_store.h>
+#include <mc/keyinputsystem.h>
 
 namespace mc::low
 {
@@ -34,6 +35,7 @@ namespace mc::low
         ModelStore m_model_store;       // 这东西不用指针
         TextureStore m_texture_store;   // 这东西不用指针
         MaterialStore m_material_store; // 这东西不用指针
+
     public:
         // static
         static double s_cursor_time;
@@ -41,6 +43,7 @@ namespace mc::low
         static double s_cursor_YPOS;
         static double s_c_xdiff;
         static double s_c_ydiff;
+        static KeyInputSystem s_keyinput; // 键盘事件管理器
 
     private:
         void update();

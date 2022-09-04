@@ -40,6 +40,10 @@ namespace
         glEnable(GL_CULL_FACE);
         return window;
     }
+    void KeyCallback(GLFWwindow *, int key, int scancode, int action, int mods)
+    {
+        mc::low::Engine::s_keyinput(key, scancode, action, mods);
+    }
 }
 
 namespace mc::low
@@ -52,6 +56,7 @@ namespace mc::low
         init_time = now_time;
         glfwSetCursorPosCallback(m_window, mouse_callback);
         glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        glfwSetKeyCallback(m_window, KeyCallback);
         std::cout << "<<<<<< Welcom to Engine >>>>>>" << std::endl;
     }
     void Engine::logic_update()
