@@ -38,6 +38,15 @@ namespace mc::low
         }
         return m_local_mat;
     }
+
+    void Transform::udpateAxis()
+    {
+        m_world_pos = m_world_mat * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+        m_world_x = m_world_mat * glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
+        m_world_y = m_world_mat * glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
+        m_world_z = m_world_mat * glm::vec4(0.0f, 0.0f, 1.0f, 1.0f);
+    }
+
     const glm::mat4 &Transform::GetWorldMat()
     {
         auto up_v = getUpperVersion();
@@ -46,6 +55,7 @@ namespace mc::low
             m_world_mat = m_upper->GetWorldMat() * m_local_mat;
             m_world_up_version = up_v;
             ++m_world_self_version;
+            udpateAxis();
         }
         return m_world_mat;
     }
@@ -65,6 +75,15 @@ namespace mc::low
         m_translate.y = y;
         m_translate.z = z;
     }
+    void Transform::IncLocalTranslate(float x, float y, float z)
+    {
+        m_local_dirty = true;
+        //
+        m_translate.x += x;
+        m_translate.y += y;
+        m_translate.z += z;
+    }
+
     void Transform::SetLocalScale(float x, float y, float z)
     {
         m_local_dirty = true;
@@ -91,6 +110,7 @@ namespace mc::low
             if (changed)
             {
                 m_world_mat = m_local_mat;
+                udpateAxis();
                 ++m_world_self_version;
             }
             return 0;
@@ -163,12 +183,24 @@ namespace mc::low
             std::cout << std::endl;
         }
     }
-
     glm::vec3 Transform::GetWorldPos()
     {
-        auto &mat{GetWorldMat()};
-        auto res{mat * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)};
-        auto cast_res{static_cast<glm::vec3>(res)};
-        return cast_res;
+        GetWorldMat();
+        return m_world_pos;
+    }
+    glm::vec3 Transform::GetWorldX()
+    {
+        GetWorldMat();
+        return m_world_x;
+    }
+    glm::vec3 Transform::GetWorldY()
+    {
+        GetWorldMat();
+        return m_world_y;
+    }
+    glm::vec3 Transform::GetWorldZ()
+    {
+        GetWorldMat();
+        return m_world_z;
     }
 }

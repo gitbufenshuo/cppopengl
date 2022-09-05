@@ -174,7 +174,7 @@ namespace
                 one->GetTransform()->SetLocalEuler(0.0f, 0.0f, 0.0f);
                 one->GetTransform()->SetLocalTranslate(0.0f, 0.0f, -20.0f);
                 one->AddLogicSupport(new game::FunctionDraw{one});
-                one->AddLogicSupport(new game::CamereLogic{one});
+                one->AddLogicSupport(new game::CamereLogic{one, one->GetTransform()});
                 res[row_idx * col + col_idx] = one;
             }
         }

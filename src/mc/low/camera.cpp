@@ -27,10 +27,7 @@ namespace mc::low
 
     const glm::mat4 &Camera::GetViewMat()
     {
-        if (m_view_dirty)
-        {
-            updateViewMat();
-        }
+        updateViewMat();
         return m_view_mat;
     }
 

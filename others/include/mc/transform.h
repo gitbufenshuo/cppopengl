@@ -17,20 +17,29 @@ namespace mc::low
         const glm::mat4 &GetLocalMat();
         const glm::mat4 &GetWorldMat();
         glm::vec3 GetWorldPos();
+        glm::vec3 GetWorldX();
+        glm::vec3 GetWorldY();
+        glm::vec3 GetWorldZ();
         void Translate(float x = 0.0f, float y = 0.0f, float z = 0.0f);
         void ShowVersion();
         unsigned int GetSelfVersion();
         void SetLocalEuler(float x, float y, float z);
+        void IncLocalTranslate(float x, float y, float z);
         void SetLocalTranslate(float x, float y, float z);
         void SetLocalScale(float x, float y, float z);
 
     private:
         unsigned int getUpperVersion();
         void updateLocal();
+        void udpateAxis();
         //
         glm::vec3 m_scale{1.0f, 1.0f, 1.0f};
         glm::quat m_rotation{1.0f, 0.0f, 0.0f, 0.0f}; // 四元数
         glm::vec3 m_translate{0.0f, 0.0f, 0.0f};
+        glm::vec3 m_world_pos{0.0f};
+        glm::vec3 m_world_z{0.0f};   // 世界坐标系下，transform 的 z
+        glm::vec3 m_world_y{0.0f};   // 世界坐标系下，transform 的 y
+        glm::vec3 m_world_x{0.0f};   // 世界坐标系下，transform 的 x
         Transform *m_upper{nullptr}; // 上层 transform
         bool m_local_dirty{false};   // local transform 是否有变化
         glm::mat4 m_local_mat{1.0f};
