@@ -42,7 +42,8 @@ namespace
     }
     void KeyCallback(GLFWwindow *, int key, int scancode, int action, int mods)
     {
-        mc::low::Engine::s_keyinput(key, scancode, action, mods);
+        float now_time = static_cast<float>(glfwGetTime());
+        mc::low::Engine::s_keyinput(now_time, key, scancode, action, mods);
     }
 }
 

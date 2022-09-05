@@ -2,14 +2,16 @@ set (MC_LOW_DIR mc/low/)
 set(GAME_DIR game/)
 set(EXAMPLE_DIR example/)
 set (LOW_CODE 
-${MC_LOW_DIR}transform.cpp 
-${MC_LOW_DIR}shader.cpp 
-${MC_LOW_DIR}camera.cpp 
-${MC_LOW_DIR}model.cpp 
-${MC_LOW_DIR}texture.cpp 
-${MC_LOW_DIR}material_phong.cpp 
-${MC_LOW_DIR}engine.cpp 
-${MC_LOW_DIR}engine_cursor.cpp 
+${MC_LOW_DIR}transform.cpp
+${MC_LOW_DIR}shader.cpp
+${MC_LOW_DIR}camera.cpp
+${MC_LOW_DIR}model.cpp
+${MC_LOW_DIR}texture.cpp
+${MC_LOW_DIR}material_phong.cpp
+${MC_LOW_DIR}engine.cpp
+${MC_LOW_DIR}engine_cursor.cpp
+${MC_LOW_DIR}engine_keyinput.cpp
+${MC_LOW_DIR}keyinputsystem.cpp
 ${MC_LOW_DIR}mesh_render.cpp
 ${MC_LOW_DIR}gameobject.cpp
 ${MC_LOW_DIR}logic_support.cpp
