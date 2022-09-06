@@ -93,11 +93,12 @@ const char descriptor_table_protodef_mc_2fcomm_2ftransform_2eproto[] PROTOBUF_SE
   "c3\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\t\n\001z\030\003 \001(\002\"o\n\tT"
   "ransform\022 \n\ttranslate\030\001 \001(\0132\r.mc.comm.Ve"
   "c3\022\034\n\005euler\030\002 \001(\0132\r.mc.comm.Vec3\022\"\n\006pare"
-  "nt\030\003 \001(\0132\022.mc.comm.Transformb\006proto3"
+  "nt\030\003 \001(\0132\022.mc.comm.TransformB\tZ\007mc/commb"
+  "\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_mc_2fcomm_2ftransform_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_mc_2fcomm_2ftransform_2eproto = {
-    false, false, 196, descriptor_table_protodef_mc_2fcomm_2ftransform_2eproto,
+    false, false, 207, descriptor_table_protodef_mc_2fcomm_2ftransform_2eproto,
     "mc/comm/transform.proto",
     &descriptor_table_mc_2fcomm_2ftransform_2eproto_once, nullptr, 0, 2,
     schemas, file_default_instances, TableStruct_mc_2fcomm_2ftransform_2eproto::offsets,
