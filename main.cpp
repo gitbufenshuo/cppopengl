@@ -15,6 +15,13 @@ void reg_entry(std::unordered_map<std::string, entry_func> &entry_list)
                 game::example_list::function_chart::g_name,
                 one));
     }
+    {
+        entry_func one{game::example_list::protobuf_test::Main};
+        entry_list.insert(
+            std::pair(
+                game::example_list::protobuf_test::g_name,
+                one));
+    }
 }
 
 int main(int argc, char *argv[])
@@ -22,7 +29,10 @@ int main(int argc, char *argv[])
     if (argc == 1)
     {
         std::cout << "请输入想要运行的程序\n"
-                  << "例如: ./mc.out function_chart" << std::endl;
+                  << "例如(mac): ./mc.out function_chart" << std::endl
+                  << "例如(mac): ./mc.out protobuf_test" << std::endl
+                  << "例如(windows): ./mc.out.exe function_chart" << std::endl
+                  << "例如(windows): ./mc.out.exe protobuf_test" << std::endl;
         return 0;
     }
     std::unordered_map<std::string, entry_func> entry_list;

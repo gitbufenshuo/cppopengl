@@ -14,6 +14,7 @@ set (INCLUDE_DIR ${PROJECT_SOURCE_DIR}/others/include)
 if (APPLE)
     set (GLFW_LIB ${PROJECT_SOURCE_DIR}/others/lib/libglfw.3.dylib)
     set (GLAD_LIB ${PROJECT_SOURCE_DIR}/others/lib/libglad.dylib)
+    set (PROTO_LIB ${PROJECT_SOURCE_DIR}/others/lib/libprotobuf.a)
 else()
     set (GLFW_LIB ${PROJECT_SOURCE_DIR}/others/lib/glfw3.dll)
     set (GLAD_LIB ${PROJECT_SOURCE_DIR}/others/lib/glad.dll)
@@ -22,7 +23,12 @@ endif()
 add_subdirectory (src)
 
 add_executable(mc.out main.cpp)
-target_link_libraries (mc.out src ${SELF_LIB} ${GLFW_LIB} ${GLAD_LIB})
+target_link_libraries (mc.out src 
+    ${SELF_LIB} 
+    ${GLFW_LIB} 
+    ${GLAD_LIB}
+    ${PROTO_LIB}
+)
 target_include_directories(
     mc.out
     PUBLIC
