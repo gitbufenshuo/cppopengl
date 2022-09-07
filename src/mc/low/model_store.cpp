@@ -13,6 +13,11 @@ namespace mc::low
     }
     ModelP ModelStore::Get(int key)
     {
+        if (key == -1)
+        {
+            // 获取最后一个
+            return m_store[s_id];
+        }
         return m_store[key];
     }
     void ModelStore::Range(RangeModelStoreFunc rf)

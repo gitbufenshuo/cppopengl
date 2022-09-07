@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <string_view>
 
 #include <mc/comm/gltf.pb.h>
 
@@ -17,6 +18,7 @@ namespace mc::gltf
 
     public:
         void Show();
+        void *Offset(int index) const;
     };
 
     class BufferList
@@ -28,6 +30,7 @@ namespace mc::gltf
 
     public:
         void Show();
+        const Buffer &GetBuffer(int index) const;
     };
 
     class BufferView
@@ -37,6 +40,8 @@ namespace mc::gltf
 
     public:
         BufferView(const mc::comm::BufferView &bufferView);
+        void SetGLID(unsigned int gl_id);
+        unsigned int GetGLID() const;
     };
 
     class BufferViewList
@@ -45,6 +50,7 @@ namespace mc::gltf
 
     public:
         BufferViewList(const mc::comm::GLTF &gltf);
+        const BufferView &GetBufferView(int index) const;
     };
 
     class Accessor
@@ -53,6 +59,9 @@ namespace mc::gltf
 
     public:
         Accessor(const mc::comm::Accessor &data);
+
+    public:
+        static int GetSizeFromType(std::string_view _type);
     };
 
     class AccessorList
@@ -63,4 +72,25 @@ namespace mc::gltf
         AccessorList(const mc::comm::GLTF &gltf);
     };
 }
+
+namespace mc::gltf
+{
+
+    class GLTF
+    {
+        const mc::comm::GLTF &m_gltf;
+        AccessorList m_aclist;
+        BufferList m_blist;
+        BufferViewList m_bvlist;
+
+    public:
+        GLTF(const mc::comm::GLTF &gltf);
+
+    public:
+        const mc::comm::GLTF &GetCommGLTF() const;
+        const Buffer &GetBuffer(int index) const;
+        const BufferView &GetBufferView(int index) const;
+    };
+}
+
 #endif

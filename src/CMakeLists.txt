@@ -13,6 +13,7 @@ set (LOW_CODE
     ${MC_LOW_DIR}material_phong.cpp
     ${MC_LOW_DIR}engine.cpp
     ${MC_LOW_DIR}engine_cursor.cpp
+    ${MC_LOW_DIR}engine_gltf.cpp
     ${MC_LOW_DIR}engine_keyinput.cpp
     ${MC_LOW_DIR}keyinputsystem.cpp
     ${MC_LOW_DIR}mesh_render.cpp

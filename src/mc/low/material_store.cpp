@@ -15,6 +15,10 @@ namespace mc::low
     }
     MaterialP MaterialStore::Get(int key)
     {
+        if (key == -1)
+        {
+            return m_store[s_id];
+        }
         return m_store[key];
     }
     int MaterialStore::GetCount()
