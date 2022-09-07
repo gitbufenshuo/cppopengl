@@ -107,7 +107,7 @@ namespace mc::low
             }
             // mesh render 暂时
             auto mr{new MeshRender{}};
-            mr->SetMaterial(m_material_store.Get());
+            mr->SetMaterial(m_material_store.Get()); // 得到最后一个材质
             n_gameobject->SetMeshRender(mr);
             n_gameobject->GetTransform()->SetLocalTranslate(0.0f, 0.0f, -5.0f);
             n_gameobject->GetTransform()->SetLocalEuler(0.0f, 0.0f, 0.0f);

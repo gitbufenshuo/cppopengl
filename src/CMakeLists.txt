@@ -47,6 +47,7 @@ set(GAME_CODE
     ${GAME_DIR}material/phong_spot.cpp
     ${GAME_DIR}material/blinn_phong_point.cpp
     ${GAME_DIR}material/function_chart.cpp
+    ${GAME_DIR}material/simple.cpp
     ${GAME_DIR}logic/function_draw.cpp
     ${GAME_DIR}logic/camera_logic.cpp
 )

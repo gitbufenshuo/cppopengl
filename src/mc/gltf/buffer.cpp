@@ -25,7 +25,7 @@ namespace mc::gltf
     }
     void *Buffer::Offset(int index) const
     {
-        const unsigned char *pr{m_data.data()};
+        const unsigned char *pr{&m_data[index]};
         const void *cv{static_cast<const void *>(pr)};
         return const_cast<void *>(cv);
     }

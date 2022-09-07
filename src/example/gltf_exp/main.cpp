@@ -3,7 +3,7 @@
 #include <fstream>
 // mc low headers
 #include <mc/engine.h>
-#include <mc/material_phong.h>
+#include <game/material/simple.h>
 
 // game headers
 
@@ -12,7 +12,6 @@
 #include <mc/gltf/buffer.h>
 
 using mlShader = mc::low::Shader;
-using mlMaterialPhong = mc::low::MaterialPhong;
 
 namespace
 {
@@ -34,9 +33,9 @@ namespace
         auto &shaderstore = gogogo.GetShaderStore();
         {
             // point phong
-            auto *point_phong{new mlShader{"../others/resource/shader/phong.vert.vs", "../others/resource/shader/phong.frag.fs"}};
-            point_phong->Load();
-            shaderstore.Register(point_phong);
+            auto *_shader{new mlShader{"../others/resource/shader/simple.vert.vs", "../others/resource/shader/simple.frag.fs"}};
+            _shader->Load();
+            shaderstore.Register(_shader);
         }
     }
 
@@ -44,18 +43,12 @@ namespace
     {
         auto &materialstore{gogogo.GetMaterialStore()};
         {
-            // 加载 phong 材质， point light
-            auto list = mlMaterialPhong::LoadSurfaceDataFromFile("../others/resource/material/all.material");
-            // 注册到 engine 中
-            for (auto one : list)
-            {
-                one->SetShader(gogogo.GetShaderStore().Get(1)); // 设置一下关联的shader 1
-                // one->AddTexture(gogogo.GetTextureStore().Get(1));
-                materialstore.Register(one);
-            }
+            // 加载 simple 材质
+            auto ma{new game::MaterialSimple{}};
+            ma->SetShader(gogogo.GetShaderStore().Get(1));
+            materialstore.Register(ma);
         }
     }
-
 }
 
 namespace game::example_list::gltf_exp

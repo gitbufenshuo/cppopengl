@@ -1,5 +1,7 @@
 #include <cassert> // for assert()
 #include <vector>
+#include <iostream>
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -33,6 +35,7 @@ namespace mc::low
 
     void Model::SetAttr(int loc, int size, int stride, void *pointer)
     {
+        std::cout << "Model::SetAttr " << loc << " " << size << " " << stride << " " << pointer << std::endl;
         glBindVertexArray(m_vao);
         glVertexAttribPointer(loc, size, GL_FLOAT, GL_FALSE, stride, pointer);
         glEnableVertexAttribArray(loc);
