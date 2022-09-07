@@ -43,3 +43,35 @@ namespace mc::gltf
         }
     }
 }
+
+namespace mc::gltf
+{
+    BufferView::BufferView(const mc::comm::BufferView &bufferView) : m_bufferView{bufferView}
+    {
+    }
+    BufferViewList::BufferViewList(const mc::comm::GLTF &gltf)
+    {
+        int bv_count = gltf.bufferviews_size();
+        for (int index = 0; index < bv_count; ++index)
+        {
+            auto &onebv{gltf.bufferviews(index)};
+            m_data.push_back(BufferView{onebv});
+        }
+    }
+}
+
+namespace mc::gltf
+{
+    Accessor::Accessor(const mc::comm::Accessor &data) : m_data{data}
+    {
+    }
+    AccessorList ::AccessorList(const mc::comm::GLTF &gltf)
+    {
+        int ac_count = gltf.accessors_size();
+        for (int index = 0; index < ac_count; ++index)
+        {
+            auto &oneac{gltf.accessors(index)};
+            m_data.push_back(Accessor{oneac});
+        }
+    }
+}
