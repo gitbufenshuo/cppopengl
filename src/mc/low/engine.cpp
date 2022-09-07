@@ -104,15 +104,21 @@ namespace mc::low
                 // 没有模型
                 continue;
             }
-            // model
-            auto _model = _mesh_filter->GetModel();
-            _model->Use();
             // material tasks
             _material->PostUniform(this, _gb);
-            // 在画之前，遍历 logic_support
             _gb->BeforeRenderUpdate(delta_time);
+            // 遍历每一个 primitive model
+            {
+                int model_size = _mesh_filter->modelsize();
+                for (int index = 0; index < model_size; ++index)
+                {
+                    auto _model = _mesh_filter->GetModel(index);
+                    _model->Use();
+                    glDrawElements(GL_TRIANGLES, _model->GetEBOCount(), GL_UNSIGNED_INT, 0);
+                }
+            }
+            // 在画之前，遍历 logic_support
             // 画
-            glDrawElements(GL_TRIANGLES, _model->GetEBOCount(), GL_UNSIGNED_INT, 0);
             // 在画之后，遍历 logic_support
             _gb->AfterRenderUpdate(delta_time);
         }

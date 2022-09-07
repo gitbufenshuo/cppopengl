@@ -1,6 +1,8 @@
 #ifndef MESH_RENDER_H
 #define MESH_RENDER_H
 
+#include <vector>
+
 #include <mc/gameobject.h>
 #include <mc/material.h>
 #include <mc/model_store.h>
@@ -34,16 +36,20 @@ namespace mc::low
 
     class MeshFilter
     {
-        ModelP m_model;
+        std::vector<ModelP> m_model_list;
 
     public:
-        void SetModel(ModelP model)
+        void AddModel(ModelP model)
         {
-            m_model = model;
+            m_model_list.push_back(model);
         }
-        ModelP GetModel()
+        int modelsize()
         {
-            return m_model;
+            return m_model_list.size();
+        }
+        ModelP GetModel(int index)
+        {
+            return m_model_list[index];
         }
     };
 }
