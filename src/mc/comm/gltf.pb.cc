@@ -168,9 +168,7 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORIT
 PROTOBUF_CONSTEXPR Accessor::Accessor(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.max_)*/{}
-  , /*decltype(_impl_._max_cached_byte_size_)*/{0}
   , /*decltype(_impl_.min_)*/{}
-  , /*decltype(_impl_._min_cached_byte_size_)*/{0}
   , /*decltype(_impl_.type_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.bufferview_)*/0
   , /*decltype(_impl_.byteoffset_)*/0
@@ -398,8 +396,8 @@ const char descriptor_table_protodef_mc_2fcomm_2fgltf_2eproto[] PROTOBUF_SECTION
   "\022\022\n\nbyteStride\030\004 \001(\005\022\016\n\006target\030\005 \001(\005\"\200\001\n"
   "\010Accessor\022\022\n\nbufferView\030\001 \001(\005\022\022\n\nbyteOff"
   "set\030\002 \001(\005\022\025\n\rcomponentType\030\003 \001(\005\022\r\n\005coun"
-  "t\030\004 \001(\005\022\014\n\004type\030\005 \001(\t\022\013\n\003max\030\006 \003(\005\022\013\n\003mi"
-  "n\030\007 \003(\005\"\030\n\005Asset\022\017\n\007version\030\001 \001(\t\"\353\002\n\004GL"
+  "t\030\004 \001(\005\022\014\n\004type\030\005 \001(\t\022\013\n\003max\030\006 \003(\002\022\013\n\003mi"
+  "n\030\007 \003(\002\"\030\n\005Asset\022\017\n\007version\030\001 \001(\t\"\353\002\n\004GL"
   "TF\022\r\n\005scene\030\001 \001(\005\022\036\n\006scenes\030\002 \003(\0132\016.mc.c"
   "omm.Scene\022\034\n\005nodes\030\003 \003(\0132\r.mc.comm.Node\022"
   "\035\n\006meshes\030\004 \003(\0132\r.mc.comm.Mesh\022\"\n\010textur"
@@ -2647,9 +2645,7 @@ Accessor::Accessor(const Accessor& from)
   Accessor* const _this = this; (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.max_){from._impl_.max_}
-    , /*decltype(_impl_._max_cached_byte_size_)*/{0}
     , decltype(_impl_.min_){from._impl_.min_}
-    , /*decltype(_impl_._min_cached_byte_size_)*/{0}
     , decltype(_impl_.type_){}
     , decltype(_impl_.bufferview_){}
     , decltype(_impl_.byteoffset_){}
@@ -2678,9 +2674,7 @@ inline void Accessor::SharedCtor(
   (void)is_message_owned;
   new (&_impl_) Impl_{
       decltype(_impl_.max_){arena}
-    , /*decltype(_impl_._max_cached_byte_size_)*/{0}
     , decltype(_impl_.min_){arena}
-    , /*decltype(_impl_._min_cached_byte_size_)*/{0}
     , decltype(_impl_.type_){}
     , decltype(_impl_.bufferview_){0}
     , decltype(_impl_.byteoffset_){0}
@@ -2777,25 +2771,25 @@ const char* Accessor::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx)
         } else
           goto handle_unusual;
         continue;
-      // repeated int32 max = 6;
+      // repeated float max = 6;
       case 6:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 50)) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt32Parser(_internal_mutable_max(), ptr, ctx);
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedFloatParser(_internal_mutable_max(), ptr, ctx);
           CHK_(ptr);
-        } else if (static_cast<uint8_t>(tag) == 48) {
-          _internal_add_max(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr));
-          CHK_(ptr);
+        } else if (static_cast<uint8_t>(tag) == 53) {
+          _internal_add_max(::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr));
+          ptr += sizeof(float);
         } else
           goto handle_unusual;
         continue;
-      // repeated int32 min = 7;
+      // repeated float min = 7;
       case 7:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 58)) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt32Parser(_internal_mutable_min(), ptr, ctx);
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedFloatParser(_internal_mutable_min(), ptr, ctx);
           CHK_(ptr);
-        } else if (static_cast<uint8_t>(tag) == 56) {
-          _internal_add_min(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr));
-          CHK_(ptr);
+        } else if (static_cast<uint8_t>(tag) == 61) {
+          _internal_add_min(::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr));
+          ptr += sizeof(float);
         } else
           goto handle_unusual;
         continue;
@@ -2862,22 +2856,14 @@ uint8_t* Accessor::_InternalSerialize(
         5, this->_internal_type(), target);
   }
 
-  // repeated int32 max = 6;
-  {
-    int byte_size = _impl_._max_cached_byte_size_.load(std::memory_order_relaxed);
-    if (byte_size > 0) {
-      target = stream->WriteInt32Packed(
-          6, _internal_max(), byte_size, target);
-    }
+  // repeated float max = 6;
+  if (this->_internal_max_size() > 0) {
+    target = stream->WriteFixedPacked(6, _internal_max(), target);
   }
 
-  // repeated int32 min = 7;
-  {
-    int byte_size = _impl_._min_cached_byte_size_.load(std::memory_order_relaxed);
-    if (byte_size > 0) {
-      target = stream->WriteInt32Packed(
-          7, _internal_min(), byte_size, target);
-    }
+  // repeated float min = 7;
+  if (this->_internal_min_size() > 0) {
+    target = stream->WriteFixedPacked(7, _internal_min(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -2896,31 +2882,25 @@ size_t Accessor::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated int32 max = 6;
+  // repeated float max = 6;
   {
-    size_t data_size = ::_pbi::WireFormatLite::
-      Int32Size(this->_impl_.max_);
+    unsigned int count = static_cast<unsigned int>(this->_internal_max_size());
+    size_t data_size = 4UL * count;
     if (data_size > 0) {
       total_size += 1 +
         ::_pbi::WireFormatLite::Int32Size(static_cast<int32_t>(data_size));
     }
-    int cached_size = ::_pbi::ToCachedSize(data_size);
-    _impl_._max_cached_byte_size_.store(cached_size,
-                                    std::memory_order_relaxed);
     total_size += data_size;
   }
 
-  // repeated int32 min = 7;
+  // repeated float min = 7;
   {
-    size_t data_size = ::_pbi::WireFormatLite::
-      Int32Size(this->_impl_.min_);
+    unsigned int count = static_cast<unsigned int>(this->_internal_min_size());
+    size_t data_size = 4UL * count;
     if (data_size > 0) {
       total_size += 1 +
         ::_pbi::WireFormatLite::Int32Size(static_cast<int32_t>(data_size));
     }
-    int cached_size = ::_pbi::ToCachedSize(data_size);
-    _impl_._min_cached_byte_size_.store(cached_size,
-                                    std::memory_order_relaxed);
     total_size += data_size;
   }
 

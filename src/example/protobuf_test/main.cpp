@@ -21,6 +21,7 @@ namespace
             std::cout << static_cast<int>(onebyte) << " ";
         }
         std::cout << std::endl;
+        ///////////////////////
     }
 }
 

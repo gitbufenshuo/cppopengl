@@ -4,6 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"os"
+	"path"
+	"strings"
 
 	"gitee.com/onebook/cppopengl/bintools/mc/comm"
 	"google.golang.org/protobuf/proto"
@@ -69,12 +72,15 @@ type GLTF struct {
 // 转成 proto bytes(二进制)
 func gltf2proto(input []byte) []byte {
 	var gltfP comm.GLTF
-	json.Unmarshal(input, &gltfP)
+	if jsonerr := json.Unmarshal(input, &gltfP); jsonerr != nil {
+		panic("非法的gltf文件" + jsonerr.Error())
+	}
+
 	//
-	rawBytes, _ := json.Marshal(&gltfP)
-	fmt.Println(string(rawBytes))
-	//
-	protoBytes, _ := proto.Marshal(&gltfP)
+	protoBytes, err := proto.Marshal(&gltfP)
+	if err != nil {
+		panic(err)
+	}
 	return protoBytes
 }
 
@@ -87,8 +93,15 @@ func proto2gltf(input []byte) []byte {
 func Main(dir string, inputFile string, outdir string) {
 	fmt.Println("gltf convert tools -> ", dir, inputFile)
 	if dir == "g2p" {
+		// ./bintools.out gltf g2p ./resource/gltf/minimal.json ./resource/gltf
 		data, _ := ioutil.ReadFile(inputFile)
-		gltf2proto(data)
+		pbdata := gltf2proto(data)
+		segs := strings.Split(inputFile, "/")
+		filename := fmt.Sprintf("%s.gltf.pb", segs[len(segs)-1])
+		outFilePath := path.Join(outdir, filename)
+		os.Remove(outFilePath)
+		fmt.Println("outdir", outFilePath)
+		ioutil.WriteFile(outFilePath, pbdata, 0644)
 	} else {
 	}
 }

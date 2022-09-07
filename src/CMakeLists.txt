@@ -1,7 +1,8 @@
 set (MC_LOW_DIR mc/low/)
 set(GAME_DIR game/)
 set(EXAMPLE_DIR example/)
-set(MC_COMM_DIR_DIR mc/comm/)
+set(MC_COMM_DIR mc/comm/)
+set(MC_GLTF_DIR mc/gltf/)
 
 set (LOW_CODE 
     ${MC_LOW_DIR}transform.cpp
@@ -23,8 +24,14 @@ set (LOW_CODE
     ${MC_LOW_DIR}material_store.cpp
 )
 set (COMM_CODE 
-    ${MC_COMM_DIR_DIR}transform.pb.cc
+    ${MC_COMM_DIR}transform.pb.cc
+    ${MC_COMM_DIR}gltf.pb.cc
 )
+
+set (MC_GLTF_CODE
+    ${MC_GLTF_DIR}buffer.cpp
+)
+
 set (TOOLS_CODE tools_image.cpp)
 set (APPS_CODE 
     app.cpp
@@ -46,6 +53,7 @@ set(GAME_CODE
 set(EXAMPLE_CODE
     ${EXAMPLE_DIR}function_chart/main.cpp
     ${EXAMPLE_DIR}protobuf_test/main.cpp
+    ${EXAMPLE_DIR}gltf_exp/main.cpp
 )
 
 add_compile_options(-Wno-unused-function)
@@ -56,5 +64,6 @@ add_library(src
     ${GAME_CODE} 
     ${EXAMPLE_CODE}
     ${COMM_CODE}
+    ${MC_GLTF_CODE}
     )
 target_include_directories(src PUBLIC ${INCLUDE_DIR})

@@ -1890,48 +1890,48 @@ class Accessor final :
     kComponentTypeFieldNumber = 3,
     kCountFieldNumber = 4,
   };
-  // repeated int32 max = 6;
+  // repeated float max = 6;
   int max_size() const;
   private:
   int _internal_max_size() const;
   public:
   void clear_max();
   private:
-  int32_t _internal_max(int index) const;
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >&
+  float _internal_max(int index) const;
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< float >&
       _internal_max() const;
-  void _internal_add_max(int32_t value);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
+  void _internal_add_max(float value);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< float >*
       _internal_mutable_max();
   public:
-  int32_t max(int index) const;
-  void set_max(int index, int32_t value);
-  void add_max(int32_t value);
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >&
+  float max(int index) const;
+  void set_max(int index, float value);
+  void add_max(float value);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< float >&
       max() const;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< float >*
       mutable_max();
 
-  // repeated int32 min = 7;
+  // repeated float min = 7;
   int min_size() const;
   private:
   int _internal_min_size() const;
   public:
   void clear_min();
   private:
-  int32_t _internal_min(int index) const;
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >&
+  float _internal_min(int index) const;
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< float >&
       _internal_min() const;
-  void _internal_add_min(int32_t value);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
+  void _internal_add_min(float value);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< float >*
       _internal_mutable_min();
   public:
-  int32_t min(int index) const;
-  void set_min(int index, int32_t value);
-  void add_min(int32_t value);
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >&
+  float min(int index) const;
+  void set_min(int index, float value);
+  void add_min(float value);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< float >&
       min() const;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< float >*
       mutable_min();
 
   // string type = 5;
@@ -1992,10 +1992,8 @@ class Accessor final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t > max_;
-    mutable std::atomic<int> _max_cached_byte_size_;
-    ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t > min_;
-    mutable std::atomic<int> _min_cached_byte_size_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedField< float > max_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedField< float > min_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr type_;
     int32_t bufferview_;
     int32_t byteoffset_;
@@ -3305,7 +3303,7 @@ inline void Accessor::set_allocated_type(std::string* type) {
   // @@protoc_insertion_point(field_set_allocated:mc.comm.Accessor.type)
 }
 
-// repeated int32 max = 6;
+// repeated float max = 6;
 inline int Accessor::_internal_max_size() const {
   return _impl_.max_.size();
 }
@@ -3315,44 +3313,44 @@ inline int Accessor::max_size() const {
 inline void Accessor::clear_max() {
   _impl_.max_.Clear();
 }
-inline int32_t Accessor::_internal_max(int index) const {
+inline float Accessor::_internal_max(int index) const {
   return _impl_.max_.Get(index);
 }
-inline int32_t Accessor::max(int index) const {
+inline float Accessor::max(int index) const {
   // @@protoc_insertion_point(field_get:mc.comm.Accessor.max)
   return _internal_max(index);
 }
-inline void Accessor::set_max(int index, int32_t value) {
+inline void Accessor::set_max(int index, float value) {
   _impl_.max_.Set(index, value);
   // @@protoc_insertion_point(field_set:mc.comm.Accessor.max)
 }
-inline void Accessor::_internal_add_max(int32_t value) {
+inline void Accessor::_internal_add_max(float value) {
   _impl_.max_.Add(value);
 }
-inline void Accessor::add_max(int32_t value) {
+inline void Accessor::add_max(float value) {
   _internal_add_max(value);
   // @@protoc_insertion_point(field_add:mc.comm.Accessor.max)
 }
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >&
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< float >&
 Accessor::_internal_max() const {
   return _impl_.max_;
 }
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >&
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< float >&
 Accessor::max() const {
   // @@protoc_insertion_point(field_list:mc.comm.Accessor.max)
   return _internal_max();
 }
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< float >*
 Accessor::_internal_mutable_max() {
   return &_impl_.max_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< float >*
 Accessor::mutable_max() {
   // @@protoc_insertion_point(field_mutable_list:mc.comm.Accessor.max)
   return _internal_mutable_max();
 }
 
-// repeated int32 min = 7;
+// repeated float min = 7;
 inline int Accessor::_internal_min_size() const {
   return _impl_.min_.size();
 }
@@ -3362,38 +3360,38 @@ inline int Accessor::min_size() const {
 inline void Accessor::clear_min() {
   _impl_.min_.Clear();
 }
-inline int32_t Accessor::_internal_min(int index) const {
+inline float Accessor::_internal_min(int index) const {
   return _impl_.min_.Get(index);
 }
-inline int32_t Accessor::min(int index) const {
+inline float Accessor::min(int index) const {
   // @@protoc_insertion_point(field_get:mc.comm.Accessor.min)
   return _internal_min(index);
 }
-inline void Accessor::set_min(int index, int32_t value) {
+inline void Accessor::set_min(int index, float value) {
   _impl_.min_.Set(index, value);
   // @@protoc_insertion_point(field_set:mc.comm.Accessor.min)
 }
-inline void Accessor::_internal_add_min(int32_t value) {
+inline void Accessor::_internal_add_min(float value) {
   _impl_.min_.Add(value);
 }
-inline void Accessor::add_min(int32_t value) {
+inline void Accessor::add_min(float value) {
   _internal_add_min(value);
   // @@protoc_insertion_point(field_add:mc.comm.Accessor.min)
 }
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >&
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< float >&
 Accessor::_internal_min() const {
   return _impl_.min_;
 }
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >&
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< float >&
 Accessor::min() const {
   // @@protoc_insertion_point(field_list:mc.comm.Accessor.min)
   return _internal_min();
 }
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< float >*
 Accessor::_internal_mutable_min() {
   return &_impl_.min_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< float >*
 Accessor::mutable_min() {
   // @@protoc_insertion_point(field_mutable_list:mc.comm.Accessor.min)
   return _internal_mutable_min();

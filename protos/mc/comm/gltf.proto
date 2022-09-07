@@ -62,8 +62,8 @@ message Accessor {
     int32 componentType = 3;
     int32 count = 4;
     string type = 5;
-    repeated int32 max = 6;
-    repeated int32 min = 7;
+    repeated float max = 6;
+    repeated float min = 7;
 }
 
 message Asset {

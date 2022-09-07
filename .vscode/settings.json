@@ -78,6 +78,9 @@
         "vector": "cpp",
         "filesystem": "cpp",
         "__memory": "cpp",
-        "*.ipp": "cpp"
+        "*.ipp": "cpp",
+        "queue": "cpp",
+        "unordered_set": "cpp",
+        "*.inc": "cpp"
     }
 }
