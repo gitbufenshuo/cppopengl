@@ -78,6 +78,7 @@
         "vector": "cpp",
         "filesystem": "cpp",
         "__memory": "cpp",
-        "*.ipp": "cpp"
+        "*.ipp": "cpp",
+        "*.tcc": "cpp"
     }
 }

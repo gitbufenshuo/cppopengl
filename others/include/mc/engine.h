@@ -17,6 +17,7 @@
 
 namespace mc::low
 {
+    using InitFunc = void (*)(GLFWwindow *window);
     class Engine
     {
         int m_next_id{1};
@@ -92,7 +93,9 @@ namespace mc::low
         }
 
     public:
+       
         Engine(int width = 800, int height = 800, const char *name = "HelloOpenGL");
+        void Setup(InitFunc p);
 
     public:
         static void mouse_callback(GLFWwindow *window, double xpos, double ypos);

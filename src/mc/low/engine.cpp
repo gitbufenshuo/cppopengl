@@ -60,6 +60,9 @@ namespace mc::low
         glfwSetKeyCallback(m_window, KeyCallback);
         std::cout << "<<<<<< Welcom to Engine >>>>>>" << std::endl;
     }
+    void Engine::Setup(InitFunc p){
+      p(m_window);
+    }
     void Engine::logic_update()
     {
         now_time = glfwGetTime();

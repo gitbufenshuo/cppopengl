@@ -14,7 +14,9 @@ namespace apps::engine
 {
     void main_loop(GLFWwindow *window)
     {
-        // main camera
+        /*
+        
+             // main camera
         mc::low::Camera main_camera;
         // models
         mc::low::Model model_0{"../others/resource/model/cube.model"};
@@ -32,7 +34,7 @@ namespace apps::engine
         mc::low::Texture image{"../others/resource/texture/mc.jpeg"};
         image.Load();
         // material
-        mc::low::Material _mate_emerald{"../others/resource/material/emerald.material"};
+       // mc::low::Material _mate_emerald{"../others/resource/material/emerald.material"};
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
 
@@ -77,10 +79,10 @@ namespace apps::engine
                 // vec3 specular;
                 // float shininess;
 
-                shader.Uniform("material.ambient", _mate_emerald.GetAmbient());
-                shader.Uniform("material.diffuse", _mate_emerald.GetDiffuse());
-                shader.Uniform("material.specular", _mate_emerald.GetSpecular());
-                shader.Uniform("material.shininess", _mate_emerald.GetShininess());
+              //  shader.Uniform("material.ambient", _mate_emerald.GetAmbient());
+                //shader.Uniform("material.diffuse", _mate_emerald.GetDiffuse());
+                //shader.Uniform("material.specular", _mate_emerald.GetSpecular());
+                //shader.Uniform("material.shininess", _mate_emerald.GetShininess());
                 // gb_0
                 shader.Uniform("ma_Model", gb_0.GetWorldMat());
                 glDrawElements(GL_TRIANGLES, model_0.GetEBOCount(), GL_UNSIGNED_INT, 0);
@@ -95,5 +97,10 @@ namespace apps::engine
         // glfw: terminate, clearing all previously allocated GLFW resources.
         // ------------------------------------------------------------------
         glfwTerminate();
+        
+        
+        
+        */
+   
     }
 }
