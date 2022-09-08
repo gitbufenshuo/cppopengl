@@ -49,6 +49,8 @@ namespace mc::low
             return;
         }
         m_uploaded = true;
+        m_ebo_size=m_e_data.size();
+        m_ebo_type=GL_UNSIGNED_INT;
         //
         glGenVertexArrays(1, &m_vao);
         glBindVertexArray(m_vao);
@@ -57,6 +59,7 @@ namespace mc::low
         //
         glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
         glBufferData(GL_ARRAY_BUFFER, m_v_data.size() * sizeof(float), m_v_data.data(), GL_STATIC_DRAW);
+       
         //
         int _loc = 0;
         int _total = 0;
@@ -76,6 +79,7 @@ namespace mc::low
         // ebo
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * m_e_data.size(), m_e_data.data(), GL_STATIC_DRAW);
+    
     }
     void Model::Use()
     {
