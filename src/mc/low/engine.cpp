@@ -56,12 +56,13 @@ namespace mc::low
         last_time = now_time;
         init_time = now_time;
         glfwSetCursorPosCallback(m_window, mouse_callback);
-        glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        // glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         glfwSetKeyCallback(m_window, KeyCallback);
         std::cout << "<<<<<< Welcom to Engine >>>>>>" << std::endl;
     }
-    void Engine::Setup(InitFunc p){
-      p(m_window);
+    void Engine::Setup(InitFunc p)
+    {
+        p(m_window);
     }
     void Engine::logic_update()
     {
