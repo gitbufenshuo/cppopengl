@@ -1,5 +1,7 @@
 #include <cassert> // for assert()
 #include <vector>
+#include <iostream>
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -12,10 +14,33 @@ namespace mc::low
     Model::Model(const char *file_name) : m_file_name{file_name}
     {
         mc::tools::CSVReader<float, int, int>::Read(m_file_name, m_v_data, m_e_data, m_s_data);
+        m_ebo_size = m_e_data.size();
     }
-    Model::Model()
+    Model::Model(bool init_vao)
     {
+        if (init_vao)
+        {
+            glGenVertexArrays(1, &m_vao);
+            glBindVertexArray(m_vao);
+        }
     }
+
+    void Model::SetGLID(unsigned int vbo, unsigned int ebo, unsigned int ebo_type, int ebo_size)
+    {
+        m_vbo = vbo;
+        m_ebo = ebo;
+        m_ebo_type = ebo_type;
+        m_ebo_size = ebo_size;
+    }
+
+    void Model::SetAttr(int loc, int size, int stride, void *pointer)
+    {
+        std::cout << "Model::SetAttr " << loc << " " << size << " " << stride << " " << pointer << std::endl;
+        glBindVertexArray(m_vao);
+        glVertexAttribPointer(loc, size, GL_FLOAT, GL_FALSE, stride, pointer);
+        glEnableVertexAttribArray(loc);
+    }
+
     // normal method
     void Model::Upload()
     {
@@ -54,12 +79,18 @@ namespace mc::low
     }
     void Model::Use()
     {
+        std::cout << "vao: " << m_vao << " vbo: " << m_vbo << " ebo: " << m_ebo << std::endl;
         glBindVertexArray(m_vao);
     }
     int Model::GetEBOCount() const
     {
-        return static_cast<int>(m_e_data.size());
+        return m_ebo_size;
     }
+    unsigned int Model::GetEBOType() const
+    {
+        return m_ebo_type;
+    }
+
     // 生成一个巨大的多顶点quad, 正方形，边长的点数是edge
     // 确保 edge 是奇数且 >= 3
     Model *Model::GenerateHugeQuad(int edge)

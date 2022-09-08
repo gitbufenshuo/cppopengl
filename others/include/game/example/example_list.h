@@ -11,9 +11,14 @@ namespace game::example_list::protobuf_test
     const std::string g_name{"protobuf_test"};
     int Main();
 }
-namespace game::example_list::DebugDraw{
+namespace game::example_list::DebugDraw
+{
     const std::string g_name{"debug_draw"};
     int Main();
 }
-
+namespace game::example_list::gltf_exp
+{
+    const std::string g_name{"gltf_exp"};
+    int Main();
+}
 #endif

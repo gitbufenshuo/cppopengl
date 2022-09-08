@@ -79,6 +79,12 @@
         "filesystem": "cpp",
         "__memory": "cpp",
         "*.ipp": "cpp",
+<<<<<<< HEAD
         "*.tcc": "cpp"
+=======
+        "queue": "cpp",
+        "unordered_set": "cpp",
+        "*.inc": "cpp"
+>>>>>>> master
     }
 }

@@ -26,7 +26,7 @@ namespace mc::low
 
     public:
         void Register(Material *material);
-        MaterialP Get(int key);
+        MaterialP Get(int key = -1);
         int GetCount();
         void Range(RangeMaterialStoreFunc rf);
     };

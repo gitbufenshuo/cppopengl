@@ -50,7 +50,7 @@ namespace
             shaderstore.Register(function_chart);
         }
         {
-            auto *shader{new mlShader{"../others/resource/shader/debugtriangle.vs","../others/resource/shader/debugtriangle.fs"}};
+            auto *shader{new mlShader{"../others/resource/shader/debugtriangle.vs", "../others/resource/shader/debugtriangle.fs"}};
             shader->Load();
             shaderstore.Register(shader);
         }
@@ -135,150 +135,155 @@ namespace
     {
         auto &modelstore{gogogo.GetModelStore()};
         auto *filter_0{new mlFilter{}};
-        filter_0->SetModel(modelstore.Get(1));
+        filter_0->AddModel(modelstore.Get(1));
         return filter_0;
     }
-    void ClientsetUp(GLFWwindow *window){
+    void ClientsetUp(GLFWwindow *window)
+    {
         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     }
-struct GLRenderTriangles
-{
-    void create() {
+    struct GLRenderTriangles
+    {
+        void create()
+        {
 #pragma region 创建着色器程序
-        const char* V = \
-            "#version 330\n"
-            "uniform mat4 projectionMatrix;\n"
-            "layout(location = 0) in vec2 v_position;\n"
-            "layout(location = 1) in vec4 v_color;\n"
-            "out vec4 f_color;\n"
-            "void main(void)\n"
-            "{\n"
-            "	f_color = v_color;\n"
-            "	gl_Position = projectionMatrix*vec4(v_position, 0.0f, 1.0f);\n"
+            const char *V =
+                "#version 330\n"
+                "uniform mat4 projectionMatrix;\n"
+                "layout(location = 0) in vec2 v_position;\n"
+                "layout(location = 1) in vec4 v_color;\n"
+                "out vec4 f_color;\n"
+                "void main(void)\n"
+                "{\n"
+                "	f_color = v_color;\n"
+                "	gl_Position = projectionMatrix*vec4(v_position, 0.0f, 1.0f);\n"
 
-            "}\n";
+                "}\n";
 
-        const char* F = \
-            "#version 330\n"
-            "in vec4 f_color;\n"
-            "out vec4 color;\n"
-            "void main(void)\n"
-            "{\n"
-            "	color = f_color;\n"
-            "}\n";
+            const char *F =
+                "#version 330\n"
+                "in vec4 f_color;\n"
+                "out vec4 color;\n"
+                "void main(void)\n"
+                "{\n"
+                "	color = f_color;\n"
+                "}\n";
 
-        unsigned vP = glCreateShader(GL_VERTEX_SHADER);
-        glShaderSource(vP, 1, &V, NULL);
-        unsigned fP = glCreateShader(GL_FRAGMENT_SHADER);
-        glShaderSource(fP, 1, &F, NULL);
+            unsigned vP = glCreateShader(GL_VERTEX_SHADER);
+            glShaderSource(vP, 1, &V, NULL);
+            unsigned fP = glCreateShader(GL_FRAGMENT_SHADER);
+            glShaderSource(fP, 1, &F, NULL);
 
-        char infolog[512];
-        int success;
-        glCompileShader(vP);
-        glGetShaderiv(vP, GL_COMPILE_STATUS, &success);
-        if (!success) {
-            glad_glGetShaderInfoLog(vP, 512, NULL, infolog);
-            std::cout << infolog << std::endl;
-        }
-        else {
-            std::cout << "顶点着色器编译成功" << std::endl;
-        }
-        glCompileShader(fP);
-        glGetShaderiv(fP, GL_COMPILE_STATUS, &success);
-        if (!success) {
-            glad_glGetShaderInfoLog(fP, 512, NULL, infolog);
-            std::cout << infolog << std::endl;
-        }
-        else {
-            std::cout << "片段着色器编译成功" << std::endl;
-        }
+            char infolog[512];
+            int success;
+            glCompileShader(vP);
+            glGetShaderiv(vP, GL_COMPILE_STATUS, &success);
+            if (!success)
+            {
+                glad_glGetShaderInfoLog(vP, 512, NULL, infolog);
+                std::cout << infolog << std::endl;
+            }
+            else
+            {
+                std::cout << "顶点着色器编译成功" << std::endl;
+            }
+            glCompileShader(fP);
+            glGetShaderiv(fP, GL_COMPILE_STATUS, &success);
+            if (!success)
+            {
+                glad_glGetShaderInfoLog(fP, 512, NULL, infolog);
+                std::cout << infolog << std::endl;
+            }
+            else
+            {
+                std::cout << "片段着色器编译成功" << std::endl;
+            }
 
-        shader = glCreateProgram();
-        glAttachShader(shader, vP);
-        glAttachShader(shader, fP);
+            shader = glCreateProgram();
+            glAttachShader(shader, vP);
+            glAttachShader(shader, fP);
 
-        glLinkProgram(shader);
-        glGetShaderiv(shader, GL_LINK_STATUS, &success);
-        if (!success) {
-            glad_glGetProgramInfoLog(shader, 512, NULL, infolog);
-            std::cout << infolog << std::endl;
-        }
-        else {
-            std::cout << "着色器链接成功" << std::endl;
-        }
-        glDeleteShader(vP);
-        glDeleteShader(fP);
-
+            glLinkProgram(shader);
+            glGetShaderiv(shader, GL_LINK_STATUS, &success);
+            if (!success)
+            {
+                glad_glGetProgramInfoLog(shader, 512, NULL, infolog);
+                std::cout << infolog << std::endl;
+            }
+            else
+            {
+                std::cout << "着色器链接成功" << std::endl;
+            }
+            glDeleteShader(vP);
+            glDeleteShader(fP);
 
 #pragma endregion
 
-        projection = glGetUniformLocation(shader, "projectionMatrix");
-        glGenVertexArrays(1, &vaoId);
-        glBindVertexArray(vaoId);
-        glEnableVertexAttribArray(0);//位置属性
-        glEnableVertexAttribArray(1);//颜色属性	
+            projection = glGetUniformLocation(shader, "projectionMatrix");
+            glGenVertexArrays(1, &vaoId);
+            glBindVertexArray(vaoId);
+            glEnableVertexAttribArray(0); //位置属性
+            glEnableVertexAttribArray(1); //颜色属性
 
-        glGenBuffers(2, bufferId);
-        glBindBuffer(GL_ARRAY_BUFFER, bufferId[0]);
-        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
-        glBindBuffer(GL_ARRAY_BUFFER, bufferId[1]);
-        glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(color), color, GL_DYNAMIC_DRAW);
+            glGenBuffers(2, bufferId);
+            glBindBuffer(GL_ARRAY_BUFFER, bufferId[0]);
+            glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (void *)0);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
+            glBindBuffer(GL_ARRAY_BUFFER, bufferId[1]);
+            glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, (void *)0);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(color), color, GL_DYNAMIC_DRAW);
 
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
+            glBindVertexArray(0);
 
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindVertexArray(0);
-
-        m_count = 0;
-
-
-    }
-    void Vertex(const glm::vec2& v, const glm::vec4& c) {//在缓冲区中送入一个顶点
-        if (m_count == maxCount) {	//缓冲区的数据满了
-            fflush();
+            m_count = 0;
         }
-        vertices[m_count] = v;
-        color[m_count] = c;
+        void Vertex(const glm::vec2 &v, const glm::vec4 &c)
+        { //在缓冲区中送入一个顶点
+            if (m_count == maxCount)
+            { //缓冲区的数据满了
+                fflush();
+            }
+            vertices[m_count] = v;
+            color[m_count] = c;
 
-        m_count++;
-    }
-    void fflush() {//实际的绘制操作
-        if (m_count == 0)
-            return;
+            m_count++;
+        }
+        void fflush()
+        { //实际的绘制操作
+            if (m_count == 0)
+                return;
 
-        glUseProgram(shader);
-        float p[16] = { 0.0 };
-        //g_camera.BuildProjectionMatrix(p, 0.0);
-        glUniformMatrix4fv(projection, 1, GL_FALSE, p);
-        glBindVertexArray(vaoId);
+            glUseProgram(shader);
+            float p[16] = {0.0};
+            // g_camera.BuildProjectionMatrix(p, 0.0);
+            glUniformMatrix4fv(projection, 1, GL_FALSE, p);
+            glBindVertexArray(vaoId);
 
-        glBindBuffer(GL_ARRAY_BUFFER, bufferId[0]);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, m_count * sizeof(glm::vec2), vertices);
-        glBindBuffer(GL_ARRAY_BUFFER, bufferId[1]);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, m_count * sizeof(glm::vec4), color);
+            glBindBuffer(GL_ARRAY_BUFFER, bufferId[0]);
+            glBufferSubData(GL_ARRAY_BUFFER, 0, m_count * sizeof(glm::vec2), vertices);
+            glBindBuffer(GL_ARRAY_BUFFER, bufferId[1]);
+            glBufferSubData(GL_ARRAY_BUFFER, 0, m_count * sizeof(glm::vec4), color);
 
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            glDrawArrays(GL_TRIANGLES, 0, m_count);
+            glDisable(GL_BLEND);
 
-
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glDrawArrays(GL_TRIANGLES, 0, m_count);
-        glDisable(GL_BLEND);
-
-        glBindVertexArray(0);
-        glUseProgram(0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        m_count = 0;
-    }
-    unsigned int m_count;//点的数目
-    unsigned int vaoId;//
-    unsigned int bufferId[2];
-    unsigned int shader;//着色器程序
-    static const int maxCount = 1024 * 32;
-    glm::vec2 vertices[maxCount];//位置
-    glm::vec4 color[maxCount];//颜色}drawtriangles;
-    int projection;
-};
+            glBindVertexArray(0);
+            glUseProgram(0);
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
+            m_count = 0;
+        }
+        unsigned int m_count; //点的数目
+        unsigned int vaoId;   //
+        unsigned int bufferId[2];
+        unsigned int shader; //着色器程序
+        static const int maxCount = 1024 * 32;
+        glm::vec2 vertices[maxCount]; //位置
+        glm::vec4 color[maxCount];    //颜色}drawtriangles;
+        int projection;
+    };
 }
 
 namespace game::example_list::DebugDraw

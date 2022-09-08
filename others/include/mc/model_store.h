@@ -25,7 +25,7 @@ namespace mc::low
 
     public:
         void Register(Model *Model);
-        ModelP Get(int key);
+        ModelP Get(int key = -1);
         void Range(RangeModelStoreFunc rf);
     };
 }

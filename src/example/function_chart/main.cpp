@@ -187,7 +187,7 @@ namespace
     {
         auto &modelstore{gogogo.GetModelStore()};
         auto *filter_0{new mlFilter{}};
-        filter_0->SetModel(modelstore.Get(2));
+        filter_0->AddModel(modelstore.Get(2));
         return filter_0;
     }
 

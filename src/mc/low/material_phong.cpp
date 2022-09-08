@@ -42,7 +42,10 @@ namespace mc::low
     void MaterialPhong::PostUniform(Engine *eg, GameObject *gb)
     {
         m_shader->Use();
-        m_texture->Use();
+        if (m_texture)
+        {
+            m_texture->Use();
+        }
         // 传一些 uniform
         {
             m_shader->Uniform("ma_View", eg->GetCamera()->GetViewMat());
