@@ -15,15 +15,20 @@ if (APPLE)
     set (GLFW_LIB ${PROJECT_SOURCE_DIR}/others/lib/libglfw.3.dylib)
     set (GLAD_LIB ${PROJECT_SOURCE_DIR}/others/lib/libglad.dylib)
     set (PROTO_LIB ${PROJECT_SOURCE_DIR}/others/lib/libprotobuf.a)
+    set (SPD_BOLD "bold")
+    set (SPD_GREEN "green")
 else()
     set (GLFW_LIB ${PROJECT_SOURCE_DIR}/others/lib/glfw3.dll)
     set (GLAD_LIB ${PROJECT_SOURCE_DIR}/others/lib/glad.dll)
     set (PROTO_LIB ${PROJECT_SOURCE_DIR}/others/lib/libprotobuf.lib)
+    set (SPD_BOLD "BOLD")
+    set (SPD_GREEN "GREEN")
 endif()
 
 add_subdirectory (src)
 
 add_executable(mc.out main.cpp)
+target_compile_definitions(mc.out PRIVATE SPDBOLD=${SPD_BOLD} SPDGREEN=${SPD_GREEN})
 target_link_libraries (mc.out src 
     ${SELF_LIB} 
     ${GLFW_LIB} 
