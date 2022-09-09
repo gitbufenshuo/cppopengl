@@ -24,4 +24,11 @@ namespace mc::asset
         return store.Get(key);
     }
 
+    template <typename T>
+    void AssetManager::Del(MD5SUM key)
+    {
+        auto &store{getStore<T>()};
+        store.Del(key);
+    }
+
 }

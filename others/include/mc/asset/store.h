@@ -45,6 +45,7 @@ namespace mc::asset
     public:
         void Register(MD5SUM key, T *data);
         Elem Get(MD5SUM key);
+        void Del(MD5SUM key);
 
     private:
         THash m_store;

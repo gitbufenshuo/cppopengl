@@ -17,4 +17,10 @@ namespace mc::asset
         return m_store[key];
     }
 
+    template <class T>
+    void Store<T>::Del(MD5SUM key)
+    {
+        m_store.erase(key);
+    }
+
 }

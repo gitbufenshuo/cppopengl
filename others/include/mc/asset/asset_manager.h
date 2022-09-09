@@ -15,6 +15,9 @@ namespace mc::asset
         template <typename T>
         typename Store<T>::Elem Get(MD5SUM key);
 
+        template <typename T>
+        void Del(MD5SUM key);
+
     private:
         template <typename T>
         Store<T> &getStore();

@@ -69,9 +69,14 @@ namespace
         auto p_image{new mc::asset::Image{"../others/resource/texture/mc.png"}};
         mc::asset::MD5SUM key{};
         am.Reg<mc::asset::Image>(key, p_image);
-        auto spimage{am.Get<mc::asset::Image>(key)};
-        auto rp{spimage.get()};
+        mc::asset::Image *rp{};
+        {
+            auto spimage{am.Get<mc::asset::Image>(key)};
+            rp = spimage.get();
+        }
         std::cout << "raw p_image " << p_image << " reg and get " << rp << std::endl;
+        am.Del<mc::asset::Image>(key);
+        std::cout << "AssetManager Test OK" << std::endl;
         return 0;
     }
 }
