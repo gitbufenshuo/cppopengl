@@ -13,6 +13,11 @@ namespace mc::asset
     {
         return m_shader_code_store;
     }
+    template <>
+    Store<BinBuffer> &AssetManager::getStore()
+    {
+        return m_bin_buffer_store;
+    }
 
 #undef FUNCTION_SPECIAL
 

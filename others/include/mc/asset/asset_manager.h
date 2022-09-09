@@ -4,6 +4,7 @@
 #include <mc/asset/store.h>
 #include <mc/asset/image.h>
 #include <mc/asset/shader_code.h>
+#include <mc/asset/bin_buffer.h>
 
 namespace mc::asset
 {
@@ -26,6 +27,7 @@ namespace mc::asset
     private:
         Store<Image> m_image_store;
         Store<ShaderCode> m_shader_code_store;
+        Store<BinBuffer> m_bin_buffer_store;
     };
 }
 #include <mc/asset/asset_manager.inl>
