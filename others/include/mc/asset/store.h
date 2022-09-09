@@ -32,9 +32,9 @@ namespace mc::asset
     template <class T>
     class Store
     {
+    public:
         using Elem = std::shared_ptr<T>;
         using THash = std::unordered_map<MD5SUM, Elem>;
-        THash m_store;
 
     public:
         // Constructors
@@ -43,8 +43,11 @@ namespace mc::asset
         Store &operator=(const Store &other) = delete; // 禁止拷贝赋值
 
     public:
-        void Register(MD5SUM key, T *shader);
+        void Register(MD5SUM key, T *data);
         Elem Get(MD5SUM key);
+
+    private:
+        THash m_store;
     };
 }
 

@@ -6,9 +6,19 @@
 
 namespace mc::asset
 {
-    class AssetStore
+    class AssetManager
     {
     public:
+        template <typename T>
+        void Reg(MD5SUM key, T *r_data);
+
+        template <typename T>
+        typename Store<T>::Elem Get(MD5SUM key);
+
+    private:
+        template <typename T>
+        Store<T> getStore();
+
     private:
         Store<Image> m_image_store;
     };

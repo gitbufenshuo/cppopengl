@@ -6,9 +6,9 @@ namespace mc::asset
 {
 
     template <class T>
-    void Store<T>::Register(MD5SUM key, T *shader)
+    void Store<T>::Register(MD5SUM key, T *data)
     {
-        m_store.insert(std::pair{s_id, ShaderP{shader}});
+        m_store.insert(std::pair{key, Elem{data}});
     }
 
     template <class T>
