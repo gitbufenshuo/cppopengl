@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package mc.comm;
+
+option go_package = "mc/comm";
+
+message PBTexture {
+    int32 magFilter = 1;
+    int32 minFilter = 2;
+    int32 wrapS = 3;
+    int32 wrapT = 4;
+    string image = 5;
+}
