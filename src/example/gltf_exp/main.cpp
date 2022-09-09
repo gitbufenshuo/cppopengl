@@ -66,16 +66,32 @@ namespace
     int testAssetManager()
     {
         mc::asset::AssetManager am{};
-        auto p_image{new mc::asset::Image{"../others/resource/texture/mc.png"}};
-        mc::asset::MD5SUM key{};
-        am.Reg<mc::asset::Image>(key, p_image);
-        mc::asset::Image *rp{};
         {
-            auto spimage{am.Get<mc::asset::Image>(key)};
-            rp = spimage.get();
+            // test mc::asset::Image
+            auto p_image{new mc::asset::Image{"../others/resource/texture/mc.png"}};
+            mc::asset::MD5SUM key{};
+            am.Reg<mc::asset::Image>(key, p_image);
+            mc::asset::Image *rp{};
+            {
+                auto spimage{am.Get<mc::asset::Image>(key)};
+                rp = spimage.get();
+            }
+            std::cout << "raw p_image " << p_image << " reg and get " << rp << std::endl;
+            am.Del<mc::asset::Image>(key);
         }
-        std::cout << "raw p_image " << p_image << " reg and get " << rp << std::endl;
-        am.Del<mc::asset::Image>(key);
+        {
+            // test mc::asset::ShaderCode
+            auto p_shader_code{new mc::asset::ShaderCode{"../others/resource/shader/v1.vs"}};
+            mc::asset::MD5SUM key{};
+            am.Reg<mc::asset::ShaderCode>(key, p_shader_code);
+            mc::asset::ShaderCode *rp{};
+            {
+                auto sp{am.Get<mc::asset::ShaderCode>(key)};
+                rp = sp.get();
+            }
+            std::cout << "raw shadercode " << p_shader_code << " reg and get " << rp << std::endl;
+            am.Del<mc::asset::ShaderCode>(key);
+        }
         std::cout << "AssetManager Test OK" << std::endl;
         return 0;
     }

@@ -3,6 +3,7 @@
 
 #include <mc/asset/store.h>
 #include <mc/asset/image.h>
+#include <mc/asset/shader_code.h>
 
 namespace mc::asset
 {
@@ -24,6 +25,7 @@ namespace mc::asset
 
     private:
         Store<Image> m_image_store;
+        Store<ShaderCode> m_shader_code_store;
     };
 }
 #include <mc/asset/asset_manager.inl>

@@ -6,5 +6,5 @@ in vec3 io_color;
 in float io_height;
 
 void main() {
-    FragColor = vec4(io_height, io_height, io_height, 1.0f);
+    FragColor = vec4(io_color, 1.0f);
 }

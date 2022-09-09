@@ -8,6 +8,12 @@ namespace mc::asset
     {
         return m_image_store;
     }
+    template <>
+    Store<ShaderCode> &AssetManager::getStore()
+    {
+        return m_shader_code_store;
+    }
+
 #undef FUNCTION_SPECIAL
 
     template <typename T>

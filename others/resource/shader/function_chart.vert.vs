@@ -16,11 +16,9 @@ void main() {
     vec4 tou = mvp * vec4(good_v_coord.x, height, good_v_coord.y, 1.0);
     gl_Position = tou;
     io_height = (height + 1.0) * 0.5;
-    if(gl_VertexID % 3 == 0) {
-        io_color = vec3(1.0, 0.0, 0.0);
-    } else if(gl_VertexID % 3 == 1) {
-        io_color = vec3(0.0, 1.0, 0.0);
+    if((gl_VertexID / 6) % 2 == 0) {
+        io_color = vec3(0.2, 0.2, 0.2);
     } else {
-        io_color = vec3(0.0, 0.0, 1.0);
+        io_color = vec3(0.8, 0.8, 0.8);
     }
 }
