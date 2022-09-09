@@ -10,6 +10,8 @@ namespace mc::asset
     {
     public:
         Image(const std::string &file_path);
+        ~Image();
+    public:
         int GetWidth();
         int GetHeight();
         int GetNrChannels();

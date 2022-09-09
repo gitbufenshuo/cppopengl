@@ -34,7 +34,7 @@ namespace mc::asset
     {
     public:
         using Elem = std::shared_ptr<T>;
-        using THash = std::unordered_map<MD5SUM, Elem>;
+        using THash = std::unordered_map<MD5SUM, Elem, MD5SUMHasher>;
 
     public:
         // Constructors

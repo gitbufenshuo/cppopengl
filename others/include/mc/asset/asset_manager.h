@@ -17,11 +17,11 @@ namespace mc::asset
 
     private:
         template <typename T>
-        Store<T> getStore();
+        Store<T> &getStore();
 
     private:
         Store<Image> m_image_store;
     };
 }
-
+#include <mc/asset/asset_manager.inl>
 #endif

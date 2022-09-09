@@ -11,6 +11,9 @@
 #include <mc/comm/gltf.pb.h>
 #include <mc/gltf/buffer.h>
 
+// asset headers
+#include <mc/asset/asset_manager.h>
+
 using mlShader = mc::low::Shader;
 
 namespace
@@ -49,11 +52,7 @@ namespace
             materialstore.Register(ma);
         }
     }
-}
-
-namespace game::example_list::gltf_exp
-{
-    int Main()
+    int testGLTF()
     {
         mc::comm::GLTF gltf;
         loadAndParse(gltf);
@@ -63,5 +62,24 @@ namespace game::example_list::gltf_exp
         gogogo.LoadFromGLTF(gltf);
         gogogo.Run();
         return 0;
+    }
+    int testAssetManager()
+    {
+        mc::asset::AssetManager am{};
+        auto p_image{new mc::asset::Image{"../others/resource/texture/mc.png"}};
+        mc::asset::MD5SUM key{};
+        am.Reg<mc::asset::Image>(key, p_image);
+        auto spimage{am.Get<mc::asset::Image>(key)};
+        auto rp{spimage.get()};
+        std::cout << "raw p_image " << p_image << " reg and get " << rp << std::endl;
+        return 0;
+    }
+}
+
+namespace game::example_list::gltf_exp
+{
+    int Main()
+    {
+        return testAssetManager();
     }
 }
