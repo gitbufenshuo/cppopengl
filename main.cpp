@@ -60,15 +60,13 @@ namespace core
         std::vector<wincolor_sink_ptr> sinks;
         sinks.emplace_back(std::make_shared<spdlog::sinks::stdout_color_sink_mt>());
         sinks[0]->set_pattern("%^%T > [%L] %v%$");
-#ifndef SPDBOLD
-#define SPDBOLD
+#ifdef _WIN32
+        sinks[0]->set_color(spdlog::level::trace, sinks[0]->BOLD);
+        sinks[0]->set_color(spdlog::level::debug, sinks[0]->GREEN);
+#else
+        sinks[0]->set_color(spdlog::level::trace, sinks[0]->bold);
+        sinks[0]->set_color(spdlog::level::trace, sinks[0]->green)
 #endif
-#ifndef SPDGREEN
-#define SPDGREEN
-#endif
-        sinks[0]->set_color(spdlog::level::trace, sinks[0]->SPDBOLD);
-        sinks[0]->set_color(spdlog::level::debug, sinks[0]->SPDGREEN);
-
         logger = std::make_shared<spdlog::logger>("sketchpad", begin(sinks), end(sinks));
         spdlog::register_logger(logger);
         logger->set_level(spdlog::level::trace);

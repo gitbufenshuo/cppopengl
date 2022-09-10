@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include <glm/gtc/matrix_transform.hpp>
+#include <glm/glm.hpp>
 
 #include <mc/transform.h>
 
@@ -156,6 +156,9 @@ namespace mc::low
         m_rotation = glm::cross(quat_z, quat_yx);             // z45 y45 x45
         m_local_dirty = true;
     }
+
+    //void Transform::Rotate(){}
+    //void Transform::Rotate(){}
     void showVec(const glm::vec3 &input)
     {
         std::cout << "        " << input.x << " "

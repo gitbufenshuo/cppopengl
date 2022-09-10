@@ -140,6 +140,8 @@ namespace
     }
     void ClientsetUp(GLFWwindow *window){
         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        game::BoxDraw::g_camera.window=window;
+    
     }
 
 
@@ -150,7 +152,7 @@ namespace game::example_list::DebugDraw
     int Main()
     {
         //
-        mc::low::Engine gogogo{800, 800, "Hello MC"};
+        mc::low::Engine gogogo{1600, 900, "Hello MC"};
         gogogo.Setup(ClientsetUp);
         {
             LoadShader(gogogo);

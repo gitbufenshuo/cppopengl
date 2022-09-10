@@ -3,18 +3,66 @@
 #include<mc/logic_support.h>
 #include <mc/gameobject.h>
 namespace game {
+    enum class Space : char {
+        Local = 1 << 0,
+        World = 1 << 1
+    };
+
+ 
+
+    class Transform {
+      private:
+        void RecalculateBasis(void);
+        void RecalculateEuler(void);
+
+      public:
+        glm::vec3 position;
+        glm::quat rotation;   
+        glm::mat4 transform;  
+
+        float euler_x, euler_y, euler_z;  
+        float scale_x, scale_y, scale_z;
+
+        glm::vec3 up;
+        glm::vec3 forward;
+        glm::vec3 right;
+
+        Transform();
+
+        void Translate(const glm::vec3& vector, Space space = Space::World);
+        void Translate(float x, float y, float z, Space space = Space::World);
+
+        void Rotate(const glm::vec3& axis, float angle, Space space);
+        void Rotate(const glm::vec3& eulers, Space space);
+        void Rotate(float euler_x, float euler_y, float euler_z, Space space);
+
+        void Scale(float scale);
+        void Scale(const glm::vec3& scale);
+        void Scale(float scale_x, float scale_y, float scale_z);
+
+        void SetPosition(const glm::vec3& position);
+        void SetRotation(const glm::quat& rotation);
+        void SetTransform(const glm::mat4& transform);
+
+        glm::vec3 Local2World(const glm::vec3& v) const;
+        glm::vec3 World2Local(const glm::vec3& v) const;
+
+        glm::mat4 GetLocalTransform() const;
+        glm::mat4 GetLocalTransform(const glm::vec3& forward, const glm::vec3& up) const;
+    };
+
     class BoxDraw :public mc::low::LogicSupport {   
         public:  
-        
-     
         struct Camera{
+            GLFWwindow *window;
+            glm::mat4 projection;
+            Transform t;
             Camera();
-
+            void Update(float t);
             void ResetView();
             glm::vec2 ConvertScreenToWorld(const glm::vec2& screenPoint);
             glm::vec2 ConvertWorldToScreen(const glm::vec2& worldPoint);
             void BuildProjectionMatrix(float* m, float zBias);
-
             glm::vec2 m_center;
             float m_zoom;
             int m_width;
@@ -171,13 +219,13 @@ namespace game {
                 const char* V = \
                     "#version 330\n"
                     "uniform mat4 projectionMatrix;\n"
-                    "layout(location = 0) in vec2 v_position;\n"
+                    "layout(location = 0) in vec3 v_position;\n"
                     "layout(location = 1) in vec4 v_color;\n"
                     "out vec4 f_color;\n"
                     "void main(void)\n"
                     "{\n"
                     "	f_color = v_color;\n"
-                    "	gl_Position =projectionMatrix*vec4(v_position, 0.0f, 1.0f);\n"
+                    "	gl_Position =projectionMatrix*vec4(v_position, 1.0f);\n"
 
                     "}\n";
 
@@ -215,11 +263,9 @@ namespace game {
                 else {
                     std::cout << "片段着色器编译成功" << std::endl;
                 }
-
                 shader = glCreateProgram();
                 glAttachShader(shader, vP);
                 glAttachShader(shader, fP);
-
                 glLinkProgram(shader);
                 glGetShaderiv(shader, GL_LINK_STATUS, &success);
                 if (!success) {
@@ -231,33 +277,24 @@ namespace game {
                 }
                 glDeleteShader(vP);
                 glDeleteShader(fP);
-
-
 #pragma endregion
-
                 projection = glGetUniformLocation(shader, "projectionMatrix");
                 glGenVertexArrays(1, &vaoId);
                 glBindVertexArray(vaoId);
                 glEnableVertexAttribArray(0);//位置属性
                 glEnableVertexAttribArray(1);//颜色属性	
-
                 glGenBuffers(2, bufferId);
                 glBindBuffer(GL_ARRAY_BUFFER, bufferId[0]);
-                glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+                glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
                 glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
                 glBindBuffer(GL_ARRAY_BUFFER, bufferId[1]);
                 glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);
                 glBufferData(GL_ARRAY_BUFFER, sizeof(color), color, GL_DYNAMIC_DRAW);
-
-
                 glBindBuffer(GL_ARRAY_BUFFER, 0);
                 glBindVertexArray(0);
-
                 m_count = 0;
-
-
             }
-            void Vertex(const glm::vec2& v, const glm::vec4& c) {//在缓冲区中送入一个顶点
+            void Vertex(const glm::vec3& v, const glm::vec4& c) {//在缓冲区中送入一个顶点
                 if (m_count == 1024) {	//缓冲区的数据满了
                     fflush();
                 }
@@ -269,24 +306,16 @@ namespace game {
                 if (m_count == 0)
                     return;
                 //后面可以加设置投影矩阵的代码
-               std::cout<<"begin line draw :"<<m_count<<std::endl;
-
                 glUseProgram(shader);
-
-
                 float p[16] = { 0.0 };
                 g_camera.BuildProjectionMatrix(p, 0.0);
                 glUniformMatrix4fv(projection, 1, GL_FALSE, p);
                 glBindVertexArray(vaoId);
-
                 glBindBuffer(GL_ARRAY_BUFFER, bufferId[0]);
-                glBufferSubData(GL_ARRAY_BUFFER, 0, m_count * sizeof(glm::vec2), vertices);
+                glBufferSubData(GL_ARRAY_BUFFER, 0, m_count * sizeof(glm::vec3), vertices);
                 glBindBuffer(GL_ARRAY_BUFFER, bufferId[1]);
                 glBufferSubData(GL_ARRAY_BUFFER, 0, m_count * sizeof(glm::vec4), color);
-
-
                 glDrawArrays(GL_LINES, 0, m_count);
-
                 glBindVertexArray(0);
                 glUseProgram(0);
                 glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -296,7 +325,7 @@ namespace game {
             unsigned int vaoId;//
             unsigned int bufferId[2];
             unsigned int shader;//着色器程序
-            glm::vec2 vertices[1024];//位置
+            glm::vec3 vertices[1024];//位置
             glm::vec4 color[1024];//颜色
             int projection;
         };
@@ -307,13 +336,13 @@ namespace game {
                 const char* V = \
                     "#version 330\n"
                     "uniform mat4 projectionMatrix;\n"
-                    "layout(location = 0) in vec2 v_position;\n"
+                    "layout(location = 0) in vec3 v_position;\n"
                     "layout(location = 1) in vec4 v_color;\n"
                     "out vec4 f_color;\n"
                     "void main(void)\n"
                     "{\n"
                     "	f_color = v_color;\n"
-                    "	gl_Position = projectionMatrix*vec4(v_position, 0.0f, 1.0f);\n"
+                    "	gl_Position = projectionMatrix*vec4(v_position, 1.0f);\n"
 
                     "}\n";
 
@@ -379,7 +408,7 @@ namespace game {
 
                 glGenBuffers(2, bufferId);
                 glBindBuffer(GL_ARRAY_BUFFER, bufferId[0]);
-                glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+                glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
                 glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
                 glBindBuffer(GL_ARRAY_BUFFER, bufferId[1]);
                 glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);
@@ -393,7 +422,7 @@ namespace game {
 
 
             }
-            void Vertex(const glm::vec2& v, const glm::vec4& c) {//在缓冲区中送入一个顶点
+            void Vertex(const glm::vec3& v, const glm::vec4& c) {//在缓冲区中送入一个顶点
                 if (m_count == maxCount) {	//缓冲区的数据满了
                     fflush();
                 }
@@ -415,12 +444,12 @@ namespace game {
                 glBindVertexArray(vaoId);
 
                 glBindBuffer(GL_ARRAY_BUFFER, bufferId[0]);
-                glBufferSubData(GL_ARRAY_BUFFER, 0, m_count * sizeof(glm::vec2), vertices);
+                glBufferSubData(GL_ARRAY_BUFFER, 0, m_count * sizeof(glm::vec3), vertices);
                 glBindBuffer(GL_ARRAY_BUFFER, bufferId[1]);
                 glBufferSubData(GL_ARRAY_BUFFER, 0, m_count * sizeof(glm::vec4), color);
 
 
-
+                glDisable(GL_CULL_FACE);
                 glEnable(GL_BLEND);
                 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
                 glDrawArrays(GL_TRIANGLES, 0, m_count);
@@ -436,11 +465,10 @@ namespace game {
             unsigned int bufferId[2];
             unsigned int shader;//着色器程序
             static const int maxCount = 1024 * 32;
-            glm::vec2 vertices[maxCount];//位置
+            glm::vec3 vertices[maxCount];//位置
             glm::vec4 color[maxCount];//颜色}drawtriangles;
             int projection;
         };
-
         class DebugDraw
         {
         public:
@@ -451,18 +479,18 @@ namespace game {
             void Create();
             void Destroy();
 
-            void DrawPolygon(const glm::vec2* vertices, int vertexCount, const glm::vec4& color);
+            void DrawPolygon(const glm::vec3* vertices, int vertexCount, const glm::vec4& color);
 
-            void DrawSolidPolygon(const glm::vec2* vertices, int vertexCount, const glm::vec4& color);
+            void DrawSolidPolygon(const glm::vec3* vertices, int vertexCount, const glm::vec4& color);
 
-            void DrawCircle(const glm::vec2& center, float radius, const glm::vec4& color);
-
-
+            void DrawCircle(const glm::vec3& center, float radius, const glm::vec4& color);
 
 
-            void DrawSolidCircle(const glm::vec2& center, float radius, const glm::vec2& axis, const glm::vec4& color);
 
-            void DrawSegment(const glm::vec2& p1, const glm::vec2& p2, const glm::vec4& color);
+
+            void DrawSolidCircle(const glm::vec3& center, float radius, const glm::vec3& axis, const glm::vec4& color);
+
+            void DrawSegment(const glm::vec3& p1, const glm::vec3& p2, const glm::vec4& color);
 
 
 
@@ -478,16 +506,12 @@ namespace game {
 
         };
         static DebugDraw maindraw;
-
-    
     public:
         BoxDraw(mc::low::GameObject *gb);
-
     public:
         void Update(double delta_time) override;
         void BeforeRenderUpdate(double delta_time) override;
         void AfterRenderUpdate(double delta_time) override;
-
     };
 }
 #endif // !BOX_DRAW_H

@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 namespace mc::low
 {
+
     class Transform
     {
     public:
@@ -27,6 +28,9 @@ namespace mc::low
         void IncLocalTranslate(float x, float y, float z);
         void SetLocalTranslate(float x, float y, float z);
         void SetLocalScale(float x, float y, float z);
+        
+ 
+     
 
     private:
         unsigned int getUpperVersion();
