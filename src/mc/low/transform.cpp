@@ -203,4 +203,39 @@ namespace mc::low
         GetWorldMat();
         return m_world_z;
     }
+
+    void Transform::Move(glm::vec3 diff, Space space)
+    {
+        GetWorldPos();
+        glm::vec4 v_final;
+        v_final.w = 1.0f;
+        //
+        if (space == Space::World)
+        {
+            v_final.x = m_world_pos.x + diff.x;
+            v_final.y = m_world_pos.y + diff.y;
+            v_final.z = m_world_pos.z + diff.z;
+        }
+        else
+        {
+            // diff 是相对于 local 来说的
+            glm::vec3 lxdir{m_world_x - m_world_pos};
+            glm::vec3 lydir{m_world_y - m_world_pos};
+            glm::vec3 lzdir{m_world_z - m_world_pos};
+            v_final += (lxdir * diff.x);
+            v_final += (lydir * diff.y);
+            v_final += (lzdir * diff.z);
+        }
+        // 获得最终 v_final 之后
+        // 先求 M_6 逆
+        glm::mat4 m_6_inverse{1.0f}; // 单位阵
+        if (m_upper)
+        {
+            // 有上级的情况下
+            m_6_inverse = glm::inverse(m_upper->GetWorldMat());
+        }
+        auto equition_right{m_6_inverse * v_final};
+        auto equition_left{GetLocalMat() * glm::vec4{0.0f, 0.0f, 0.0f, 1.0f}};
+        IncLocalTranslate(equition_right.x - equition_left.x, equition_right.y - equition_left.y, equition_right.z - equition_left.z);
+    }
 }

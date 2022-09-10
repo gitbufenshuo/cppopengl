@@ -1,7 +1,8 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-// glm
+// mc glm
+#include <mc/glmex/show.h>
 
 // mc low headers
 #include <mc/engine.h>
@@ -103,6 +104,9 @@ namespace game::example_list::gltf_exp
 {
     int Main()
     {
+        glm::mat4 E{1.0f};
+        mc::glmex::showMat(E);
+        return 0;
         return testAssetManager();
     }
 }

@@ -30,4 +30,11 @@ add_library(src
     ${EXAMPLE_CODE}
     ${ASSET_CODE}
 )
+
+if (APPLE)
+    set (MCSYSTEM "apple")
+endif()
+
+target_compile_definitions(src PUBLIC MCSYSTEM=${MCSYSTEM})
+
 target_include_directories(src PUBLIC ${INCLUDE_DIR})
