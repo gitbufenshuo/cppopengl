@@ -21,7 +21,7 @@ namespace game {
         static float angle=0;
         angle+=delta_time*3.14;
         g_camera.Update(delta_time);
-        maindraw.DrawSolidCircle({0,0,-30},10,{cos(angle),1,sin(angle)},{1.0,0,0,1.0});
+        maindraw.DrawCircle({0,0,-30},10,{cos(angle),1,sin(angle)},{1.0,0,0,1.0});
     }
     void BoxDraw::AfterRenderUpdate(double delta_time) {
       
@@ -91,26 +91,13 @@ namespace game {
         }
     }
 
-    void BoxDraw::DebugDraw::DrawCircle(const glm::vec3& center, float radius, const glm::vec4& color)
-    {
-        float d = 2 * 3.141592654 / 32;
-        float sind = sinf(d);
-        float cosd = cosf(d);
-        glm::vec3 start = radius * glm::vec3(0.0, 1.0,0);
-        for (int i = 0; i < 32; i++) {
-            glm::vec3 next = { cosd * start.x - sind * start.y,sind * start.x + cosd * start.y ,0};
-            m_lines->Vertex(center + start, color);
-            m_lines->Vertex(center + next, color);
-            start = next;
-        }
-    }
 
-    void BoxDraw::DebugDraw::DrawSolidCircle(const glm::vec3& center, float radius, const glm::vec3& axis, const glm::vec4& color)
+
+    void BoxDraw::DebugDraw::DrawCircle(const glm::vec3& center, float radius, const glm::vec3& axis, const glm::vec4& color,bool flag)
     {
         float d = 2 * 3.141592654 / 32;
         float sind = sinf(d);
         float cosd = cosf(d);
-        //glm::vec3 start = radius * glm::vec3(0.0, 1.0,0);
         glm::vec2 start = radius * glm::vec2(0.0, 1.0);
         auto zaxis= glm::cross(axis,glm::vec3(0,1,0));
         auto yaxis= glm::cross(zaxis,axis);
@@ -119,12 +106,16 @@ namespace game {
         glm::vec4 c = { color.r / 2,color.g / 2,color.b / 2,color.a / 2 };
         for (int i = 0; i < 32; i++) {
             glm::vec2 next = { cosd * start.x - sind * start.y,sind * start.x + cosd * start.y };
+            if(flag){
             m_triangles->Vertex(center + start.x*xaxis+start.y*yaxis, c);
             m_triangles->Vertex(center + next.x*xaxis+next.y*yaxis, c);
             m_triangles->Vertex(center, c);
+            }
+            m_lines->Vertex(center + start.x*xaxis+start.y*yaxis, color);
+            m_lines->Vertex(center + next.x*xaxis+next.y*yaxis, color);
             start = next;
         }
-       DrawCircle(center, radius, color);
+       //DrawCircle(center, radius, color);
        m_lines->Vertex(center, color);
        m_lines->Vertex(center + radius * xaxis, color);
     }

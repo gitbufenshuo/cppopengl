@@ -483,12 +483,7 @@ namespace game {
 
             void DrawSolidPolygon(const glm::vec3* vertices, int vertexCount, const glm::vec4& color);
 
-            void DrawCircle(const glm::vec3& center, float radius, const glm::vec4& color);
-
-
-
-
-            void DrawSolidCircle(const glm::vec3& center, float radius, const glm::vec3& axis, const glm::vec4& color);
+            void DrawCircle(const glm::vec3& center, float radius, const glm::vec3& axis, const glm::vec4& color,bool flag=true);
 
             void DrawSegment(const glm::vec3& p1, const glm::vec3& p2, const glm::vec4& color);
 
