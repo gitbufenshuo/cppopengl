@@ -118,7 +118,6 @@ namespace mc::low
                 {
                     auto _model = _mesh_filter->GetModel(index);
                     _model->Use();
-                    std::cout << " model draw " << _model->GetEBOCount() << " " << _model->GetEBOType() << std::endl;
                     glDrawElements(GL_TRIANGLES, _model->GetEBOCount(), _model->GetEBOType(), 0);
                 }
             }

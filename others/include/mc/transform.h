@@ -5,6 +5,11 @@
 #include <glm/glm.hpp>
 namespace mc::low
 {
+    enum class Space
+    {
+        World,
+        Self
+    };
 
     class Transform
     {
@@ -28,9 +33,8 @@ namespace mc::low
         void IncLocalTranslate(float x, float y, float z);
         void SetLocalTranslate(float x, float y, float z);
         void SetLocalScale(float x, float y, float z);
-        
- 
-     
+
+        void Move(glm::vec3, Space = Space::Self); // 移动
 
     private:
         unsigned int getUpperVersion();

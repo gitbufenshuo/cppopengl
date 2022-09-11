@@ -12,9 +12,15 @@ namespace mc::asset
     }
 
     template <class T>
-    Store<T>::Elem Store<T>::Get(MD5SUM key)
+    typename Store<T>::Elem Store<T>::Get(MD5SUM key)
     {
         return m_store[key];
+    }
+
+    template <class T>
+    void Store<T>::Del(MD5SUM key)
+    {
+        m_store.erase(key);
     }
 
 }
