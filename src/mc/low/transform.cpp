@@ -199,9 +199,9 @@ namespace mc::low
                   << input.w << " "
                   << std::endl;
     }
-    void showMat(const glm::mat4 &input)
+    void showMat(const glm::mat4 &input, const char *info = "")
     {
-        std::cout << "---show mat---" << std::endl;
+        std::cout << "---show mat---" << info << std::endl;
         for (int row = 0; row < 4; ++row)
         {
             for (int col = 0; col < 4; ++col)
@@ -269,4 +269,75 @@ namespace mc::low
         auto equition_left{m_local_mat * glm::vec4{0.0f, 0.0f, 0.0f, 1.0f}};
         IncLocalTranslate(equition_right.x - equition_left.x, equition_right.y - equition_left.y, equition_right.z - equition_left.z);
     }
+
+    /*
+        修改 local m_rotation，使得本 transform 最终
+        1. 本transform 的 y轴 指向 worldUp
+        2. 本transform 的 z轴 指向 target
+    */
+    void Transform::LookAt(Transform *target, const glm::vec3 &worldUp)
+    {
+        updateBranch();
+        const glm::vec3 &target_pos{target->GetWorldPos()};
+        const glm::vec3 &now_origin{m_world_pos};
+        // 先计算 最终的 world_x world_y world_z
+        auto z_dir = glm::normalize(target_pos - now_origin);
+        auto final_z = z_dir + now_origin;
+        auto x_dir = glm::normalize(glm::cross(worldUp, z_dir));
+        auto y_dir = glm::cross(z_dir, x_dir);
+        auto final_x = x_dir + now_origin;
+        auto final_y = y_dir + now_origin;
+        // 求 m6_inverse
+        glm::mat4 m6;
+        if (m_upper)
+        {
+            // 有上级
+            m6 = m_upper->GetWorldMat();
+        }
+        else
+        {
+            // 没有上级
+            m6 = m_upper->GetWorldMat();
+        }
+        glm::mat4 localT{1.0f};
+        localT[3][0] = m_translate.x;
+        localT[3][1] = m_translate.y;
+        localT[3][2] = m_translate.z;
+        localT[3][3] = 1.0f;
+        m6 = m6 * localT;
+        m6 = glm::inverse(m6);
+        // 得到最终的 local 旋转矩阵 放到 m6 中
+        auto col0 = m6 * glm::vec4{final_x.x, final_x.y, final_x.z, 1.0f};
+        auto col1 = m6 * glm::vec4{final_y.x, final_y.y, final_y.z, 1.0f};
+        auto col2 = m6 * glm::vec4{final_z.x, final_z.y, final_z.z, 1.0f};
+        m6[0][0] = col0.x / m_scale.x;
+        m6[0][1] = col0.y / m_scale.x;
+        m6[0][2] = col0.z / m_scale.x;
+        m6[0][3] = 0.0f;
+
+        m6[1][0] = col1.x / m_scale.y;
+        m6[1][1] = col1.y / m_scale.y;
+        m6[1][2] = col1.z / m_scale.y;
+        m6[1][3] = 0.0f;
+
+        m6[2][0] = col2.x / m_scale.z;
+        m6[2][1] = col2.y / m_scale.z;
+        m6[2][2] = col2.z / m_scale.z;
+        m6[2][3] = 0.0f;
+
+        m6[3][0] = 0.0f;
+        m6[3][1] = 0.0f;
+        m6[3][2] = 0.0f;
+        m6[3][3] = 1.0f;
+        // 利用最终的 local 旋转矩阵反推 最终的 local quaternion
+
+        auto calc_rotation{glm::toQuat(m6)};
+        m_rotation = glm::slerp(m_rotation, calc_rotation, 1.0f);
+        // std::cout << " m_rotation.w " << m_rotation.w << " "
+        //           << " m_rotation.x " << m_rotation.x << " "
+        //           << " m_rotation.y " << m_rotation.y << " "
+        //           << " m_rotation.z " << m_rotation.z << " " << std::endl;
+        m_local_dirty = true;
+    }
+
 }

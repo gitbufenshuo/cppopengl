@@ -34,7 +34,8 @@ namespace mc::low
         void SetLocalTranslate(float x, float y, float z);
         void SetLocalScale(float x, float y, float z);
 
-        void Move(glm::vec3, Space = Space::Self); // 移动
+        void Move(glm::vec3, Space = Space::Self);                                              // 移动
+        void LookAt(Transform *target, const glm::vec3 &worldUp = glm::vec3{0.0f, 1.0f, 0.0f}); // 看向 target
 
     private:
         void updateBranch();

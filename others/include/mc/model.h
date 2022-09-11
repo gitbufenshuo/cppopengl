@@ -7,7 +7,7 @@ namespace mc::low
     class Model
     {
     public:
-        Model(const char *file_name);
+        Model(const char *file_name, bool append = false);
         Model(bool init_vao = false);
 
     public:

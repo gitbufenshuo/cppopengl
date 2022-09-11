@@ -17,6 +17,9 @@
 // game headers
 #include <game/example/example_list.h>
 #include <game/logic/camera_logic.h>
+#include <game/logic/rotate_logic.h>
+#include <game/logic/lookat_logic.h>
+#include <game/logic/translate_logic.h>
 
 // comm headers
 
@@ -45,7 +48,7 @@ namespace
         auto &modelstore = gogogo.GetModelStore();
         {
             // load from file
-            auto *model_0{new mlModel{"../others/resource/model/cube.model"}};
+            auto *model_0{new mlModel{"../others/resource/model/cube.model", true}};
             model_0->Upload();
             modelstore.Register(model_0);
         }
@@ -80,10 +83,10 @@ namespace
             }
         }
     }
-    mlRender *GetOneRender(mc::low::Engine &gogogo)
+    mlRender *GetOneRender(mc::low::Engine &gogogo, int id)
     {
         auto &materialstore{gogogo.GetMaterialStore()};
-        auto spMat{materialstore.Get(1)}; //   mat_count/2 + 1 是spot phong
+        auto spMat{materialstore.Get(id + 1)}; //   mat_count/2 + 1 是spot phong
         auto *render{new mlRender{}};
         render->SetMaterial(spMat);
         return render;
@@ -94,31 +97,37 @@ namespace
     std::vector<mlGB *> GenSomeGameobject(mc::low::Engine &gogogo)
     {
         std::vector<mlGB *> res;
-        int gb_size = 2;
+        int gb_size = 3;
         res.resize(gb_size);
 
-        for (int g_idx = 0; g_idx < gb_size; ++g_idx)
+        // root transform
         {
             auto *one = new mlGB{&gogogo};
             one->SetMeshFilter(GetOneFilter(gogogo));
-
-            one->SetMeshRender(GetOneRender(gogogo));
-            if (g_idx > 0)
-            {
-                one->GetTransform()->SetUpper(res[g_idx - 1]->GetTransform());
-            }
-            if (g_idx == 0)
-            {
-                one->GetTransform()->SetLocalEuler(0.0f, 0.0f, 45.0f);
-                one->GetTransform()->SetLocalTranslate(3.0f, 0.0f, -20.0f);
-            }
-            else
-            {
-                one->GetTransform()->SetLocalTranslate(3.0f, 0.0f, 0.0f);
-                one->AddLogicSupport(new game::CamereLogic{one, one->GetTransform()});
-            }
-            res[g_idx] = one;
+            one->SetMeshRender(GetOneRender(gogogo, 0));
+            one->GetTransform()->SetLocalTranslate(0.0f, -10.0f, -20.0f);
+            one->AddLogicSupport(new game::RotateLogic{one});
+            res[0] = one;
         }
+        {
+            auto *one = new mlGB{&gogogo};
+            one->SetMeshFilter(GetOneFilter(gogogo));
+            one->SetMeshRender(GetOneRender(gogogo, 1));
+            one->GetTransform()->SetUpper(res[0]->GetTransform());
+            one->GetTransform()->SetLocalTranslate(5.0f, 0.0f, 0.0f);
+            one->AddLogicSupport(new game::TranslateLogic{one});
+            res[1] = one;
+        }
+        {
+            auto *one = new mlGB{&gogogo};
+            one->SetMeshFilter(GetOneFilter(gogogo));
+            one->SetMeshRender(GetOneRender(gogogo, 2));
+            one->GetTransform()->SetUpper(res[0]->GetTransform());
+            one->GetTransform()->SetLocalTranslate(2.0f, 2.0f, 0.0f);
+            one->AddLogicSupport(new game::LookatLogic{one, res[1]->GetTransform()});
+            res[2] = one;
+        }
+        res[1]->AddLogicSupport(new game::LookatLogic{res[1], res[2]->GetTransform()});
         return res;
     }
 
