@@ -20,6 +20,9 @@ namespace game
 
     void CamereLogic::Update(double delta_time)
     {
+        //
+        // m_ctl_transform->ShowVersion();
+        // return;
         // camera rotate
         float speed = 1.0f * static_cast<float>(delta_time);
         float xdiff = static_cast<float>(mc::low::Engine::s_c_xdiff);
@@ -29,34 +32,31 @@ namespace game
         m_now_pitch = std::clamp(m_now_pitch, -89.0f, 89.0f);
         m_ctl_transform->SetLocalEuler(m_now_pitch, m_now_yaw, 0.0f);
         // camera translate
-        glm::vec3 t_x = m_ctl_transform->GetWorldX();
-        glm::vec3 t_z = m_ctl_transform->GetWorldZ();
-        glm::vec3 t_o = m_ctl_transform->GetWorldPos();
-        glm::vec3 t_d = t_o - t_z;
-        glm::vec3 t_r = t_x - t_o;
-        glm::vec3 t_l = -t_r;
-        //
         speed *= 2.0f;
         if (mc::low::Engine::s_keyinput.KeyStateDown(65))
         {
             // A key
-            m_ctl_transform->IncLocalTranslate(t_l.x * speed, t_l.y * speed, t_l.z * speed);
+            m_ctl_transform->Move(glm::vec3{-speed, 0.0f, 0.0f});
+            // m_ctl_transform->Move(glm::vec3{-speed, 0.0f, 0.0f}, mc::low::Space::World);
         }
         else if (mc::low::Engine::s_keyinput.KeyStateDown(68))
         {
-            // W key
-            m_ctl_transform->IncLocalTranslate(t_r.x * speed, t_r.y * speed, t_r.z * speed);
+            // D key
+            m_ctl_transform->Move(glm::vec3{speed, 0.0f, 0.0f});
+            // m_ctl_transform->Move(glm::vec3{speed, 0.0f, 0.0f}, mc::low::Space::World);
         }
 
         if (mc::low::Engine::s_keyinput.KeyStateDown(87))
         {
             // W key
-            m_ctl_transform->IncLocalTranslate(t_d.x * speed, 0.0f, t_d.z * speed);
+            m_ctl_transform->Move(glm::vec3{0.0f, 0.0f, -speed});
+            // m_ctl_transform->Move(glm::vec3{0.0f, 0.0f, -speed}, mc::low::Space::World);
         }
         else if (mc::low::Engine::s_keyinput.KeyStateDown(83))
         {
             // S key
-            m_ctl_transform->IncLocalTranslate(-t_d.x * speed, 0.0f, -t_d.z * speed);
+            m_ctl_transform->Move(glm::vec3{0.0f, 0.0f, speed});
+            // m_ctl_transform->Move(glm::vec3{0.0f, 0.0f, speed}, mc::low::Space::World);
         }
     }
 

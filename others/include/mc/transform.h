@@ -37,8 +37,8 @@ namespace mc::low
         void Move(glm::vec3, Space = Space::Self); // 移动
 
     private:
-        unsigned int getUpperVersion();
-        void updateLocal();
+        void updateBranch();
+        bool updateLocal();
         void udpateAxis();
         //
         glm::vec3 m_scale{1.0f, 1.0f, 1.0f};

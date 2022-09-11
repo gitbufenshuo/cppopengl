@@ -110,7 +110,7 @@ namespace mc::low
     }
     void Model::Use()
     {
-        std::cout << "vao: " << m_vao << " vbo: " << m_vbo << " ebo: " << m_ebo << std::endl;
+        // std::cout << "vao: " << m_vao << " vbo: " << m_vbo << " ebo: " << m_ebo << std::endl;
         glBindVertexArray(m_vao);
     }
     int Model::GetEBOCount() const

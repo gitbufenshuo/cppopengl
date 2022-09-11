@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 #include <glm/glm.hpp>
 
@@ -19,11 +20,11 @@ namespace mc::low
     {
         return *m_upper;
     }
-    void Transform::updateLocal()
+    bool Transform::updateLocal()
     {
         if (!m_local_dirty)
         {
-            return;
+            return false; // 本地无变化
         }
         m_local_dirty = false;
         // local
@@ -31,6 +32,7 @@ namespace mc::low
         m_local_mat = glm::translate(m_local_mat, m_translate);
         m_local_mat = m_local_mat * glm::toMat4(m_rotation);
         m_local_mat = glm::scale(m_local_mat, m_scale);
+        return true;
     }
     const glm::mat4 &Transform::GetLocalMat()
     {
@@ -51,14 +53,7 @@ namespace mc::low
 
     const glm::mat4 &Transform::GetWorldMat()
     {
-        auto up_v = getUpperVersion();
-        if (up_v != m_world_up_version)
-        {
-            m_world_mat = m_upper->GetWorldMat() * m_local_mat;
-            m_world_up_version = up_v;
-            ++m_world_self_version;
-            udpateAxis();
-        }
+        updateBranch();
         return m_world_mat;
     }
     void Transform::Translate(float x, float y, float z)
@@ -79,6 +74,7 @@ namespace mc::low
     }
     void Transform::IncLocalTranslate(float x, float y, float z)
     {
+        // std::cout << " Transform::IncLocalTranslate " << x << " " << y << " " << z << std::endl;
         m_local_dirty = true;
         //
         m_translate.x += x;
@@ -95,42 +91,69 @@ namespace mc::low
         m_scale.z = z;
     }
 
-    // 这个过程，会更新路径上所有节点的 local mat 和 world mat
-    // 按需更新
-    unsigned int Transform::getUpperVersion()
+    // 更新本transform至root节点，所有transform的状态
+    void Transform::updateBranch()
     {
-        bool changed{false};
-        // update local mat
-        if (m_local_dirty)
+        static unsigned int func_counter{0};
+        ++func_counter;
+        std::vector<Transform *> all_list;
+        all_list.reserve(10); // 大概预设一个大小，省的不停的 malloc,free
+        auto now_t{this};
+        while (now_t)
         {
-            updateLocal();
-            changed = true;
+            all_list.push_back(now_t);
+            // std::cout << " Transform::updateBranch append " << func_counter << " " << now_t << std::endl;
+            now_t = &(now_t->GetUpper());
         }
-        //
-        if (!m_upper)
+
+        // 逆向遍历, 从root开始
+        int size = static_cast<int>(all_list.size());
+        bool local_changed{false};
+        bool up_changed{false};
+        for (int index = size - 1; index >= 0; --index)
         {
-            if (changed)
+            now_t = all_list[index];
+            // 更新自身的变化
+            local_changed = now_t->updateLocal();
+            if (now_t->m_upper)
             {
-                m_world_mat = m_local_mat;
-                udpateAxis();
-                ++m_world_self_version;
+                // 如果有 上级
+                if (now_t->m_world_up_version != now_t->m_upper->m_world_self_version)
+                {
+                    // 如果上级变了
+                    up_changed = true;
+                    m_world_up_version = now_t->m_upper->m_world_self_version;
+                    m_world_mat = now_t->m_upper->m_world_mat * m_local_mat;
+                }
+                else
+                {
+                    // 如果上级没变
+                    up_changed = false;
+                    if (local_changed)
+                    {
+                        m_world_mat = now_t->m_upper->m_world_mat * m_local_mat;
+                    }
+                }
             }
-            return 0;
+            else
+            {
+                // 没有上级 (这就是root)
+                up_changed = false;
+                now_t->m_world_mat = now_t->m_local_mat;
+            }
+            if (local_changed || up_changed)
+            {
+                // 到此时，local 矩阵 和 world 矩阵都已经更新完毕
+                // 只要有变化，那么本身的版本号就要++
+                // std::cout << this << " " << func_counter << " before debug transform update " << now_t->m_world_self_version << std::endl;
+                ++now_t->m_world_self_version;
+                // std::cout << this << " " << func_counter << " debug transform update " << now_t->m_world_self_version << std::endl;
+                //  更新一些属性(四个坐标点)
+                now_t->udpateAxis();
+            }
         }
-        //
-        Transform &up_transform{*m_upper};
-        auto uup = up_transform.getUpperVersion();
-        if (uup != up_transform.m_world_up_version)
-        {
-            //
-            Transform &up1_transform{*up_transform.m_upper};
-            up_transform.m_world_mat = up1_transform.m_world_mat * up_transform.m_local_mat;
-            up_transform.m_world_up_version = uup;
-            ++up_transform.m_world_self_version;
-        }
-        //
-        return up_transform.m_world_self_version;
     }
+
     void Transform::ShowVersion()
     {
         std::cout << m_world_self_version << " ";
@@ -190,36 +213,39 @@ namespace mc::low
     }
     glm::vec3 Transform::GetWorldPos()
     {
-        GetWorldMat();
+        updateBranch();
         return m_world_pos;
     }
     glm::vec3 Transform::GetWorldX()
     {
-        GetWorldMat();
+        updateBranch();
         return m_world_x;
     }
     glm::vec3 Transform::GetWorldY()
     {
-        GetWorldMat();
+        updateBranch();
         return m_world_y;
     }
     glm::vec3 Transform::GetWorldZ()
     {
-        GetWorldMat();
+        updateBranch();
         return m_world_z;
     }
 
     void Transform::Move(glm::vec3 diff, Space space)
     {
-        GetWorldPos();
+        updateBranch();
         glm::vec4 v_final;
+        v_final.x = m_world_pos.x;
+        v_final.y = m_world_pos.y;
+        v_final.z = m_world_pos.z;
         v_final.w = 1.0f;
         //
         if (space == Space::World)
         {
-            v_final.x = m_world_pos.x + diff.x;
-            v_final.y = m_world_pos.y + diff.y;
-            v_final.z = m_world_pos.z + diff.z;
+            v_final.x += diff.x;
+            v_final.y += diff.y;
+            v_final.z += diff.z;
         }
         else
         {
@@ -240,7 +266,7 @@ namespace mc::low
             m_6_inverse = glm::inverse(m_upper->GetWorldMat());
         }
         auto equition_right{m_6_inverse * v_final};
-        auto equition_left{GetLocalMat() * glm::vec4{0.0f, 0.0f, 0.0f, 1.0f}};
+        auto equition_left{m_local_mat * glm::vec4{0.0f, 0.0f, 0.0f, 1.0f}};
         IncLocalTranslate(equition_right.x - equition_left.x, equition_right.y - equition_left.y, equition_right.z - equition_left.z);
     }
 }

@@ -21,4 +21,10 @@ namespace game::example_list::gltf_exp
     const std::string g_name{"gltf_exp"};
     int Main();
 }
+namespace game::example_list::cube_transform
+{
+    const std::string g_name{"cube_transform"};
+    int Main();
+}
+
 #endif
