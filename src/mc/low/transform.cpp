@@ -272,7 +272,7 @@ namespace mc::low
 
     /*
         修改 local m_rotation，使得本 transform 最终
-        1. 本transform 的 y轴 指向 worldUp
+        1. 本transform 的 y轴 指向 worldUp ( 暂时的，这个为了算 x轴 指向)
         2. 本transform 的 z轴 指向 target
     */
     void Transform::LookAt(Transform *target, const glm::vec3 &worldUp)
@@ -331,12 +331,7 @@ namespace mc::low
         m6[3][3] = 1.0f;
         // 利用最终的 local 旋转矩阵反推 最终的 local quaternion
 
-        auto calc_rotation{glm::toQuat(m6)};
-        m_rotation = glm::slerp(m_rotation, calc_rotation, 1.0f);
-        // std::cout << " m_rotation.w " << m_rotation.w << " "
-        //           << " m_rotation.x " << m_rotation.x << " "
-        //           << " m_rotation.y " << m_rotation.y << " "
-        //           << " m_rotation.z " << m_rotation.z << " " << std::endl;
+        m_rotation = glm::toQuat(m6);
         m_local_dirty = true;
     }
 
