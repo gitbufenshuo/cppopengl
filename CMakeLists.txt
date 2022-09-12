@@ -20,7 +20,6 @@ else()
     set (GLFW_LIB ${PROJECT_SOURCE_DIR}/others/lib/glfw3.dll)
     set (GLAD_LIB ${PROJECT_SOURCE_DIR}/others/lib/glad.dll)
     set (PROTO_LIB ${PROJECT_SOURCE_DIR}/others/lib/libprotobuf.lib)
-    set (MCSYSTEM "notapple")
 endif()
 
 add_subdirectory (src)

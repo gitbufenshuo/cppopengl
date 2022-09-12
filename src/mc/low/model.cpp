@@ -12,11 +12,53 @@
 namespace mc::low
 {
     // constructors
-    Model::Model(const char *file_name) : m_file_name{file_name}
+    Model::Model(const char *file_name, bool append) : m_file_name{file_name}
     {
         mc::tools::CSVReader<float, int, int>::Read(m_file_name, m_v_data, m_e_data, m_s_data);
         m_ebo_size = m_e_data.size();
+        //
+        if (append)
+        {
+            int stride{0};
+            for (auto one : m_s_data)
+            {
+                stride += one;
+            }
+            int raw_v_size = static_cast<int>(m_v_data.size());
+            int raw_e_size = static_cast<int>(m_e_data.size());
+            m_v_data.resize(m_v_data.size() * 4);
+            float offset{1.0f};
+            float scale{0.2f};
+            // v - z -append
+            for (int index = raw_v_size; index < 2 * raw_v_size; index += stride)
+            {
+                m_v_data[index] = m_v_data[index - raw_v_size] * scale;
+                m_v_data[index + 1] = m_v_data[index - raw_v_size + 1] * scale;
+                m_v_data[index + 2] = m_v_data[index - raw_v_size + 2] + offset;
+            }
+            // v - x -append
+            for (int index = 2 * raw_v_size; index < 3 * raw_v_size; index += stride)
+            {
+                m_v_data[index] = m_v_data[index - 2 * raw_v_size] + offset;
+                m_v_data[index + 1] = m_v_data[index - 2 * raw_v_size + 1] * scale;
+                m_v_data[index + 2] = m_v_data[index - 2 * raw_v_size + 2] * scale;
+            }
+            // v - y -append
+            for (int index = 3 * raw_v_size; index < 4 * raw_v_size; index += stride)
+            {
+                m_v_data[index] = m_v_data[index - 3 * raw_v_size] * scale;
+                m_v_data[index + 1] = m_v_data[index - 3 * raw_v_size + 1] + offset;
+                m_v_data[index + 2] = m_v_data[index - 3 * raw_v_size + 2] * scale;
+            }
+            m_e_data.resize(m_e_data.size() * 4);
+            for (int index = raw_e_size; index < 4 * raw_e_size; ++index)
+            {
+                m_e_data[index] = m_e_data[index - raw_e_size] + 24;
+            }
+            m_ebo_size = m_e_data.size();
+        }
     }
+
     Model::Model(bool init_vao)
     {
         if (init_vao)
@@ -110,7 +152,7 @@ namespace mc::low
     }
     void Model::Use()
     {
-        std::cout << "vao: " << m_vao << " vbo: " << m_vbo << " ebo: " << m_ebo << std::endl;
+        // std::cout << "vao: " << m_vao << " vbo: " << m_vbo << " ebo: " << m_ebo << std::endl;
         glBindVertexArray(m_vao);
     }
     int Model::GetEBOCount() const

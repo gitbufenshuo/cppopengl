@@ -38,6 +38,13 @@ void reg_entry(std::unordered_map<std::string, entry_func> &entry_list)
                 game::example_list::gltf_exp::g_name,
                 one));
     }
+    {
+        entry_func one{game::example_list::cube_transform::Main};
+        entry_list.insert(
+            std::pair(
+                game::example_list::cube_transform::g_name,
+                one));
+    }
 }
 
 int main(int argc, char *argv[])
@@ -51,9 +58,11 @@ int main(int argc, char *argv[])
         SPD_INFO("例如(mac): ./mc.out function_chart");
         SPD_INFO("例如(mac): ./mc.out protobuf_test");
         SPD_INFO("例如(mac): ./mc.out gltf_exp");
+        SPD_INFO("例如(mac): ./mc.out cube_transform");
         SPD_INFO("例如(windows): ./mc.out.exe function_chart");
         SPD_INFO("例如(windows): ./mc.out.exe protobuf_test");
         SPD_INFO("例如(windows): ./mc.out.exe gltf_exp");
+        SPD_INFO("例如(windows): ./mc.out.exe cube_transform");
         return 0;
     }
     std::unordered_map<std::string, entry_func> entry_list;
