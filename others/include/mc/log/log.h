@@ -56,7 +56,7 @@ namespace mc::log
         sinks.emplace_back(std::make_shared<spdlog::sinks::stdout_color_sink_mt>());
         sinks[0]->set_pattern("%^%T > [%L] %v%$");
 
-#ifdef MCSYSTEM
+#ifdef apple
         sinks[0]->set_color(spdlog::level::trace, sinks[0]->bold);
         sinks[0]->set_color(spdlog::level::debug, sinks[0]->green);
 #else
@@ -64,12 +64,6 @@ namespace mc::log
         sinks[0]->set_color(spdlog::level::debug, sinks[0]->GREEN);
 #endif
 
-#ifndef SPDBOLD
-#define SPDBOLD
-#endif
-#ifndef SPDGREEN
-#define SPDGREEN
-#endif
 
         logger = std::make_shared<spdlog::logger>("sketchpad", begin(sinks), end(sinks));
         spdlog::register_logger(logger);

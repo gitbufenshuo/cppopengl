@@ -12,6 +12,16 @@
 #include <mc/engine.h>
 #include<game/logic/box_draw.h>
 namespace game {
+   
+
+    void CreateSphere(float radius = 1.0f);
+    void CreateCube(float size = 1.0f);
+    void CreatePlane(float size = 10.0f);
+    void Create2DQuad(float size = 1.0f);
+    void CreateTorus(float R = 1.5f, float r = 0.5f);
+    void CreateCapsule(float a = 2.0f, float r = 1.0f);
+    void CreatePyramid(float s = 2.0f);
+
     BoxDraw::Camera BoxDraw::g_camera;
     BoxDraw::DebugDraw BoxDraw::maindraw;
     BoxDraw::BoxDraw(mc::low::GameObject *gb): mc::low::LogicSupport{gb}{
@@ -22,6 +32,15 @@ namespace game {
         angle+=delta_time*3.14;
         g_camera.Update(delta_time);
         maindraw.DrawCircle({0,0,-30},10,{cos(angle),1,sin(angle)},{1.0,0,0,1.0});
+        maindraw.DrawBound({0,0,-30},{1,2,3},{0,1,0,1});
+        internal::Frustum Fr;
+        Fr.Define(45,1,1,1.0,10.0);
+        auto it=Fr.IsInside({0,0,0},{10,10,10});
+        if(it==internal::Intersection::INTERSECTS)
+        maindraw.DrawFrustum(Fr,{1.0,0.0,1.0,1.0});
+        else
+        maindraw.DrawFrustum(Fr,{1.0,1.0,0.0,1.0});
+        maindraw.DrawBound({5,5,5},{5,5,5},{0,1,0,1});
     }
     void BoxDraw::AfterRenderUpdate(double delta_time) {
       
@@ -90,8 +109,39 @@ namespace game {
             p2 = vertices + i;
         }
     }
+    
+    void BoxDraw::DebugDraw::DrawBound(const glm::vec3& center,const glm::vec3& extent,const glm::vec4& color,bool flag){
+        static const glm::vec3 data[]={
+            {-1.0f, -1.0f, -1.0f},{-1.0f, -1.0f, +1.0f},{+1.0f, -1.0f, +1.0f},{+1.0f, -1.0f, -1.0f},
+            {-1.0f, +1.0f, -1.0f},{-1.0f, +1.0f, +1.0f},{+1.0f, +1.0f, +1.0f},{+1.0f, +1.0f, -1.0f},
+            {-1.0f, -1.0f, -1.0f},{-1.0f, +1.0f, -1.0f},{ +1.0f, +1.0f, -1.0f},{+1.0f, -1.0f, -1.0f},
+            {-1.0f, -1.0f, +1.0f},{-1.0f, +1.0f, +1.0f},{+1.0f, +1.0f, +1.0f},{+1.0f, -1.0f, +1.0f},
+            {-1.0f, -1.0f, -1.0f},{-1.0f, -1.0f, +1.0f},{-1.0f, +1.0f, +1.0f},{-1.0f, +1.0f, -1.0f},  
+            {+1.0f, -1.0f, -1.0f},{+1.0f, -1.0f, +1.0f},{+1.0f, +1.0f, +1.0f},{+1.0f, +1.0f, -1.0f}    
+        };
+        static const int indices[]= {
+            +0, +2, +1,   +0, +3, +2,   +4, +5, +6,
+            +4, +6, +7,   +8, +9, 10,   +8, 10, 11,
+            12, 15, 14,   12, 14, 13,   16, 17, 18,
+            16, 18, 19,   20, 23, 22,   20, 22, 21
+        };
+        glm::vec4 c = { color.r / 2,color.g / 2,color.b / 2,color.a / 2 };
+        for(size_t i=0;i<12;i++){
+            m_triangles->Vertex(center+data[indices[3*i]]*extent,c);
+            m_triangles->Vertex(center+data[indices[3*i+1]]*extent,c);
+            m_triangles->Vertex(center+data[indices[3*i+2]]*extent,c);
+            if(flag){
+                m_lines->Vertex(center+data[indices[3*i]]*extent,color);
+                m_lines->Vertex(center+data[indices[3*i+1]]*extent,color);
 
+                m_lines->Vertex(center+data[indices[3*i+1]]*extent,color);
+                m_lines->Vertex(center+data[indices[3*i+2]]*extent,color);
 
+                m_lines->Vertex(center+data[indices[3*i+2]]*extent,color);
+                m_lines->Vertex(center+data[indices[3*i]]*extent,color);
+            }
+        }
+    }
 
     void BoxDraw::DebugDraw::DrawCircle(const glm::vec3& center, float radius, const glm::vec3& axis, const glm::vec4& color,bool flag)
     {
@@ -115,25 +165,53 @@ namespace game {
             m_lines->Vertex(center + next.x*xaxis+next.y*yaxis, color);
             start = next;
         }
-       //DrawCircle(center, radius, color);
+
        m_lines->Vertex(center, color);
        m_lines->Vertex(center + radius * xaxis, color);
     }
+    void BoxDraw::DebugDraw::DrawFrustum(const internal::Frustum& frustum,const glm::vec4& color,bool flag)const {
+        static const int indices[] = {
+            0, 2, 1, 0, 3, 2, 3, 4, 7,
+            3, 0, 4, 6, 5, 2, 2, 5, 1,
+            5, 6, 7, 5, 7, 4, 6, 3, 7,
+            6, 2, 3, 0, 1, 5, 4, 0, 5};
+        for (size_t i = 0; i < 4; i++)
+        {
 
+            m_lines->Vertex(frustum.vertices_[i], color);
+            m_lines->Vertex(frustum.vertices_[(i + 1) % 4], color);
+
+            m_lines->Vertex(frustum.vertices_[i + 4], color);
+            m_lines->Vertex(frustum.vertices_[(i + 1) % 4 + 4], color);
+
+            m_lines->Vertex(frustum.vertices_[i], color);
+            m_lines->Vertex(frustum.vertices_[i + 4], color);
+
+      }
+      if(flag){
+        glm::vec4 c={color.r/2,color.g/2,color.b/2,color.a/2};
+        for(size_t i=0;i<12;i++){
+
+            m_triangles->Vertex(frustum.vertices_[indices[3*i]],c);
+            m_triangles->Vertex(frustum.vertices_[indices[3*i+1]],c);
+            m_triangles->Vertex(frustum.vertices_[indices[3*i+2]],c);
+        }
+
+
+      }
+        
+
+    }
     void BoxDraw::DebugDraw::DrawSegment(const glm::vec3& p1, const glm::vec3& p2, const glm::vec4& color)
     {
         m_lines->Vertex(p1, color);
         m_lines->Vertex(p2, color);
     }
 
-
-
     void BoxDraw::DebugDraw::DrawPoint(const glm::vec2& p, float size, const glm::vec4& color)
     {
         m_points->Vertex(p, color, size);
     }
-
-
 
     void BoxDraw::DebugDraw::Flush()
     {
@@ -143,9 +221,9 @@ namespace game {
     }
     BoxDraw::Camera::Camera()
     {
-        projection=glm::perspectiveFovRH((float)glm::radians(45.0f),800.0f,800.0f,0.1f,100.0f);
-        m_width = 800;
-        m_height = 800;
+        projection=glm::perspectiveFovRH((float)glm::radians(45.0f),1600.0f,900.0f,0.1f,100.0f);
+        m_width = 1600;
+        m_height = 900;
         ResetView();
     }
 
@@ -154,7 +232,7 @@ namespace game {
         m_center = { 0.0f, 0.0f };
         m_zoom = 1.0f;
     }
-    //相机上的屏幕对应于世界空间的一块矩形区域
+
     glm::vec2 BoxDraw::Camera::ConvertScreenToWorld(const glm::vec2& ps)
     {
 
@@ -201,37 +279,7 @@ namespace game {
     {
         auto it=this->projection*t.GetLocalTransform();
         memcpy(m,&it[0][0],sizeof(it));
-      /*
-        float w = float(m_width);
-        float h = float(m_height);
-        float ratio = w / h;
-        glm::vec2 extents(ratio * 25.0f, 25.0f);
-        extents *= m_zoom;
 
-        glm::vec2 lower = m_center - extents;
-        glm::vec2 upper = m_center + extents;
-
-        m[0] = 2.0f / (upper.x - lower.x);
-        m[1] = 0.0f;
-        m[2] = 0.0f;
-        m[3] = 0.0f;
-
-        m[4] = 0.0f;
-        m[5] = 2.0f / (upper.y - lower.y);
-        m[6] = 0.0f;
-        m[7] = 0.0f;
-
-        m[8] = 0.0f;
-        m[9] = 0.0f;
-        m[10] = 2.0f / (upper.y - lower.y);
-        m[11] = 0.0f;
-
-        m[12] = -(upper.x + lower.x) / (upper.x - lower.x);
-        m[13] = -(upper.y + lower.y) / (upper.y - lower.y);
-        m[14] = zBias;
-        m[15] = 1.0f;      
-      
-      */
 
     }
     void BoxDraw::Camera::Update(float delta_time){
@@ -239,7 +287,7 @@ namespace game {
        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
         {
             // A key
-            t.Translate({-delta_time*speed,0,0},Space::Local);      
+              t.Translate({-delta_time*speed,0,0},Space::Local);      
         }
         else if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         { 
@@ -263,7 +311,8 @@ namespace game {
             if (prex >= 0) {
                auto anglex=-(x - prex)*45.0f*delta_time;
                auto angley=-(y - prey)*20.0f*delta_time;
-               t.Rotate(angley,anglex,0,Space::Local);
+               t.Rotate({0,1,0},anglex,Space::Local);
+               t.Rotate({1,0,0},angley,Space::Local);
             }
             prex = x;
             prey = y;
@@ -304,8 +353,8 @@ namespace game {
         float radians = glm::radians(angle);
         glm::vec3 v = glm::normalize(axis);
 
-        glm::mat4 R = glm::rotate(radians, v);     // rotation matrix4x4
-        glm::quat Q = glm::angleAxis(radians, v);  // rotation quaternion
+        glm::mat4 R = glm::rotate(radians, v);     
+        glm::quat Q = glm::angleAxis(radians, v);  
 
         if (space == Space::Local) {
             this->transform = this->transform * R;
@@ -326,12 +375,12 @@ namespace game {
         glm::mat4 RX = glm::rotate(radians.x, world_right);
         glm::mat4 RY = glm::rotate(radians.y, world_up);
         glm::mat4 RZ = glm::rotate(radians.z, world_forward);
-        glm::mat4 R = RZ * RX * RY;  // Y->X->Z
+        glm::mat4 R = RZ * RX * RY;  
 
         glm::quat QX = glm::angleAxis(radians.x, world_right);
         glm::quat QY = glm::angleAxis(radians.y, world_up);
         glm::quat QZ = glm::angleAxis(radians.z, world_forward);
-        glm::quat Q = QZ * QX * QY;  // Y->X->Z
+        glm::quat Q = QZ * QX * QY;  
 
         if (space == Space::Local) {
             this->transform = this->transform * R;
@@ -375,15 +424,15 @@ namespace game {
     }
 
     void Transform::SetRotation(const glm::quat& rotation) {
-        glm::vec4 T = this->transform[3];  // cache the translation component
+        glm::vec4 T = this->transform[3]; 
         this->transform = glm::mat4(1.0f);
         this->transform[0][0] = scale_x;
         this->transform[1][1] = scale_y;
         this->transform[2][2] = scale_z;
         this->transform[3][3] = 1;
         this->rotation = glm::normalize(rotation);
-        this->transform = glm::mat4_cast(this->rotation) * this->transform;  // world space
-        this->transform[3] = T;  // finally apply translation back (replace the last column)
+        this->transform = glm::mat4_cast(this->rotation) * this->transform;  
+        this->transform[3] = T;  
         RecalculateEuler();
         RecalculateBasis();
     }
@@ -432,5 +481,73 @@ namespace game {
     glm::mat4 Transform::GetLocalTransform(const glm::vec3& forward, const glm::vec3& up) const {
         return glm::lookAt(position, position + forward, up);
     }
+        void CreateSphere(float radius ){
+
+        }
+        void CreateCube(float size ){
+        constexpr int n_vertices = 24;  
+        constexpr int stride = 8;  // 3 + 3 + 2
+
+        std::vector<glm::vec3> vertices;
+        vertices.reserve(n_vertices);
+
+        static const float data[] = {
+
+            -1.0f, -1.0f, -1.0f,   +0.0f, -1.0f, +0.0f,   0.0f, 0.0f,
+            -1.0f, -1.0f, +1.0f,   +0.0f, -1.0f, +0.0f,   0.0f, 1.0f,
+            +1.0f, -1.0f, +1.0f,   +0.0f, -1.0f, +0.0f,   1.0f, 1.0f,
+            +1.0f, -1.0f, -1.0f,   +0.0f, -1.0f, +0.0f,   1.0f, 0.0f,
+            -1.0f, +1.0f, -1.0f,   +0.0f, +1.0f, +0.0f,   1.0f, 0.0f,
+            -1.0f, +1.0f, +1.0f,   +0.0f, +1.0f, +0.0f,   1.0f, 1.0f,
+            +1.0f, +1.0f, +1.0f,   +0.0f, +1.0f, +0.0f,   0.0f, 1.0f,
+            +1.0f, +1.0f, -1.0f,   +0.0f, +1.0f, +0.0f,   0.0f, 0.0f,
+            -1.0f, -1.0f, -1.0f,   +0.0f, +0.0f, -1.0f,   0.0f, 0.0f,
+            -1.0f, +1.0f, -1.0f,   +0.0f, +0.0f, -1.0f,   0.0f, 1.0f,
+            +1.0f, +1.0f, -1.0f,   +0.0f, +0.0f, -1.0f,   1.0f, 1.0f,
+            +1.0f, -1.0f, -1.0f,   +0.0f, +0.0f, -1.0f,   1.0f, 0.0f,
+            -1.0f, -1.0f, +1.0f,   +0.0f, +0.0f, +1.0f,   0.0f, 0.0f,
+            -1.0f, +1.0f, +1.0f,   +0.0f, +0.0f, +1.0f,   0.0f, 1.0f,
+            +1.0f, +1.0f, +1.0f,   +0.0f, +0.0f, +1.0f,   1.0f, 1.0f,
+            +1.0f, -1.0f, +1.0f,   +0.0f, +0.0f, +1.0f,   1.0f, 0.0f,
+            -1.0f, -1.0f, -1.0f,   -1.0f, +0.0f, +0.0f,   0.0f, 0.0f,
+            -1.0f, -1.0f, +1.0f,   -1.0f, +0.0f, +0.0f,   0.0f, 1.0f,
+            -1.0f, +1.0f, +1.0f,   -1.0f, +0.0f, +0.0f,   1.0f, 1.0f,
+            -1.0f, +1.0f, -1.0f,   -1.0f, +0.0f, +0.0f,   1.0f, 0.0f,
+            +1.0f, -1.0f, -1.0f,   +1.0f, +0.0f, +0.0f,   0.0f, 0.0f,
+            +1.0f, -1.0f, +1.0f,   +1.0f, +0.0f, +0.0f,   0.0f, 1.0f,
+            +1.0f, +1.0f, +1.0f,   +1.0f, +0.0f, +0.0f,   1.0f, 1.0f,
+            +1.0f, +1.0f, -1.0f,   +1.0f, +0.0f, +0.0f,   1.0f, 0.0f
+        };
+
+        for (unsigned int i = 0; i < n_vertices; i++) {
+            unsigned int offset = i * stride;
+            vertices.push_back(glm::vec3(data[offset + 0], data[offset + 1], data[offset + 2]) * size);
+        }
+
+        // counter-clockwise winding order
+        std::vector<GLuint> indices {
+            +0, +2, +1,   +0, +3, +2,   +4, +5, +6,
+            +4, +6, +7,   +8, +9, 10,   +8, 10, 11,
+            12, 15, 14,   12, 14, 13,   16, 17, 18,
+            16, 18, 19,   20, 23, 22,   20, 22, 21
+        };
+
+
+        }
+        void CreatePlane(float size ){
+
+        }
+        void Create2DQuad(float size ){
+
+        }
+        void CreateTorus(float R , float r ){
+
+        }
+        void CreateCapsule(float a , float r){
+
+        }
+        void CreatePyramid(float s){
+
+        }
 
 }

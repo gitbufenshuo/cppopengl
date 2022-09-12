@@ -3,6 +3,215 @@
 #include<mc/logic_support.h>
 #include <mc/gameobject.h>
 namespace game {
+    namespace internal
+    {
+        using Vector3=glm::vec3;
+        using Vector4=glm::vec4;
+        using Matrix4=glm::mat4;
+        /// Intersection test result.
+        enum Intersection
+        {
+            OUTSIDE,
+            INTERSECTS,
+            INSIDE
+        };
+        enum FrustumPlane
+        {
+            PLANE_NEAR = 0,
+            PLANE_LEFT,
+            PLANE_RIGHT,
+            PLANE_UP,
+            PLANE_DOWN,
+            PLANE_FAR
+        };
+        static const unsigned NUM_FRUSTUM_PLANES = 6;
+        static const unsigned NUM_FRUSTUM_VERTICES = 8;
+        inline constexpr float M_DEGTORAD_2 = M_PI / 360.0f;    // M_DEGTORAD / 2.f
+        struct Plane{
+            Vector3 n;
+            float d;
+            float Distance(Vector3 point)const{
+                return glm::dot(point,n)+d;
+            }
+            void Define(const Vector3& v0, const Vector3& v1, const Vector3& v2){
+
+           Vector3 dist1 = v1 - v0;
+           Vector3 dist2 = v2 - v0;
+           Vector3 N= glm::normalize(glm::cross(dist1,dist2));
+           n=N;
+           d=-glm::dot(n,v0);
+
+            }
+
+        };
+
+        class Frustum
+        {
+        public:
+            Frustum() noexcept = default;
+
+            Frustum(const Frustum &frustum) noexcept{
+                *this=frustum;
+            }
+
+            Frustum &operator=(const Frustum &rhs) noexcept{
+            for (unsigned i = 0; i < NUM_FRUSTUM_PLANES; ++i)
+                planes_[i] = rhs.planes_[i];
+            for (unsigned i = 0; i < NUM_FRUSTUM_VERTICES; ++i)
+                vertices_[i] = rhs.vertices_[i];
+            return *this;
+            }
+
+            void Define(float fov, float aspectRatio, float zoom, float nearZ, float farZ, const Matrix4 &transform = Matrix4(1.0f))
+            {
+
+                nearZ = std::max(nearZ, 0.0f);
+                farZ = std::max(farZ, nearZ);
+                float halfViewSize = tanf(fov * M_DEGTORAD_2) / zoom;
+                Vector3 near, far;
+
+                near.z= nearZ;
+                near.y = near.z * halfViewSize;
+                near.x = near.y * aspectRatio;
+                far.z = farZ;
+                far.y = far.z * halfViewSize;
+                far.x = far.y * aspectRatio;
+
+                Define(near, far, transform);
+            }
+
+            void Define(const Vector3 &near, const Vector3 &far, const Matrix4 &transform = Matrix4(1.0f))
+            {
+                
+
+                vertices_[0] = transform * Vector4(near,1.0);
+                vertices_[1] = transform * Vector4(near.x, -near.y, near.z,1.0f);
+                vertices_[2] = transform * Vector4(-near.x, -near.y, near.z,1.0f);
+                vertices_[3] = transform * Vector4(-near.x, near.y, near.z,1.0f);
+                vertices_[4] = transform * Vector4(far,1.0);
+                vertices_[5] = transform * Vector4(far.x, -far.y, far.z,1.0f);
+                vertices_[6] = transform * Vector4(-far.x, -far.y, far.z,1.0f);
+                vertices_[7] = transform * Vector4(-far.x, far.y, far.z,1.0f);
+
+                UpdatePlanes();
+            }
+
+            void Define(const Matrix4 &projection){
+                Matrix4 projInverse = glm::inverse(projection);
+                vertices_[0] = projInverse * Vector4(1.0f, 1.0f, 0.0f,1.0f);
+                vertices_[1] = projInverse * Vector4(1.0f, -1.0f, 0.0f,1.0f);
+                vertices_[2] = projInverse * Vector4(-1.0f, -1.0f, 0.0f,1.0f);
+                vertices_[3] = projInverse * Vector4(-1.0f, 1.0f, 0.0f,1.0f);
+                vertices_[4] = projInverse * Vector4(1.0f, 1.0f, 1.0f,1.0f);
+                vertices_[5] = projInverse * Vector4(1.0f, -1.0f, 1.0f,1.0f);
+                vertices_[6] = projInverse * Vector4(-1.0f, -1.0f, 1.0f,1.0f);
+                vertices_[7] = projInverse * Vector4(-1.0f, 1.0f, 1.0f,1.0f);
+            }
+
+            void DefineSplit(const Matrix4 &projection, float near, float far){
+                 Matrix4 projInverse = glm::inverse(projection);
+
+                // Figure out depth values for near & far
+                Vector4 nearTemp = projection * Vector4(0.0f, 0.0f, near, 1.0f);
+                Vector4 farTemp = projection * Vector4(0.0f, 0.0f, far, 1.0f);
+                float nearZ = nearTemp.z / nearTemp.w;
+                float farZ = farTemp.z / farTemp.w;
+
+                vertices_[0] = projInverse * Vector4(1.0f, 1.0f, nearZ,1.0f);
+                vertices_[1] = projInverse * Vector4(1.0f, -1.0f, nearZ,1.0f);
+                vertices_[2] = projInverse * Vector4(-1.0f, -1.0f, nearZ,1.0f);
+                vertices_[3] = projInverse * Vector4(-1.0f, 1.0f, nearZ,1.0f);
+                vertices_[4] = projInverse * Vector4(1.0f, 1.0f, farZ,1.0f);
+                vertices_[5] = projInverse * Vector4(1.0f, -1.0f, farZ,1.0f);
+                vertices_[6] = projInverse * Vector4(-1.0f, -1.0f, farZ,1.0f);
+                vertices_[7] = projInverse * Vector4(-1.0f, 1.0f, farZ,1.0f);
+
+                UpdatePlanes();
+            }
+
+            Intersection IsInside(const Vector3 &point)
+            {
+                for (const auto &p : planes_)
+                {
+                    if(p.Distance(point)>0)
+                    return OUTSIDE;
+                }
+
+                return INSIDE;
+            }
+
+            Intersection IsInside(const Vector4 &sphere) const
+            {
+                bool allInside = true;
+                for (const auto &plane : planes_)
+                {
+                    float dist = plane.Distance({sphere.x,sphere.y,sphere.z});
+                    if (dist > sphere.w)
+                        return OUTSIDE;
+                    else if (dist > -sphere.w)
+                        allInside = false;
+                }
+
+                return allInside ? INSIDE : INTERSECTS;
+            }
+
+
+            /// Test if a bounding box is inside, outside or intersects.
+            Intersection IsInside(const Vector3 &vmin, const Vector3 &vmax) const
+            {
+                Vector3 center = {(vmin.x+vmax.x)/2,(vmin.y+vmax.y)/2,(vmin.z+vmax.z)/2};
+                Vector3 edge = center - vmin;
+                bool allInside = true;
+
+                for (const auto &plane : planes_)
+                {
+                    float dist = plane.Distance(center);
+                    Vector3 absNormal={abs(plane.n.x),abs(plane.n.y),abs(plane.n.z)};
+                    float absDist = glm::dot(absNormal,edge);
+
+                    if (dist > absDist)
+                        return OUTSIDE;
+                    else if (dist > -absDist)
+                        allInside = false;
+                }
+
+                return allInside ? INSIDE : INTERSECTS;
+            }
+            /// Return distance of a point to the frustum, or 0 if inside.
+            float Distance(const Vector3 &point) const
+            {
+                float distance = 0.0f;
+                for (const auto &plane : planes_)
+                distance = plane.Distance(point)> distance?plane.Distance(point):distance;
+                return distance;
+            }
+
+            /// Update the planes. Called internally.
+            void UpdatePlanes()
+            {
+                planes_[PLANE_NEAR].Define(vertices_[2], vertices_[1], vertices_[0]);
+                planes_[PLANE_LEFT].Define(vertices_[3], vertices_[7], vertices_[6]);
+                planes_[PLANE_RIGHT].Define(vertices_[1], vertices_[5], vertices_[4]);
+                planes_[PLANE_UP].Define(vertices_[0], vertices_[4], vertices_[7]);
+                planes_[PLANE_DOWN].Define(vertices_[6], vertices_[5], vertices_[1]);
+                planes_[PLANE_FAR].Define(vertices_[5], vertices_[6], vertices_[7]);
+
+                // Check if we ended up with inverted planes (reflected transform) and flip in that case
+                if (planes_[PLANE_NEAR].Distance(vertices_[5]) < 0.0f)
+                {
+                    for (auto &plane : planes_)
+                    {
+                        plane.n= -plane.n;
+                        plane.d = -plane.d;
+                    }
+                }
+            }
+            Plane planes_[NUM_FRUSTUM_PLANES];
+            /// Frustum vertices.
+            Vector3 vertices_[NUM_FRUSTUM_VERTICES];
+        };
+    }
+    
     enum class Space : char {
         Local = 1 << 0,
         World = 1 << 1
@@ -208,9 +417,10 @@ namespace game {
             unsigned int vaoId;//
             unsigned int bufferId[3];
             unsigned int shader;//着色器程序
-            glm::vec2 vertices[1024];//位置
-            glm::vec4 color[1024];//颜色
-            float size[1024];//大小
+            static const int maxCount = 1024 * 32;
+            glm::vec2 vertices[maxCount];//位置
+            glm::vec4 color[maxCount];//颜色
+            float size[maxCount];//大小
             int projection;
         };
         struct GLRenderLines {
@@ -325,8 +535,9 @@ namespace game {
             unsigned int vaoId;//
             unsigned int bufferId[2];
             unsigned int shader;//着色器程序
-            glm::vec3 vertices[1024];//位置
-            glm::vec4 color[1024];//颜色
+            static const int maxCount = 1024 * 32;
+            glm::vec3 vertices[maxCount];//位置
+            glm::vec4 color[maxCount];//颜色
             int projection;
         };
         struct GLRenderTriangles
@@ -478,7 +689,7 @@ namespace game {
 
             void Create();
             void Destroy();
-
+            void DrawBound(const glm::vec3& center,const glm::vec3& extent,const glm::vec4& color,bool flag=true);
             void DrawPolygon(const glm::vec3* vertices, int vertexCount, const glm::vec4& color);
 
             void DrawSolidPolygon(const glm::vec3* vertices, int vertexCount, const glm::vec4& color);
@@ -487,7 +698,7 @@ namespace game {
 
             void DrawSegment(const glm::vec3& p1, const glm::vec3& p2, const glm::vec4& color);
 
-
+            void DrawFrustum(const internal::Frustum& frustum,const glm::vec4& color,bool flag=true)const ;
 
             void DrawPoint(const glm::vec2& p, float size, const glm::vec4& color);
 

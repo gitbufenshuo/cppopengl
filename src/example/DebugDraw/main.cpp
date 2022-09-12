@@ -112,7 +112,6 @@ namespace
         int row = 1;
         int col = 1;
         res.resize(row * col);
-
         for (int row_idx = 0; row_idx < row; ++row_idx)
         {
             for (int col_idx = 0; col_idx < col; ++col_idx)
@@ -122,36 +121,27 @@ namespace
                 one->SetMeshRender(GetOneRender(gogogo, col_idx + row_idx * col));
                 one->GetTransform()->SetLocalEuler(0.0f, 0.0f, 0.0f);
                 one->GetTransform()->SetLocalTranslate(0.0f, 0.0f, -20.0f);
-                one->AddLogicSupport(new game::FunctionDraw{one});
-                one->AddLogicSupport(new game::CamereLogic{one, one->GetTransform()});
                 one->AddLogicSupport(new game::BoxDraw{one});
                 res[row_idx * col + col_idx] = one;
             }
         }
         return res;
     }
-
     mlFilter *GetOneFilter(mc::low::Engine &gogogo)
     {
         auto &modelstore{gogogo.GetModelStore()};
         auto *filter_0{new mlFilter{}};
-        filter_0->AddModel(modelstore.Get(1));
         return filter_0;
     }
     void ClientsetUp(GLFWwindow *window){
         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         game::BoxDraw::g_camera.window=window;
-    
     }
-
-
 }
-
 namespace game::example_list::DebugDraw
 {
     int Main()
     {
-        //
         mc::low::Engine gogogo{1600, 900, "Hello MC"};
         gogogo.Setup(ClientsetUp);
         {
@@ -164,7 +154,6 @@ namespace game::example_list::DebugDraw
             std::cout << "Gen GameObject good" << std::endl;
             for (auto one : list)
             {
-                // 这个里面所有的 gameobject 都是一个 filter 和 render
                 gogogo.AddGameobject(one);
             }
         }
@@ -172,5 +161,4 @@ namespace game::example_list::DebugDraw
         gogogo.Run();
         return 0;
     }
-
 }
