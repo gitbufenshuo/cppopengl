@@ -335,4 +335,54 @@ namespace mc::low
         m_local_dirty = true;
     }
 
+    void Transform::SetLocalRotation(float w, float x, float y, float z)
+    {
+        m_rotation.w = w;
+        m_rotation.x = x;
+        m_rotation.y = y;
+        m_rotation.z = z;
+    }
+    void Transform::SetLocalRotation(const glm::quat &local_rotation)
+    {
+        SetLocalRotation(local_rotation.w, local_rotation.x, local_rotation.y, local_rotation.z);
+    }
+
+    void Transform::Rotate(float x, float y, float z, float angle, Space space)
+    {
+        Rotate(glm::vec3{x, y, z}, angle, space);
+    }
+
+    void Transform::Rotate(const glm::vec3 &axis, float angle, Space space)
+    {
+        updateBranch();
+        auto self_axis{axis};
+        // 先将 axis 转化到 self
+        if (space == Space::World)
+        {
+            self_axis.x = axis.x * m_world_x.x;
+            self_axis.y = axis.x * m_world_x.y;
+            self_axis.z = axis.x * m_world_x.z;
+
+            self_axis.x += axis.y * m_world_y.x;
+            self_axis.y += axis.y * m_world_y.y;
+            self_axis.z += axis.y * m_world_y.z;
+
+            self_axis.x += axis.z * m_world_z.x;
+            self_axis.y += axis.z * m_world_z.y;
+            self_axis.z += axis.z * m_world_z.z;
+
+            self_axis = self_axis - m_world_pos;
+        }
+        self_axis = glm::normalize(self_axis);
+        //
+        glm::quat newq{
+            glm::cos(angle * 0.5f),
+            glm::sin(angle * 0.5f) * self_axis.x,
+            glm::sin(angle * 0.5f) * self_axis.y,
+            glm::sin(angle * 0.5f) * self_axis.z,
+        };
+        m_rotation = newq * m_rotation;
+        m_local_dirty = true;
+    }
+
 }

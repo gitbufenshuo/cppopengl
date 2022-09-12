@@ -14,9 +14,7 @@ namespace game
     {
         if (mc::low::Engine::s_keyinput.KeyStateDown(80))
         {
-            m_speed = 50.0f;
-            m_time += static_cast<float>(delta_time);
-            m_gb->GetTransform()->SetLocalEuler(0.0f, m_time * m_speed, 0.0f);
+            m_gb->GetTransform()->Rotate(1.0f, 0.0f, 0.0f, delta_time);
         }
     }
 

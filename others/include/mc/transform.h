@@ -36,6 +36,10 @@ namespace mc::low
 
         void Move(glm::vec3, Space = Space::Self);                                              // 移动
         void LookAt(Transform *target, const glm::vec3 &worldUp = glm::vec3{0.0f, 1.0f, 0.0f}); // 看向 target
+        void SetLocalRotation(const glm::quat &local_rotation);                                 // 直接设置 local rotation
+        void SetLocalRotation(float w, float x, float y, float z);                              // 直接设置 local rotation
+        void Rotate(const glm::vec3 &axis, float angle, Space space = Space::Self);             // 绕 axis 轴 旋转 angle(°)
+        void Rotate(float x, float y, float z, float angle, Space space = Space::Self);         // 绕 axis 轴 旋转 angle(°)
 
     private:
         void updateBranch();
