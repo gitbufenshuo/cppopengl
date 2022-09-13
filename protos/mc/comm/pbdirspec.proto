@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package mc.comm;
+
+option go_package = "mc/comm";
+
+message PBDirSpec {
+    string base_dir = 1;
+    repeated string image_list = 2;
+    repeated string bin_buffer_list = 3;
+    repeated string shader_code_list = 4;
+    repeated string texture_list = 5;
+    repeated string model_list = 6;
+    repeated string shader_program_list = 7;
+    repeated string material_list = 8;
+    repeated string scene_list = 9;
+    repeated string node_list = 10;
+}

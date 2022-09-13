@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"os"
 
-	"gitee.com/onebook/cppopengl/bintools/stgltf"
+	"gitee.com/onebook/cppopengl/bintools/stdirspec"
 )
 
 func main() {
 	fmt.Println("bintools Wriiten by Golang")
-	if os.Args[1] == "gltf" {
-		stgltf.Main(os.Args[2], os.Args[3], os.Args[4])
+	if os.Args[1] == "dirspec" {
+		stdirspec.Main(os.Args[2])
 	}
 }
