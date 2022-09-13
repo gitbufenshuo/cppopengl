@@ -16,6 +16,9 @@ namespace mc::asset
         ~ShaderCode();
 
     public:
+        const char *GetData();
+
+    public:
         MD5SUM GetKey();
 
     private:

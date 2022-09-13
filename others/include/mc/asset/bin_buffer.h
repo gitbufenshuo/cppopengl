@@ -16,6 +16,7 @@ namespace mc::asset
 
     public:
         MD5SUM GetKey();
+        const unsigned char *GetData(int offset);
 
     private:
         const std::string m_file_path;

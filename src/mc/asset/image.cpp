@@ -36,5 +36,6 @@ namespace mc::asset
     int Image::GetHeight() { return m_height; }
     int Image::GetNrChannels() { return m_nrChannels; }
     MD5SUM Image::GetKey() { return m_key; }
+    unsigned char *Image::GetData() { return m_image_data; }
 
 }

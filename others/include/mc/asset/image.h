@@ -21,6 +21,7 @@ namespace mc::asset
         int GetHeight();
         int GetNrChannels();
         MD5SUM GetKey();
+        unsigned char *GetData();
 
     private:
         const std::string m_file_path;

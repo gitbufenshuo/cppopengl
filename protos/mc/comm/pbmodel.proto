@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package mc.comm;
+
+option go_package = "mc/comm";
+
+message PBModel {
+    string bin_buffer = 1;
+    int32 begin = 2;
+    int32 length = 3;
+    int32 ebo_length = 4;
+    int32 ebo_type = 5;
+    repeated int32 attrib = 6;
+}

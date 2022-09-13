@@ -29,4 +29,8 @@ namespace mc::asset
     {
         return m_key;
     }
+    const char *ShaderCode::GetData()
+    {
+        return m_data.data();
+    }
 } // namespace mc::asset

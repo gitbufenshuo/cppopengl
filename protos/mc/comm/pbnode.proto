@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package mc.comm;
+
+option go_package = "mc/comm";
+
+message PBVec4 {
+    float w = 1;
+    float x = 2;
+    float y = 3;
+    float z = 4;
+}
+
+message PBTransform {
+    PBVec4 translate = 1;
+    PBVec4 rotation = 2;
+}
+
+message PBNode {
+    PBTransform transform = 1;
+    repeated string logic_support_list = 2;
+    repeated string model_list = 3; // 一个 node 会有多个 mesh
+    string material = 4;
+    repeated PBNode sub_list = 5; // 所有的子节点
+}
+
+message Scene {
+    repeated PBNode root_list = 1; // 所有根节点
+}

@@ -29,4 +29,10 @@ namespace mc::asset
     {
         return m_key;
     }
+    const unsigned char *BinBuffer::GetData(int offset)
+    {
+        auto p{m_data.data()};
+        p += offset;
+        return reinterpret_cast<const unsigned char *>(p);
+    }
 }

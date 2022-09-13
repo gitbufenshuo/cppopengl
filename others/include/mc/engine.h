@@ -6,7 +6,6 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
-#include <mc/gltf/buffer.h>
 
 #include <mc/gameobject.h>
 #include <mc/camera.h>
@@ -58,7 +57,7 @@ namespace mc::low
             return m_main_camera;
         }
         void Run();
-        void LoadFromGLTF(const mc::gltf::GLTF &gltf);
+
         void AddGameobject(GameObject *gb);
         ShaderStore &GetShaderStore()
         {
@@ -95,7 +94,6 @@ namespace mc::low
         }
 
     public:
-       
         Engine(int width = 800, int height = 800, const char *name = "HelloOpenGL");
         void Setup(InitFunc p);
 

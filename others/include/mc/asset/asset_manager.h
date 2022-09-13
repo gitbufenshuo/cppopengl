@@ -5,12 +5,20 @@
 #include <mc/asset/image.h>
 #include <mc/asset/shader_code.h>
 #include <mc/asset/bin_buffer.h>
+#include <mc/asset/texture.h>
+#include <mc/asset/model.h>
+#include <mc/asset/shader_program.h>
+#include <mc/asset/material.h>
 
 namespace mc::asset
 {
     class BinBuffer;
     class ShaderCode;
     class Image;
+    class Texture;
+    class Model;
+    class ShaderProgram;
+    class Material;
     class AssetManager
     {
     public:
@@ -31,6 +39,10 @@ namespace mc::asset
         Store<Image> m_image_store;
         Store<ShaderCode> m_shader_code_store;
         Store<BinBuffer> m_bin_buffer_store;
+        Store<Texture> m_texture_store;
+        Store<Model> m_model_store;
+        Store<ShaderProgram> m_shader_program_store;
+        Store<Material> m_material_store;
     };
 }
 #include <mc/asset/asset_manager.inl>

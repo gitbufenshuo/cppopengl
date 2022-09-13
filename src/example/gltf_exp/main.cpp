@@ -11,8 +11,6 @@
 // game headers
 
 // comm headers
-#include <mc/comm/gltf.pb.h>
-#include <mc/gltf/buffer.h>
 
 // asset headers
 #include <mc/asset/md5sum.h>
@@ -26,17 +24,8 @@ using mlShader = mc::low::Shader;
 namespace
 {
 
-    void loadAndParse(mc::comm::GLTF &gltf)
+    void loadAndParse()
     {
-        {
-            std::ifstream file_stream("../others/resource/gltf/minimal.json.gltf.pb", std::ios::in | std::ios::binary);
-            auto ok{gltf.ParseFromIstream(&file_stream)};
-            if (!ok)
-            {
-                std::cout << "loading gltf.pb fail" << std::endl;
-            }
-        }
-        mc::gltf::BufferList buffers{gltf};
     }
     void LoadShader(mc::low::Engine &gogogo)
     {
@@ -61,13 +50,6 @@ namespace
     }
     int testGLTF()
     {
-        mc::comm::GLTF gltf;
-        loadAndParse(gltf);
-        mc::low::Engine gogogo{800, 800, "Hello GLTF EXP"};
-        LoadShader(gogogo);
-        LoadMaterial(gogogo);
-        gogogo.LoadFromGLTF(gltf);
-        gogogo.Run();
         return 0;
     }
     int testAssetManager()

@@ -19,6 +19,26 @@ namespace mc::asset
     {
         return m_bin_buffer_store;
     }
+    template <>
+    inline Store<Texture> &AssetManager::getStore()
+    {
+        return m_texture_store;
+    }
+    template <>
+    inline Store<Model> &AssetManager::getStore()
+    {
+        return m_model_store;
+    }
+    template <>
+    inline Store<ShaderProgram> &AssetManager::getStore()
+    {
+        return m_shader_program_store;
+    }
+    template <>
+    inline Store<Material> &AssetManager::getStore()
+    {
+        return m_material_store;
+    }
 
 #undef FUNCTION_SPECIAL
 
