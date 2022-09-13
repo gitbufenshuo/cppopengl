@@ -1,6 +1,7 @@
 #ifndef MC_LOG_LOG_H
 #define MC_LOG_LOG_H
 
+#include <mc/config.h>
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
@@ -56,14 +57,8 @@ namespace mc::log
         sinks.emplace_back(std::make_shared<spdlog::sinks::stdout_color_sink_mt>());
         sinks[0]->set_pattern("%^%T > [%L] %v%$");
 
-#ifdef apple
-        sinks[0]->set_color(spdlog::level::trace, sinks[0]->bold);
-        sinks[0]->set_color(spdlog::level::debug, sinks[0]->green);
-#else
-        sinks[0]->set_color(spdlog::level::trace, sinks[0]->BOLD);
-        sinks[0]->set_color(spdlog::level::debug, sinks[0]->GREEN);
-#endif
-
+        sinks[0]->set_color(spdlog::level::trace, sinks[0]->COLOR_BOLD);
+        sinks[0]->set_color(spdlog::level::debug, sinks[0]->COLOR_GREEN);
 
         logger = std::make_shared<spdlog::logger>("sketchpad", begin(sinks), end(sinks));
         spdlog::register_logger(logger);

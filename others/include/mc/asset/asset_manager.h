@@ -8,21 +8,24 @@
 
 namespace mc::asset
 {
+    class BinBuffer;
+    class ShaderCode;
+    class Image;
     class AssetManager
     {
     public:
         template <typename T>
-        void Reg(MD5SUM key, T *r_data);
+        inline void Reg(MD5SUM key, T *r_data);
 
         template <typename T>
-        typename Store<T>::Elem Get(MD5SUM key);
+        inline typename Store<T>::Elem Get(MD5SUM key);
 
         template <typename T>
-        void Del(MD5SUM key);
+        inline void Del(MD5SUM key);
 
     private:
         template <typename T>
-        Store<T> &getStore();
+        inline Store<T> &getStore();
 
     private:
         Store<Image> m_image_store;

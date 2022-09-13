@@ -3,12 +3,16 @@
 
 #include <image/stb_image.h>
 
+#include <mc/asset/asset_manager.h>
 #include <mc/asset/image.h>
+#include <mc/asset/md5sum.h>
+
+#include <mc/tools/md5.h>
 
 namespace mc::asset
 {
 
-    Image::Image(const std::string &file_path) : m_file_path{file_path}
+    Image::Image(AssetManager &am, const std::string &file_path) : m_file_path{file_path}
     {
         stbi_set_flip_vertically_on_load(true);
 
@@ -17,6 +21,10 @@ namespace mc::asset
         {
             throw 1;
         }
+        //
+        mc::tools::MD5Sum(file_path, m_key.data);
+        //
+        am.Reg<Image>(m_key, this);
     }
     Image::~Image()
     {
@@ -27,5 +35,6 @@ namespace mc::asset
     int Image::GetWidth() { return m_width; }
     int Image::GetHeight() { return m_height; }
     int Image::GetNrChannels() { return m_nrChannels; }
+    MD5SUM Image::GetKey() { return m_key; }
 
 }
