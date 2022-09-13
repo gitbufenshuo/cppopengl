@@ -1,0 +1,1 @@
+ÅLÉNÅR ÅR*#others/resource/asset/image/one.png
