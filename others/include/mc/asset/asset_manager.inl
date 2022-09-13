@@ -39,6 +39,16 @@ namespace mc::asset
     {
         return m_material_store;
     }
+    template <>
+    inline Store<Node> &AssetManager::getStore()
+    {
+        return m_node_store;
+    }
+    template <>
+    inline Store<Scene> &AssetManager::getStore()
+    {
+        return m_scene_store;
+    }
 
 #undef FUNCTION_SPECIAL
 

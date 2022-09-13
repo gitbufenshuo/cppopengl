@@ -9,6 +9,8 @@
 #include <mc/asset/model.h>
 #include <mc/asset/shader_program.h>
 #include <mc/asset/material.h>
+#include <mc/asset/node.h>
+#include <mc/asset/scene.h>
 
 namespace mc::asset
 {
@@ -19,6 +21,9 @@ namespace mc::asset
     class Model;
     class ShaderProgram;
     class Material;
+    class Node;
+    class Scene;
+
     class AssetManager
     {
     public:
@@ -43,6 +48,8 @@ namespace mc::asset
         Store<Model> m_model_store;
         Store<ShaderProgram> m_shader_program_store;
         Store<Material> m_material_store;
+        Store<Node> m_node_store;
+        Store<Scene> m_scene_store;
     };
 }
 #include <mc/asset/asset_manager.inl>
