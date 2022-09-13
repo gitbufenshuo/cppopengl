@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package mc.comm;
+
+option go_package = "mc/comm";
+
+message PBShaderProgram {
+    string vs = 1;
+    string fs = 2;
+}

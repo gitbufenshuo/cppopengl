@@ -2,17 +2,26 @@
 #define MC_ASSET_BIN_BUFFER_H
 #include <string>
 
+#include <mc/asset/asset_manager.h>
+#include <mc/asset/md5sum.h>
+
 namespace mc::asset
 {
+    class AssetManager;
     class BinBuffer
     {
     public:
-        BinBuffer(const std::string &file_path);
+        BinBuffer(AssetManager &am, const std::string &file_path);
         ~BinBuffer();
+
+    public:
+        MD5SUM GetKey();
+        const unsigned char *GetData(int offset);
 
     private:
         const std::string m_file_path;
         std::string m_data;
+        MD5SUM m_key;
     };
 }
 #endif
