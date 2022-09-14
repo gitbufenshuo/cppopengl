@@ -30,6 +30,7 @@ namespace mc::asset
         }
         load();
         mc::tools::MD5Sum(file_path, m_key.data);
+        am.Reg<Scene>(m_key, this);
     }
     Scene::~Scene()
     {

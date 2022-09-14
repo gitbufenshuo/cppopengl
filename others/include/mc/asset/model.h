@@ -1,3 +1,7 @@
+namespace mc::asset
+{
+    class Model;
+}
 #ifndef MC_ASSET_MODEL_H
 #define MC_ASSET_MODEL_H
 
@@ -12,8 +16,6 @@
 
 namespace mc::asset
 {
-    class AssetManager;
-
     class Model
     {
     public:
@@ -23,6 +25,8 @@ namespace mc::asset
     public:
         MD5SUM GetKey();
         void Use();
+        int GetEBOCount();
+        unsigned int GetEBOType();
 
     private:
         void load(); // load to gl
@@ -36,6 +40,7 @@ namespace mc::asset
         unsigned int m_vao;
         std::vector<unsigned int> m_vbo_list;
         unsigned int m_ebo;
+        int m_ebo_count;
     };
 }
 #endif

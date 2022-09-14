@@ -1,3 +1,8 @@
+namespace mc::asset
+{
+    class Texture;
+}
+
 #ifndef MC_ASSET_TEXTURE_H
 #define MC_ASSET_TEXTURE_H
 
@@ -11,13 +16,14 @@
 
 namespace mc::asset
 {
-    class AssetManager;
-
     class Texture
     {
     public:
         Texture(AssetManager &am, const std::string &file_path);
         ~Texture();
+
+    public:
+        void Use();
 
     private:
         void load(); // load to gl

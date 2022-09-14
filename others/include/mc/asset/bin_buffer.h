@@ -1,3 +1,7 @@
+namespace mc::asset
+{
+    class BinBuffer;
+}
 #ifndef MC_ASSET_BIN_BUFFER_H
 #define MC_ASSET_BIN_BUFFER_H
 #include <string>
@@ -7,7 +11,6 @@
 
 namespace mc::asset
 {
-    class AssetManager;
     class BinBuffer
     {
     public:

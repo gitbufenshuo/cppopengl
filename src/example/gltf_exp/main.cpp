@@ -6,11 +6,11 @@
 
 // mc low headers
 #include <mc/engine.h>
-#include <game/material/simple.h>
 
 // game headers
 
 // comm headers
+#include <mc/comm/pbdirspec.pb.h>
 
 // asset headers
 #include <mc/asset/md5sum.h>
@@ -19,39 +19,12 @@
 // tools headers
 #include <mc/tools/md5.h>
 
-using mlShader = mc::low::Shader;
+// log
+#include <mc/log/log.h>
 
 namespace
 {
 
-    void loadAndParse()
-    {
-    }
-    void LoadShader(mc::low::Engine &gogogo)
-    {
-        auto &shaderstore = gogogo.GetShaderStore();
-        {
-            // point phong
-            auto *_shader{new mlShader{"../others/resource/shader/simple.vert.vs", "../others/resource/shader/simple.frag.fs"}};
-            _shader->Load();
-            shaderstore.Register(_shader);
-        }
-    }
-
-    void LoadMaterial(mc::low::Engine &gogogo)
-    {
-        auto &materialstore{gogogo.GetMaterialStore()};
-        {
-            // 加载 simple 材质
-            auto ma{new game::MaterialSimple{}};
-            ma->SetShader(gogogo.GetShaderStore().Get(1));
-            materialstore.Register(ma);
-        }
-    }
-    int testGLTF()
-    {
-        return 0;
-    }
     int testAssetManager()
     {
         mc::asset::AssetManager am;
@@ -82,12 +55,26 @@ namespace
         std::cout << "AssetManager Test OK" << std::endl;
         return 0;
     }
+
+    void loadSceneFromFile(mc::low::Engine &gogogo, const char *dir_spec_path)
+    {
+        std::ifstream t(dir_spec_path);
+        mc::comm::PBDirSpec pb_data;
+        if (!pb_data.ParseFromIstream(&t))
+        {
+            SPD_WARN("loadSceneFromFile()", dir_spec_path);
+            throw 1;
+        }
+        //
+    }
+
 }
 
 namespace game::example_list::gltf_exp
 {
     int Main()
     {
-        return testAssetManager();
+        mc::low::Engine gogogo{800, 800, "Hello Scene Load"};
+        loadSceneFromFile(gogogo, "");
     }
 }

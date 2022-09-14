@@ -2,6 +2,7 @@
 #define ENGINE_H
 
 #include <unordered_map>
+#include <memory>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -14,6 +15,9 @@
 #include <mc/texture_store.h>
 #include <mc/material_store.h>
 #include <mc/keyinputsystem.h>
+
+// asset
+#include <mc/asset/asset_manager.h>
 
 namespace mc::low
 {
@@ -32,6 +36,9 @@ namespace mc::low
         int m_height{800};
         glm::vec3 m_light_color{1.0f, 1.0f, 1.0f};
         glm::vec3 m_light_pos{0.0f, 0.0f, 0.0f};
+
+        // asset
+        std::shared_ptr<mc::asset::AssetManager> m_am;
         ShaderStore m_shader_store;     // 这东西不用指针
         ModelStore m_model_store;       // 这东西不用指针
         TextureStore m_texture_store;   // 这东西不用指针

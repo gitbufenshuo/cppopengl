@@ -1,3 +1,7 @@
+namespace mc::asset
+{
+    class Node;
+}
 #ifndef MC_ASSET_NODE_H
 #define MC_ASSET_NODE_H
 
@@ -12,8 +16,6 @@
 
 namespace mc::asset
 {
-    class AssetManager;
-
     class Node
     {
     public:

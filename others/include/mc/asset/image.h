@@ -1,3 +1,7 @@
+namespace mc::asset
+{
+    class Image;
+}
 #ifndef MC_ASSET_IMAGE_H
 #define MC_ASSET_IMAGE_H
 
@@ -9,7 +13,6 @@
 
 namespace mc::asset
 {
-    class AssetManager;
     class Image
     {
     public:

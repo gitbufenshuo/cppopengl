@@ -1,3 +1,8 @@
+namespace mc::asset
+{
+    class Material;
+}
+
 #ifndef MC_ASSET_MATERIAL_H
 #define MC_ASSET_MATERIAL_H
 
@@ -12,8 +17,6 @@
 
 namespace mc::asset
 {
-    class AssetManager;
-
     class Material
     {
     public:

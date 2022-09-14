@@ -37,6 +37,7 @@ namespace mc::asset
         m_program = am.Get<ShaderProgram>(_key);
         load();
         mc::tools::MD5Sum(file_path, m_key.data);
+        am.Reg<Material>(m_key, this);
     }
 
     Material::~Material()

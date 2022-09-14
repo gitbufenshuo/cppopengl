@@ -33,12 +33,17 @@ namespace mc::asset
         }
         load();
         mc::tools::MD5Sum(file_path, m_key.data);
+        am.Reg<Texture>(m_key, this);
     }
 
     Texture::~Texture()
     {
     }
-
+    void Texture::Use()
+    {
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, gl_id);
+    }
     void Texture::load()
     {
         glGenTextures(1, &gl_id);

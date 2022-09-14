@@ -1,3 +1,7 @@
+namespace mc::asset
+{
+    class Scene;
+}
 #ifndef MC_ASSET_SCENE_H
 #define MC_ASSET_SCENE_H
 
@@ -12,8 +16,6 @@
 
 namespace mc::asset
 {
-    class AssetManager;
-
     class Scene
     {
     public:

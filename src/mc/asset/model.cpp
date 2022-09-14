@@ -37,6 +37,7 @@ namespace mc::asset
         }
         load();
         mc::tools::MD5Sum(file_path, m_key.data);
+        am.Reg<Model>(m_key, this);
     }
     Model::~Model()
     {
@@ -59,6 +60,15 @@ namespace mc::asset
         m_vbo_list.push_back(vbo);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glBufferData(GL_ARRAY_BUFFER, m_pb_data.length() - m_pb_data.ebo_length(), m_bin_buffer->GetData(m_pb_data.begin() + m_pb_data.ebo_length()), GL_STATIC_DRAW);
+        if (m_pb_data.ebo_type() == GL_UNSIGNED_INT)
+        {
+            m_ebo_count = m_pb_data.ebo_length() / 4;
+        }
+        else if (m_pb_data.ebo_type() == GL_UNSIGNED_INT)
+        {
+            m_ebo_count = m_pb_data.ebo_length() / 2;
+        }
+
         // 3. vertex attrib
         int total{0};
         int offset{0};
@@ -77,5 +87,12 @@ namespace mc::asset
     {
         glBindVertexArray(m_vao);
     }
-
+    int Model::GetEBOCount()
+    {
+        return m_ebo_count;
+    }
+    unsigned int Model::GetEBOType()
+    {
+        return m_pb_data.ebo_type();
+    }
 }

@@ -49,7 +49,7 @@ namespace
 
 namespace mc::low
 {
-    Engine::Engine(int width, int height, const char *name) : m_main_camera{new Camera{}}, m_width{width}, m_height{height}
+    Engine::Engine(int width, int height, const char *name) : m_main_camera{new Camera{}}, m_width{width}, m_height{height}, m_am{std::make_shared<mc::asset::AssetManager>()}
     {
         m_window = open_new_window(m_width, m_height, name);
         now_time = glfwGetTime();

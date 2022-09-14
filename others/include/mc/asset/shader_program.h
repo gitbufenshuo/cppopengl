@@ -1,8 +1,14 @@
+namespace mc::asset
+{
+    class ShaderProgram;
+}
 #ifndef MC_ASSET_SHADER_PROGRAM_H
 #define MC_ASSET_SHADER_PROGRAM_H
 
 #include <string>
 #include <memory>
+
+#include <glad/glad.h>
 
 #include <mc/asset/asset_manager.h>
 #include <mc/asset/md5sum.h>
@@ -11,8 +17,6 @@
 
 namespace mc::asset
 {
-    class AssetManager;
-
     class ShaderProgram
     {
     public:
@@ -22,6 +26,9 @@ namespace mc::asset
     public:
         void Use();
         MD5SUM GetKey();
+        void Uniform(const char *_name, const glm::mat4 &input);
+        void Uniform(const char *_name, const glm::vec3 &input);
+        void Uniform(const char *_name, const float input);
 
     private:
         void load(); // load to gl

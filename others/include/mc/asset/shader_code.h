@@ -1,3 +1,7 @@
+namespace mc::asset
+{
+    class ShaderCode;
+}
 #ifndef MC_ASSET_SHADER_CODE_H
 #define MC_ASSET_SHADER_CODE_H
 
@@ -8,7 +12,6 @@
 
 namespace mc::asset
 {
-    class AssetManager;
     class ShaderCode
     {
     public:

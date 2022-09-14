@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package mc.comm;
+
+option go_package = "mc/comm";
+
+message PBArtLogic {
+    string logic_class = 1;
+    string properties = 2; // 用于初始化上述 class 的数据, 由于 class 不一致，此信息交由 class 本身处理
+}

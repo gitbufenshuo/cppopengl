@@ -61,6 +61,7 @@ namespace mc::asset
         }
         load();
         mc::tools::MD5Sum(file_path, m_key.data);
+        am.Reg<ShaderProgram>(m_key, this);
     }
 
     ShaderProgram::~ShaderProgram()
@@ -96,6 +97,18 @@ namespace mc::asset
     MD5SUM ShaderProgram::GetKey()
     {
         return m_key;
+    }
+    void ShaderProgram::Uniform(const char *_name, const glm::mat4 &input)
+    {
+        glUniformMatrix4fv(glGetUniformLocation(gl_id, _name), 1, GL_FALSE, &input[0][0]);
+    }
+    void ShaderProgram::Uniform(const char *_name, const glm::vec3 &input)
+    {
+        glUniform3fv(glGetUniformLocation(gl_id, _name), 1, &input[0]);
+    }
+    void ShaderProgram::Uniform(const char *_name, const float input)
+    {
+        glUniform1f(glGetUniformLocation(gl_id, _name), input);
     }
 
 } // namespace mc::asset

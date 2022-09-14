@@ -2,6 +2,13 @@
 
 namespace mc::asset
 {
+    inline AssetManager::AssetManager() : m_art_factory{std::make_shared<ArtLogicFactory>()}
+    {
+    }
+    inline ArtLogicFactory &AssetManager::GetAF()
+    {
+        return *m_art_factory;
+    }
 
 #define FUNCTION_SPECIAL
     template <>
@@ -48,6 +55,11 @@ namespace mc::asset
     inline Store<Scene> &AssetManager::getStore()
     {
         return m_scene_store;
+    }
+    template <>
+    inline Store<ArtLogic> &AssetManager::getStore()
+    {
+        return m_art_logic_store;
     }
 
 #undef FUNCTION_SPECIAL
