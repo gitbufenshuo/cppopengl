@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"gitee.com/onebook/cppopengl/bintools/stdirspec"
+	"gitee.com/onebook/cppopengl/bintools/stmodel"
 	"gitee.com/onebook/cppopengl/bintools/sttexture"
 )
 
@@ -18,4 +19,9 @@ func main() {
 		sttexture.Main()
 		return
 	}
+	if os.Args[1] == "model" {
+		stmodel.Main()
+		return
+	}
+
 }
