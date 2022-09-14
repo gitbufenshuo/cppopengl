@@ -9,6 +9,7 @@ import (
 	"gitee.com/onebook/cppopengl/bintools/stdirspec"
 	"gitee.com/onebook/cppopengl/bintools/stmaterial"
 	"gitee.com/onebook/cppopengl/bintools/stmodel"
+	"gitee.com/onebook/cppopengl/bintools/stscene"
 	"gitee.com/onebook/cppopengl/bintools/stshader"
 	"gitee.com/onebook/cppopengl/bintools/sttexture"
 )
@@ -36,4 +37,9 @@ func main() {
 		stmaterial.Main()
 		return
 	}
+	if os.Args[1] == "scene" {
+		stscene.Main()
+		return
+	}
+
 }
