@@ -7,7 +7,9 @@ import (
 	"time"
 
 	"gitee.com/onebook/cppopengl/bintools/stdirspec"
+	"gitee.com/onebook/cppopengl/bintools/stmaterial"
 	"gitee.com/onebook/cppopengl/bintools/stmodel"
+	"gitee.com/onebook/cppopengl/bintools/stshader"
 	"gitee.com/onebook/cppopengl/bintools/sttexture"
 )
 
@@ -26,5 +28,12 @@ func main() {
 		stmodel.Main()
 		return
 	}
-
+	if os.Args[1] == "shader" {
+		stshader.Main()
+		return
+	}
+	if os.Args[1] == "material" {
+		stmaterial.Main()
+		return
+	}
 }
