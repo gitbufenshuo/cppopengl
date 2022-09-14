@@ -11,7 +11,7 @@
 #include <glm/gtx/perpendicular.hpp>
 #include <mc/engine.h>
 #include<game/logic/box_draw.h>
-
+//#include<mc/log/log.h>
 
 namespace game {
    
@@ -26,8 +26,12 @@ namespace game {
 
     BoxDraw::Camera BoxDraw::g_camera;
     BoxDraw::DebugDraw BoxDraw::maindraw;
+    internal::Octant tree(internal::BoundingBox(-5,5),0,nullptr,nullptr);
+    internal::Drawable draw=internal::Drawable(internal::BoundingBox(-1,1));
+
     BoxDraw::BoxDraw(mc::low::GameObject *gb): mc::low::LogicSupport{gb}{
-        maindraw.Create();
+        maindraw.Create(); 
+        tree.InsertDrawable(&draw);
     }
     void BoxDraw::Update(double delta_time) {
         static float angle=0;
@@ -36,13 +40,23 @@ namespace game {
         maindraw.DrawCircle({0,0,-30},10,{cos(angle),1,sin(angle)},{1.0,0,0,1.0});
         maindraw.DrawBound({0,0,-30},{1,2,3},{0,1,0,1});
         internal::Frustum Fr;
-        Fr.Define(45,1,1,1.0,10.0);
-        auto it=Fr.IsInside({0,0,0},{10,10,10});
-        if(it==internal::Intersection::INTERSECTS)
+        Fr.Define(45,1,1,0,10.0);
+        auto it=Fr.IsInside({-1,-1,-1},{1,1,1});
+       
+        if(it!=internal::Intersection::OUTSIDE)
         maindraw.DrawFrustum(Fr,{1.0,0.0,1.0,1.0});
         else
         maindraw.DrawFrustum(Fr,{1.0,1.0,0.0,1.0});
         maindraw.DrawBound({5,5,5},{5,5,5},{0,1,0,1});
+
+        std::vector<internal::Drawable*>res;
+  
+        tree.QueryByFrustum(res,Fr);
+      
+        std::cout<<"query"<<res.size()<<std::endl;
+   
+        maindraw.DrawOctant(tree,{0,0,1,0});
+
     }
     void BoxDraw::AfterRenderUpdate(double delta_time) {
       
@@ -144,7 +158,9 @@ namespace game {
             }
         }
     }
-
+    void BoxDraw::DebugDraw::DrawBoundBox(const internal::BoundingBox& box,const glm::vec4& color,bool flag){
+        DrawBound(box.Center(),box.HalfSize(),color,flag);
+    }
     void BoxDraw::DebugDraw::DrawCircle(const glm::vec3& center, float radius, const glm::vec3& axis, const glm::vec4& color,bool flag)
     {
         float d = 2 * 3.141592654 / 32;
@@ -214,7 +230,30 @@ namespace game {
     {
         m_points->Vertex(p, color, size);
     }
-
+    void BoxDraw::DebugDraw::DrawOctant(const internal::Octant &octant, const glm::vec4 &color)
+    {
+        auto box = octant.GetWorldBoundingBox();
+        auto center = box.Center();
+        auto half = box.HalfSize();
+        static const glm::vec3 data[] = {
+        {1,1,1},{1,-1,1},{-1,-1,1},{-1,1,1},
+        {1,1,-1},{1,-1,-1},{-1,-1,-1},{-1,1,-1}
+        };
+        static const int indices[] = {
+            0,1,1,2,2,3,0,3,
+            4,5,5,6,6,7,4,7,
+            0,4,1,5,2,6,3,7
+       };
+       for(size_t i=0;i<12;i++){
+        m_lines->Vertex(center+half*data[indices[2*i]],color);
+        m_lines->Vertex(center+half*data[indices[2*i+1]],color);
+       }
+       for(size_t i=0;i<8;i++){
+       if(octant.children_[i]){
+        DrawOctant(*octant.children_[i],color);
+       }
+       }
+    }
     void BoxDraw::DebugDraw::Flush()
     {
         m_lines->fflush();

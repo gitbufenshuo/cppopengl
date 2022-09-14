@@ -169,7 +169,7 @@ namespace game {
                     Vector3 absNormal = {abs(plane.n.x), abs(plane.n.y), abs(plane.n.z)};
                     float absDist = glm::dot(absNormal, edge);
 
-                    if (dist > absDist)
+                    if (dist >absDist)
                         return OUTSIDE;
                     else if (dist > -absDist)
                         allInside = false;
@@ -188,21 +188,13 @@ namespace game {
 
             void UpdatePlanes()
             {
-                planes_[PLANE_NEAR].Define(vertices_[2], vertices_[1], vertices_[0]);
-                planes_[PLANE_LEFT].Define(vertices_[3], vertices_[7], vertices_[6]);
-                planes_[PLANE_RIGHT].Define(vertices_[1], vertices_[5], vertices_[4]);
-                planes_[PLANE_UP].Define(vertices_[0], vertices_[4], vertices_[7]);
-                planes_[PLANE_DOWN].Define(vertices_[6], vertices_[5], vertices_[1]);
-                planes_[PLANE_FAR].Define(vertices_[5], vertices_[6], vertices_[7]);
+                planes_[PLANE_NEAR].Define(vertices_[0], vertices_[1], vertices_[2]);
+                planes_[PLANE_LEFT].Define(vertices_[6], vertices_[7], vertices_[3]);
+                planes_[PLANE_RIGHT].Define(vertices_[4], vertices_[5], vertices_[1]);
+                planes_[PLANE_UP].Define(vertices_[7], vertices_[4], vertices_[0]);
+                planes_[PLANE_DOWN].Define(vertices_[1], vertices_[5], vertices_[6]);
+                planes_[PLANE_FAR].Define(vertices_[7], vertices_[6], vertices_[5]);
 
-                if (planes_[PLANE_NEAR].Distance(vertices_[5]) < 0.0f)
-                {
-                    for (auto &plane : planes_)
-                    {
-                        plane.n = -plane.n;
-                        plane.d = -plane.d;
-                    }
-                }
             }
             Plane planes_[NUM_FRUSTUM_PLANES];
 
@@ -361,8 +353,12 @@ namespace game {
         class Drawable
         {
         public:
+            //测试用的，主要是传入包围盒
+            Drawable(BoundingBox box):worldBoundingBox_(box){
+   
+            }
             bool worldBoundingBoxDirty_ = false;
-            virtual void OnWorldBoundingBoxUpdate()=0;
+            virtual void OnWorldBoundingBoxUpdate(){}
             void SetOctant(Octant *octant) { octant_ = octant; }
             const BoundingBox& GetWorldBoundingBox()
             {
@@ -481,6 +477,8 @@ namespace game {
             }
             void AddDrawable(Drawable *drawable)
             {
+                
+
                 drawable->SetOctant(this);
                 drawables_.push_back(drawable);
                 IncDrawableCount();
@@ -526,7 +524,6 @@ namespace game {
                         child->ResetRoot();
                 }
             }
-        protected:
             void Initialize(const BoundingBox &box)
             {
                 worldBoundingBox_ = box;
@@ -552,6 +549,32 @@ namespace game {
                 if (parent)
                     parent->DecDrawableCount();
             }
+            void QueryByFrustum(std::vector<Drawable*>&res,Frustum& fr){ 
+                
+                auto cull=this->GetCullingBox();
+                auto test=fr.IsInside(cull.min_,cull.max_);
+                if(test==OUTSIDE){
+                    std::cout<<this->drawables_.size()<<std::endl;
+                    return;
+                }
+
+               
+                for(auto t:this->drawables_){
+                   
+                    auto& box=t->GetWorldBoundingBox();
+                     
+                    test=fr.IsInside(box.min_,box.max_);
+                    if(test!=OUTSIDE){
+                        res.push_back(t);
+                    }
+                }
+                for(size_t i=0;i<8;i++){
+                    if(children_[i]){
+                        children_[i]->QueryByFrustum(res,fr);
+                    }
+                }
+            }
+
             BoundingBox worldBoundingBox_;
             BoundingBox cullingBox_;
             std::vector<Drawable*> drawables_;
@@ -1041,11 +1064,12 @@ namespace game {
 
             void Create();
             void Destroy();
+            void DrawBoundBox(const internal::BoundingBox& box,const glm::vec4& color,bool flag=true);
             void DrawBound(const glm::vec3& center,const glm::vec3& extent,const glm::vec4& color,bool flag=true);
             void DrawPolygon(const glm::vec3* vertices, int vertexCount, const glm::vec4& color);
 
             void DrawSolidPolygon(const glm::vec3* vertices, int vertexCount, const glm::vec4& color);
-
+            
             void DrawCircle(const glm::vec3& center, float radius, const glm::vec3& axis, const glm::vec4& color,bool flag=true);
 
             void DrawSegment(const glm::vec3& p1, const glm::vec3& p2, const glm::vec4& color);
@@ -1053,7 +1077,7 @@ namespace game {
             void DrawFrustum(const internal::Frustum& frustum,const glm::vec4& color,bool flag=true)const ;
 
             void DrawPoint(const glm::vec2& p, float size, const glm::vec4& color);
-
+            void DrawOctant(const internal::Octant& octant,const glm::vec4& color);
 
 
             void Flush();

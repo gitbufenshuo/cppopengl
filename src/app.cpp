@@ -5,6 +5,7 @@ namespace mc
 {
     App::App(GLFWwindow *window, const char *name) : m_window{window}, m_name{name}
     {
+        asd;
     }
     App::~App()
     {
