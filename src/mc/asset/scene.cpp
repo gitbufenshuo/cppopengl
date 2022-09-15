@@ -52,5 +52,13 @@ namespace mc::asset
     void Scene::Use()
     {
     }
+    int Scene::GetPBNodeSize()
+    {
+        return m_pb_data.root_list_size();
+    }
+    const mc::comm::PBNode &Scene::GetPBNode(int index)
+    {
+        return m_pb_data.root_list(index);
+    }
 
 }

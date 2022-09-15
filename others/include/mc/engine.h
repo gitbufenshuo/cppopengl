@@ -47,7 +47,8 @@ namespace mc::low
         static double s_cursor_YPOS;
         static double s_c_xdiff;
         static double s_c_ydiff;
-        static KeyInputSystem s_keyinput; // 键盘事件管理器
+        static KeyInputSystem s_keyinput;               // 键盘事件管理器
+        void LoadAssetAndCreate(const char *file_path); // 从文件中加载所有的资源
 
     private:
         void update();

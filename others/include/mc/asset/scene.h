@@ -25,6 +25,8 @@ namespace mc::asset
     public:
         void Use();
         MD5SUM GetKey();
+        const mc::comm::PBNode &GetPBNode(int index);
+        int GetPBNodeSize();
 
     private:
         void load(); // load to gl

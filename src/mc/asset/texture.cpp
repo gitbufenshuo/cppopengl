@@ -58,7 +58,7 @@ namespace mc::asset
         glBindTexture(GL_TEXTURE_2D, gl_id);
         // copy the data to gpu
         int internal_format = m_img->GetNrChannels() == 3 ? GL_RGB : GL_RGBA;
-        glTexImage2D(GL_TEXTURE_2D, 0, internal_format, m_img->GetWidth(), m_img->GetHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, m_img->GetData());
+        glTexImage2D(GL_TEXTURE_2D, 0, internal_format, m_img->GetWidth(), m_img->GetHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, m_img->GetData());
         glGenerateMipmap(GL_TEXTURE_2D);
         // settings
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_pb_data.wraps());

@@ -21,7 +21,7 @@ namespace mc::low
 
     private:
         // view
-        Transform m_transform{};
+        Transform m_transform{0.0f, 0.0f, 5.0f};
         unsigned int m_camera_version{0};
         glm::mat4 m_view_mat; // view matrix
         // projection

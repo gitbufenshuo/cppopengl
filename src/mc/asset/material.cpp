@@ -49,6 +49,13 @@ namespace mc::asset
             mc::tools::MD5Sum(m_pb_data.art_logic(), _key.data);
             auto al{am.Get<ArtLogic>(_key)};
             m_art_logic = af.Create(al->GetLogicName(), al->GetBinData());
+            // set ArtLogic Texture
+            for (auto one : m_texture_list)
+            {
+                m_art_logic->AddTexture(one);
+            }
+            // set ArtLogic Program
+            m_art_logic->SetShaderProgram(m_program);
         }
         load();
         {

@@ -17,6 +17,20 @@
 // log
 #include <mc/log/log.h>
 
+namespace
+{
+    void showPBDATA(mc::comm::PBModel &m_pb_data)
+    {
+        std::cout << "mc::asset::Model::showPBDATA "
+                  << m_pb_data.bin_buffer() << " "
+                  << m_pb_data.begin() << " "
+                  << m_pb_data.length() << " "
+                  << m_pb_data.ebo_length() << " "
+                  << m_pb_data.ebo_type() << std::endl;
+        throw 1;
+    }
+}
+
 namespace mc::asset
 {
     using stdpath = std::filesystem::path;
@@ -30,7 +44,7 @@ namespace mc::asset
         std::ifstream t(m_file_path.data());
         if (!m_pb_data.ParseFromIstream(&t))
         {
-            SPD_WARN("mc::asset::Texuture()", m_file_path);
+            SPD_WARN("mc::asset::Model()", m_file_path);
             return;
         }
         MD5SUM bin_buffer_key;
@@ -71,7 +85,7 @@ namespace mc::asset
         {
             m_ebo_count = m_pb_data.ebo_length() / 4;
         }
-        else if (m_pb_data.ebo_type() == GL_UNSIGNED_INT)
+        else if (m_pb_data.ebo_type() == GL_UNSIGNED_SHORT)
         {
             m_ebo_count = m_pb_data.ebo_length() / 2;
         }

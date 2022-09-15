@@ -24,7 +24,7 @@ namespace mc::asset
 
     public:
         void Register(MD5SUM key, T *data);
-        Elem Get(MD5SUM key);
+        Elem Get(MD5SUM key = MD5SUM{});
         void Del(MD5SUM key);
 
     private:

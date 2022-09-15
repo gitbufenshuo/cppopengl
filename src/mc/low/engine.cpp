@@ -10,6 +10,7 @@
 
 namespace
 {
+    unsigned int frame_count{0};
     void gl_context_init()
     {
         glfwInit();
@@ -126,6 +127,7 @@ namespace mc::low
             // 画
             // 在画之后，遍历 logic_support
             _gb->AfterRenderUpdate(delta_time);
+            break;
         }
     }
     void Engine::update()
@@ -141,6 +143,11 @@ namespace mc::low
     {
         while (!glfwWindowShouldClose(m_window))
         {
+            ++frame_count;
+            if (frame_count > 600)
+            {
+                throw 1;
+            }
             update();
         }
         glfwTerminate();

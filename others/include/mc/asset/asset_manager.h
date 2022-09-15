@@ -36,7 +36,7 @@ namespace mc::asset
         inline void Reg(MD5SUM key, T *r_data);
 
         template <typename T>
-        inline typename Store<T>::Elem Get(MD5SUM key);
+        inline typename Store<T>::Elem Get(MD5SUM key = MD5SUM{});
 
         template <typename T>
         inline void Del(MD5SUM key);
