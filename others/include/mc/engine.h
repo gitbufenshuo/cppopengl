@@ -59,6 +59,7 @@ namespace mc::low
         void standard_render();
 
     public:
+        std::shared_ptr<mc::asset::AssetManager> GetAM();
         Camera *GetCamera()
         {
             return m_main_camera;

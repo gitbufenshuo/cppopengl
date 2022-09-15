@@ -30,7 +30,7 @@ namespace mc::asset
     {
     public:
         ArtLogic() = default;
-        ArtLogic(AssetManager &am, const std::string &file_path);
+        ArtLogic(AssetManager &am, const std::string &r_name);
         virtual void PostUniform(mc::low::Engine *eg, mc::low::GameObject *gb) {}
         virtual void SetShaderProgram(std::shared_ptr<ShaderProgram> sp) {}
         virtual void AddTexture(std::shared_ptr<Texture> texture) {}
@@ -43,7 +43,10 @@ namespace mc::asset
         const std::string &GetBinData();
 
     private:
+        const std::string m_r_name;
         const std::string m_file_path;
+        static const std::string s_scope; // bin_buffer
+
         MD5SUM m_key;
         mc::comm::PBArtLogic m_pb_data;
     };

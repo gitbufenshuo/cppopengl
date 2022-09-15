@@ -7,7 +7,9 @@ namespace mc::asset
 #define MC_ASSET_ASSET_MANAGER_H
 
 #include <memory>
+#include <string>
 
+// asset
 #include <mc/asset/store.h>
 #include <mc/asset/image.h>
 #include <mc/asset/shader_code.h>
@@ -26,6 +28,7 @@ namespace mc::asset
     {
     public:
         inline AssetManager();
+        inline const std::string &GetBaseDir();
 
     public:
         template <typename T>
@@ -56,6 +59,7 @@ namespace mc::asset
         Store<Scene> m_scene_store;
         Store<ArtLogic> m_art_logic_store;
         std::shared_ptr<ArtLogicFactory> m_art_factory;
+        std::string m_base_dir;
     };
 }
 #include <mc/asset/asset_manager.inl>

@@ -1,12 +1,15 @@
 package stdirspec
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"path"
 	"path/filepath"
 
 	"gitee.com/onebook/cppopengl/bintools/mc/comm"
+	"google.golang.org/protobuf/proto"
 )
 
 /*
@@ -21,12 +24,17 @@ func Main(baseDir string) {
 	onedir(&res, "image", &res.ImageList)
 	onedir(&res, "bin_buffer", &res.BinBufferList)
 	onedir(&res, "shader_code", &res.ShaderCodeList)
+	onedir(&res, "art_logic", &res.ArtLogicList)
 	onedir(&res, "texture", &res.TextureList)
 	onedir(&res, "model", &res.ModelList)
 	onedir(&res, "shader_program", &res.ShaderProgramList)
 	onedir(&res, "material", &res.MaterialList)
 	onedir(&res, "scene", &res.SceneList)
 	onedir(&res, "node", &res.NodeList)
+	jsondata, _ := json.Marshal(&res)
+	fmt.Println(string(jsondata))
+	protodata, _ := proto.Marshal(&res)
+	ioutil.WriteFile("gogogo.pb.data", protodata, 0644)
 }
 
 func onedir(res *comm.PBDirSpec, dir string, list *[]string) {

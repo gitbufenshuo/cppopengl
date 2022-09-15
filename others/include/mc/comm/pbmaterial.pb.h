@@ -181,7 +181,7 @@ class PBMaterial final :
 
   enum : int {
     kTextureListFieldNumber = 2,
-    kLogicClassFieldNumber = 1,
+    kArtLogicFieldNumber = 1,
     kShaderProgramFieldNumber = 3,
   };
   // repeated string texture_list = 2;
@@ -208,18 +208,18 @@ class PBMaterial final :
   std::string* _internal_add_texture_list();
   public:
 
-  // string logic_class = 1;
-  void clear_logic_class();
-  const std::string& logic_class() const;
+  // string art_logic = 1;
+  void clear_art_logic();
+  const std::string& art_logic() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_logic_class(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_logic_class();
-  PROTOBUF_NODISCARD std::string* release_logic_class();
-  void set_allocated_logic_class(std::string* logic_class);
+  void set_art_logic(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_art_logic();
+  PROTOBUF_NODISCARD std::string* release_art_logic();
+  void set_allocated_art_logic(std::string* art_logic);
   private:
-  const std::string& _internal_logic_class() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_logic_class(const std::string& value);
-  std::string* _internal_mutable_logic_class();
+  const std::string& _internal_art_logic() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_art_logic(const std::string& value);
+  std::string* _internal_mutable_art_logic();
   public:
 
   // string shader_program = 3;
@@ -245,7 +245,7 @@ class PBMaterial final :
   typedef void DestructorSkippable_;
   struct Impl_ {
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> texture_list_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr logic_class_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr art_logic_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr shader_program_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -263,54 +263,54 @@ class PBMaterial final :
 #endif  // __GNUC__
 // PBMaterial
 
-// string logic_class = 1;
-inline void PBMaterial::clear_logic_class() {
-  _impl_.logic_class_.ClearToEmpty();
+// string art_logic = 1;
+inline void PBMaterial::clear_art_logic() {
+  _impl_.art_logic_.ClearToEmpty();
 }
-inline const std::string& PBMaterial::logic_class() const {
-  // @@protoc_insertion_point(field_get:mc.comm.PBMaterial.logic_class)
-  return _internal_logic_class();
+inline const std::string& PBMaterial::art_logic() const {
+  // @@protoc_insertion_point(field_get:mc.comm.PBMaterial.art_logic)
+  return _internal_art_logic();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void PBMaterial::set_logic_class(ArgT0&& arg0, ArgT... args) {
+void PBMaterial::set_art_logic(ArgT0&& arg0, ArgT... args) {
  
- _impl_.logic_class_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:mc.comm.PBMaterial.logic_class)
+ _impl_.art_logic_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:mc.comm.PBMaterial.art_logic)
 }
-inline std::string* PBMaterial::mutable_logic_class() {
-  std::string* _s = _internal_mutable_logic_class();
-  // @@protoc_insertion_point(field_mutable:mc.comm.PBMaterial.logic_class)
+inline std::string* PBMaterial::mutable_art_logic() {
+  std::string* _s = _internal_mutable_art_logic();
+  // @@protoc_insertion_point(field_mutable:mc.comm.PBMaterial.art_logic)
   return _s;
 }
-inline const std::string& PBMaterial::_internal_logic_class() const {
-  return _impl_.logic_class_.Get();
+inline const std::string& PBMaterial::_internal_art_logic() const {
+  return _impl_.art_logic_.Get();
 }
-inline void PBMaterial::_internal_set_logic_class(const std::string& value) {
+inline void PBMaterial::_internal_set_art_logic(const std::string& value) {
   
-  _impl_.logic_class_.Set(value, GetArenaForAllocation());
+  _impl_.art_logic_.Set(value, GetArenaForAllocation());
 }
-inline std::string* PBMaterial::_internal_mutable_logic_class() {
+inline std::string* PBMaterial::_internal_mutable_art_logic() {
   
-  return _impl_.logic_class_.Mutable(GetArenaForAllocation());
+  return _impl_.art_logic_.Mutable(GetArenaForAllocation());
 }
-inline std::string* PBMaterial::release_logic_class() {
-  // @@protoc_insertion_point(field_release:mc.comm.PBMaterial.logic_class)
-  return _impl_.logic_class_.Release();
+inline std::string* PBMaterial::release_art_logic() {
+  // @@protoc_insertion_point(field_release:mc.comm.PBMaterial.art_logic)
+  return _impl_.art_logic_.Release();
 }
-inline void PBMaterial::set_allocated_logic_class(std::string* logic_class) {
-  if (logic_class != nullptr) {
+inline void PBMaterial::set_allocated_art_logic(std::string* art_logic) {
+  if (art_logic != nullptr) {
     
   } else {
     
   }
-  _impl_.logic_class_.SetAllocated(logic_class, GetArenaForAllocation());
+  _impl_.art_logic_.SetAllocated(art_logic, GetArenaForAllocation());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.logic_class_.IsDefault()) {
-    _impl_.logic_class_.Set("", GetArenaForAllocation());
+  if (_impl_.art_logic_.IsDefault()) {
+    _impl_.art_logic_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:mc.comm.PBMaterial.logic_class)
+  // @@protoc_insertion_point(field_set_allocated:mc.comm.PBMaterial.art_logic)
 }
 
 // repeated string texture_list = 2;

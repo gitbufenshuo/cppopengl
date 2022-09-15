@@ -1,5 +1,6 @@
 #include <utility>
-
+#include <typeinfo>
+// asset
 #include <mc/asset/store.h>
 
 namespace mc::asset
@@ -14,6 +15,11 @@ namespace mc::asset
     template <class T>
     typename Store<T>::Elem Store<T>::Get(MD5SUM key)
     {
+        auto it{m_store.find(key)};
+        if (it == m_store.end())
+        {
+            std::cout << "[NOT FOUND] Store<T>::Get() " << typeid(T).name() << std::endl;
+        }
         return m_store[key];
     }
 

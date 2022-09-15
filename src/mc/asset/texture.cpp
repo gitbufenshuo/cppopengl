@@ -1,6 +1,8 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <filesystem>
+
 // gl
 #include <glad/glad.h>
 // asset
@@ -16,12 +18,17 @@
 
 namespace mc::asset
 {
-    Texture::Texture(AssetManager &am, const std::string &file_path) : m_file_path{file_path}
+    using stdpath = std::filesystem::path;
+    const std::string Texture::s_scope{"texture"};
+
+    Texture::Texture(AssetManager &am, const std::string &r_name) : m_r_name{r_name},
+                                                                    m_file_path{(stdpath{am.GetBaseDir()} / stdpath{s_scope} / stdpath{r_name}).string()}
+
     {
-        std::ifstream t(file_path.data());
+        std::ifstream t(m_file_path.data());
         if (!m_pb_data.ParseFromIstream(&t))
         {
-            SPD_WARN("mc::asset::Texuture()", file_path);
+            SPD_WARN("mc::asset::Texuture()", m_file_path);
             return;
         }
         MD5SUM image_key;
@@ -32,7 +39,7 @@ namespace mc::asset
             SPD_WARN("Can't find Image ", m_pb_data.image());
         }
         load();
-        mc::tools::MD5Sum(file_path, m_key.data);
+        mc::tools::MD5Sum(r_name, m_key.data);
         am.Reg<Texture>(m_key, this);
     }
 

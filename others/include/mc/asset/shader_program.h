@@ -9,6 +9,7 @@ namespace mc::asset
 #include <memory>
 
 #include <glad/glad.h>
+#include <glm/glm.hpp>
 
 #include <mc/asset/asset_manager.h>
 #include <mc/asset/md5sum.h>
@@ -20,7 +21,7 @@ namespace mc::asset
     class ShaderProgram
     {
     public:
-        ShaderProgram(AssetManager &am, const std::string &file_path);
+        ShaderProgram(AssetManager &am, const std::string &r_name);
         ~ShaderProgram();
 
     public:
@@ -34,7 +35,10 @@ namespace mc::asset
         void load(); // load to gl
 
     private:
+        const std::string m_r_name;
         const std::string m_file_path;
+        static const std::string s_scope; // bin_buffer
+
         mc::comm::PBShaderProgram m_pb_data;
         unsigned int gl_id{};
         MD5SUM m_key;

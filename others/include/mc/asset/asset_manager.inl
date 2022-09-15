@@ -9,6 +9,10 @@ namespace mc::asset
     {
         return *m_art_factory;
     }
+    inline const std::string &AssetManager::GetBaseDir()
+    {
+        return m_base_dir;
+    }
 
 #define FUNCTION_SPECIAL
     template <>

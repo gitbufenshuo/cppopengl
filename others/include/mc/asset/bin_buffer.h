@@ -14,7 +14,7 @@ namespace mc::asset
     class BinBuffer
     {
     public:
-        BinBuffer(AssetManager &am, const std::string &file_path);
+        BinBuffer(AssetManager &am, const std::string &r_name);
         ~BinBuffer();
 
     public:
@@ -22,7 +22,10 @@ namespace mc::asset
         const unsigned char *GetData(int offset);
 
     private:
+        const std::string m_r_name;
         const std::string m_file_path;
+        static const std::string s_scope; // bin_buffer
+
         std::string m_data;
         MD5SUM m_key;
     };

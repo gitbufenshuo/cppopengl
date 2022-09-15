@@ -163,4 +163,8 @@ namespace mc::low
             glDisable(GL_CULL_FACE);
         }
     }
+    std::shared_ptr<mc::asset::AssetManager> Engine::GetAM()
+    {
+        return m_am;
+    }
 }

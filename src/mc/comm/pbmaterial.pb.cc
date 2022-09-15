@@ -25,7 +25,7 @@ namespace comm {
 PROTOBUF_CONSTEXPR PBMaterial::PBMaterial(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.texture_list_)*/{}
-  , /*decltype(_impl_.logic_class_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.art_logic_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.shader_program_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct PBMaterialDefaultTypeInternal {
@@ -50,7 +50,7 @@ const uint32_t TableStruct_mc_2fcomm_2fpbmaterial_2eproto::offsets[] PROTOBUF_SE
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::mc::comm::PBMaterial, _impl_.logic_class_),
+  PROTOBUF_FIELD_OFFSET(::mc::comm::PBMaterial, _impl_.art_logic_),
   PROTOBUF_FIELD_OFFSET(::mc::comm::PBMaterial, _impl_.texture_list_),
   PROTOBUF_FIELD_OFFSET(::mc::comm::PBMaterial, _impl_.shader_program_),
 };
@@ -63,14 +63,14 @@ static const ::_pb::Message* const file_default_instances[] = {
 };
 
 const char descriptor_table_protodef_mc_2fcomm_2fpbmaterial_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\030mc/comm/pbmaterial.proto\022\007mc.comm\"O\n\nP"
-  "BMaterial\022\023\n\013logic_class\030\001 \001(\t\022\024\n\014textur"
-  "e_list\030\002 \003(\t\022\026\n\016shader_program\030\003 \001(\tB\tZ\007"
-  "mc/commb\006proto3"
+  "\n\030mc/comm/pbmaterial.proto\022\007mc.comm\"M\n\nP"
+  "BMaterial\022\021\n\tart_logic\030\001 \001(\t\022\024\n\014texture_"
+  "list\030\002 \003(\t\022\026\n\016shader_program\030\003 \001(\tB\tZ\007mc"
+  "/commb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_mc_2fcomm_2fpbmaterial_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_mc_2fcomm_2fpbmaterial_2eproto = {
-    false, false, 135, descriptor_table_protodef_mc_2fcomm_2fpbmaterial_2eproto,
+    false, false, 133, descriptor_table_protodef_mc_2fcomm_2fpbmaterial_2eproto,
     "mc/comm/pbmaterial.proto",
     &descriptor_table_mc_2fcomm_2fpbmaterial_2eproto_once, nullptr, 0, 1,
     schemas, file_default_instances, TableStruct_mc_2fcomm_2fpbmaterial_2eproto::offsets,
@@ -103,17 +103,17 @@ PBMaterial::PBMaterial(const PBMaterial& from)
   PBMaterial* const _this = this; (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.texture_list_){from._impl_.texture_list_}
-    , decltype(_impl_.logic_class_){}
+    , decltype(_impl_.art_logic_){}
     , decltype(_impl_.shader_program_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _impl_.logic_class_.InitDefault();
+  _impl_.art_logic_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.logic_class_.Set("", GetArenaForAllocation());
+    _impl_.art_logic_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_logic_class().empty()) {
-    _this->_impl_.logic_class_.Set(from._internal_logic_class(), 
+  if (!from._internal_art_logic().empty()) {
+    _this->_impl_.art_logic_.Set(from._internal_art_logic(), 
       _this->GetArenaForAllocation());
   }
   _impl_.shader_program_.InitDefault();
@@ -133,13 +133,13 @@ inline void PBMaterial::SharedCtor(
   (void)is_message_owned;
   new (&_impl_) Impl_{
       decltype(_impl_.texture_list_){arena}
-    , decltype(_impl_.logic_class_){}
+    , decltype(_impl_.art_logic_){}
     , decltype(_impl_.shader_program_){}
     , /*decltype(_impl_._cached_size_)*/{}
   };
-  _impl_.logic_class_.InitDefault();
+  _impl_.art_logic_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.logic_class_.Set("", GetArenaForAllocation());
+    _impl_.art_logic_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   _impl_.shader_program_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
@@ -159,7 +159,7 @@ PBMaterial::~PBMaterial() {
 inline void PBMaterial::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.texture_list_.~RepeatedPtrField();
-  _impl_.logic_class_.Destroy();
+  _impl_.art_logic_.Destroy();
   _impl_.shader_program_.Destroy();
 }
 
@@ -174,7 +174,7 @@ void PBMaterial::Clear() {
   (void) cached_has_bits;
 
   _impl_.texture_list_.Clear();
-  _impl_.logic_class_.ClearToEmpty();
+  _impl_.art_logic_.ClearToEmpty();
   _impl_.shader_program_.ClearToEmpty();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -185,13 +185,13 @@ const char* PBMaterial::_InternalParse(const char* ptr, ::_pbi::ParseContext* ct
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // string logic_class = 1;
+      // string art_logic = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_logic_class();
+          auto str = _internal_mutable_art_logic();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "mc.comm.PBMaterial.logic_class"));
+          CHK_(::_pbi::VerifyUTF8(str, "mc.comm.PBMaterial.art_logic"));
         } else
           goto handle_unusual;
         continue;
@@ -249,14 +249,14 @@ uint8_t* PBMaterial::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // string logic_class = 1;
-  if (!this->_internal_logic_class().empty()) {
+  // string art_logic = 1;
+  if (!this->_internal_art_logic().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_logic_class().data(), static_cast<int>(this->_internal_logic_class().length()),
+      this->_internal_art_logic().data(), static_cast<int>(this->_internal_art_logic().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "mc.comm.PBMaterial.logic_class");
+      "mc.comm.PBMaterial.art_logic");
     target = stream->WriteStringMaybeAliased(
-        1, this->_internal_logic_class(), target);
+        1, this->_internal_art_logic(), target);
   }
 
   // repeated string texture_list = 2;
@@ -303,11 +303,11 @@ size_t PBMaterial::ByteSizeLong() const {
       _impl_.texture_list_.Get(i));
   }
 
-  // string logic_class = 1;
-  if (!this->_internal_logic_class().empty()) {
+  // string art_logic = 1;
+  if (!this->_internal_art_logic().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_logic_class());
+        this->_internal_art_logic());
   }
 
   // string shader_program = 3;
@@ -336,8 +336,8 @@ void PBMaterial::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PRO
   (void) cached_has_bits;
 
   _this->_impl_.texture_list_.MergeFrom(from._impl_.texture_list_);
-  if (!from._internal_logic_class().empty()) {
-    _this->_internal_set_logic_class(from._internal_logic_class());
+  if (!from._internal_art_logic().empty()) {
+    _this->_internal_set_art_logic(from._internal_art_logic());
   }
   if (!from._internal_shader_program().empty()) {
     _this->_internal_set_shader_program(from._internal_shader_program());
@@ -363,8 +363,8 @@ void PBMaterial::InternalSwap(PBMaterial* other) {
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   _impl_.texture_list_.InternalSwap(&other->_impl_.texture_list_);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.logic_class_, lhs_arena,
-      &other->_impl_.logic_class_, rhs_arena
+      &_impl_.art_logic_, lhs_arena,
+      &other->_impl_.art_logic_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
       &_impl_.shader_program_, lhs_arena,

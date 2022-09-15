@@ -14,9 +14,9 @@ import (
 )
 
 // ./bintools.out material gen baseDir logic_class t1,t2,t3 shader_program
-func _gen(baseDir, logic_class, tlist, shader_program string) {
+func _gen(baseDir, art_logic, tlist, shader_program string) {
 	var res comm.PBMaterial
-	res.LogicClass = logic_class
+	res.ArtLogic = art_logic
 	{
 		segs := strings.Split(tlist, ",")
 		for _, onet := range segs {

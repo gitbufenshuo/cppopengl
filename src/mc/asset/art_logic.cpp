@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <filesystem>
 #include <iostream>
 
 // glad
@@ -19,16 +20,23 @@
 
 namespace mc::asset
 {
-    ArtLogic::ArtLogic(AssetManager &am, const std::string &file_path) : m_file_path{file_path}
+    using stdpath = std::filesystem::path;
+    const std::string ArtLogic::s_scope{"art_logic"};
+
+    ArtLogic::ArtLogic(AssetManager &am, const std::string &r_name) : m_r_name{r_name},
+                                                                      m_file_path{(stdpath{am.GetBaseDir()} / stdpath{s_scope} / stdpath{r_name}).string()}
+
     {
-        std::ifstream t(file_path.data());
+        std::ifstream t(m_file_path.data());
         if (!m_pb_data.ParseFromIstream(&t))
         {
-            SPD_WARN("mc::asset::ArtLogic()", file_path);
+            SPD_WARN("mc::asset::ArtLogic()", m_file_path);
             return;
         }
-        mc::tools::MD5Sum(file_path, m_key.data);
-        am.Reg<ArtLogic>(m_key, this);
+        {
+            mc::tools::MD5Sum(r_name, m_key.data);
+            am.Reg<ArtLogic>(m_key, this);
+        }
     }
     ArtLogic::~ArtLogic()
     {
@@ -81,7 +89,7 @@ namespace mc::asset
         auto func{getFunc(class_name)};
         if (!func)
         {
-            return std::make_shared<ArtLogic>(nullptr);
+            return std::shared_ptr<ArtLogic>{nullptr};
         }
         //
         return func(bin_data);
@@ -136,6 +144,7 @@ namespace mc::asset
                 break;
             }
         }
+        return res;
     }
     void ArtLogicPhong::Register(ArtLogicFactory &af)
     {

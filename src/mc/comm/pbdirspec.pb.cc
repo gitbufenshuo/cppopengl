@@ -27,6 +27,7 @@ PROTOBUF_CONSTEXPR PBDirSpec::PBDirSpec(
     /*decltype(_impl_.image_list_)*/{}
   , /*decltype(_impl_.bin_buffer_list_)*/{}
   , /*decltype(_impl_.shader_code_list_)*/{}
+  , /*decltype(_impl_.art_logic_list_)*/{}
   , /*decltype(_impl_.texture_list_)*/{}
   , /*decltype(_impl_.model_list_)*/{}
   , /*decltype(_impl_.shader_program_list_)*/{}
@@ -61,6 +62,7 @@ const uint32_t TableStruct_mc_2fcomm_2fpbdirspec_2eproto::offsets[] PROTOBUF_SEC
   PROTOBUF_FIELD_OFFSET(::mc::comm::PBDirSpec, _impl_.image_list_),
   PROTOBUF_FIELD_OFFSET(::mc::comm::PBDirSpec, _impl_.bin_buffer_list_),
   PROTOBUF_FIELD_OFFSET(::mc::comm::PBDirSpec, _impl_.shader_code_list_),
+  PROTOBUF_FIELD_OFFSET(::mc::comm::PBDirSpec, _impl_.art_logic_list_),
   PROTOBUF_FIELD_OFFSET(::mc::comm::PBDirSpec, _impl_.texture_list_),
   PROTOBUF_FIELD_OFFSET(::mc::comm::PBDirSpec, _impl_.model_list_),
   PROTOBUF_FIELD_OFFSET(::mc::comm::PBDirSpec, _impl_.shader_program_list_),
@@ -77,18 +79,18 @@ static const ::_pb::Message* const file_default_instances[] = {
 };
 
 const char descriptor_table_protodef_mc_2fcomm_2fpbdirspec_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\027mc/comm/pbdirspec.proto\022\007mc.comm\"\351\001\n\tP"
+  "\n\027mc/comm/pbdirspec.proto\022\007mc.comm\"\201\002\n\tP"
   "BDirSpec\022\020\n\010base_dir\030\001 \001(\t\022\022\n\nimage_list"
   "\030\002 \003(\t\022\027\n\017bin_buffer_list\030\003 \003(\t\022\030\n\020shade"
-  "r_code_list\030\004 \003(\t\022\024\n\014texture_list\030\005 \003(\t\022"
-  "\022\n\nmodel_list\030\006 \003(\t\022\033\n\023shader_program_li"
-  "st\030\007 \003(\t\022\025\n\rmaterial_list\030\010 \003(\t\022\022\n\nscene"
-  "_list\030\t \003(\t\022\021\n\tnode_list\030\n \003(\tB\tZ\007mc/com"
-  "mb\006proto3"
+  "r_code_list\030\004 \003(\t\022\026\n\016art_logic_list\030\005 \003("
+  "\t\022\024\n\014texture_list\030\006 \003(\t\022\022\n\nmodel_list\030\007 "
+  "\003(\t\022\033\n\023shader_program_list\030\010 \003(\t\022\025\n\rmate"
+  "rial_list\030\t \003(\t\022\022\n\nscene_list\030\n \003(\t\022\021\n\tn"
+  "ode_list\030\013 \003(\tB\tZ\007mc/commb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_mc_2fcomm_2fpbdirspec_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_mc_2fcomm_2fpbdirspec_2eproto = {
-    false, false, 289, descriptor_table_protodef_mc_2fcomm_2fpbdirspec_2eproto,
+    false, false, 313, descriptor_table_protodef_mc_2fcomm_2fpbdirspec_2eproto,
     "mc/comm/pbdirspec.proto",
     &descriptor_table_mc_2fcomm_2fpbdirspec_2eproto_once, nullptr, 0, 1,
     schemas, file_default_instances, TableStruct_mc_2fcomm_2fpbdirspec_2eproto::offsets,
@@ -123,6 +125,7 @@ PBDirSpec::PBDirSpec(const PBDirSpec& from)
       decltype(_impl_.image_list_){from._impl_.image_list_}
     , decltype(_impl_.bin_buffer_list_){from._impl_.bin_buffer_list_}
     , decltype(_impl_.shader_code_list_){from._impl_.shader_code_list_}
+    , decltype(_impl_.art_logic_list_){from._impl_.art_logic_list_}
     , decltype(_impl_.texture_list_){from._impl_.texture_list_}
     , decltype(_impl_.model_list_){from._impl_.model_list_}
     , decltype(_impl_.shader_program_list_){from._impl_.shader_program_list_}
@@ -152,6 +155,7 @@ inline void PBDirSpec::SharedCtor(
       decltype(_impl_.image_list_){arena}
     , decltype(_impl_.bin_buffer_list_){arena}
     , decltype(_impl_.shader_code_list_){arena}
+    , decltype(_impl_.art_logic_list_){arena}
     , decltype(_impl_.texture_list_){arena}
     , decltype(_impl_.model_list_){arena}
     , decltype(_impl_.shader_program_list_){arena}
@@ -181,6 +185,7 @@ inline void PBDirSpec::SharedDtor() {
   _impl_.image_list_.~RepeatedPtrField();
   _impl_.bin_buffer_list_.~RepeatedPtrField();
   _impl_.shader_code_list_.~RepeatedPtrField();
+  _impl_.art_logic_list_.~RepeatedPtrField();
   _impl_.texture_list_.~RepeatedPtrField();
   _impl_.model_list_.~RepeatedPtrField();
   _impl_.shader_program_list_.~RepeatedPtrField();
@@ -203,6 +208,7 @@ void PBDirSpec::Clear() {
   _impl_.image_list_.Clear();
   _impl_.bin_buffer_list_.Clear();
   _impl_.shader_code_list_.Clear();
+  _impl_.art_logic_list_.Clear();
   _impl_.texture_list_.Clear();
   _impl_.model_list_.Clear();
   _impl_.shader_program_list_.Clear();
@@ -274,9 +280,24 @@ const char* PBDirSpec::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx
         } else
           goto handle_unusual;
         continue;
-      // repeated string texture_list = 5;
+      // repeated string art_logic_list = 5;
       case 5:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 42)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            auto str = _internal_add_art_logic_list();
+            ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+            CHK_(ptr);
+            CHK_(::_pbi::VerifyUTF8(str, "mc.comm.PBDirSpec.art_logic_list"));
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<42>(ptr));
+        } else
+          goto handle_unusual;
+        continue;
+      // repeated string texture_list = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 50)) {
           ptr -= 1;
           do {
             ptr += 1;
@@ -285,13 +306,13 @@ const char* PBDirSpec::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx
             CHK_(ptr);
             CHK_(::_pbi::VerifyUTF8(str, "mc.comm.PBDirSpec.texture_list"));
             if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<42>(ptr));
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<50>(ptr));
         } else
           goto handle_unusual;
         continue;
-      // repeated string model_list = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 50)) {
+      // repeated string model_list = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 58)) {
           ptr -= 1;
           do {
             ptr += 1;
@@ -300,13 +321,13 @@ const char* PBDirSpec::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx
             CHK_(ptr);
             CHK_(::_pbi::VerifyUTF8(str, "mc.comm.PBDirSpec.model_list"));
             if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<50>(ptr));
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<58>(ptr));
         } else
           goto handle_unusual;
         continue;
-      // repeated string shader_program_list = 7;
-      case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 58)) {
+      // repeated string shader_program_list = 8;
+      case 8:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 66)) {
           ptr -= 1;
           do {
             ptr += 1;
@@ -315,13 +336,13 @@ const char* PBDirSpec::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx
             CHK_(ptr);
             CHK_(::_pbi::VerifyUTF8(str, "mc.comm.PBDirSpec.shader_program_list"));
             if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<58>(ptr));
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<66>(ptr));
         } else
           goto handle_unusual;
         continue;
-      // repeated string material_list = 8;
-      case 8:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 66)) {
+      // repeated string material_list = 9;
+      case 9:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 74)) {
           ptr -= 1;
           do {
             ptr += 1;
@@ -330,13 +351,13 @@ const char* PBDirSpec::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx
             CHK_(ptr);
             CHK_(::_pbi::VerifyUTF8(str, "mc.comm.PBDirSpec.material_list"));
             if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<66>(ptr));
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<74>(ptr));
         } else
           goto handle_unusual;
         continue;
-      // repeated string scene_list = 9;
-      case 9:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 74)) {
+      // repeated string scene_list = 10;
+      case 10:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 82)) {
           ptr -= 1;
           do {
             ptr += 1;
@@ -345,13 +366,13 @@ const char* PBDirSpec::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx
             CHK_(ptr);
             CHK_(::_pbi::VerifyUTF8(str, "mc.comm.PBDirSpec.scene_list"));
             if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<74>(ptr));
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<82>(ptr));
         } else
           goto handle_unusual;
         continue;
-      // repeated string node_list = 10;
-      case 10:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 82)) {
+      // repeated string node_list = 11;
+      case 11:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 90)) {
           ptr -= 1;
           do {
             ptr += 1;
@@ -360,7 +381,7 @@ const char* PBDirSpec::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx
             CHK_(ptr);
             CHK_(::_pbi::VerifyUTF8(str, "mc.comm.PBDirSpec.node_list"));
             if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<82>(ptr));
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<90>(ptr));
         } else
           goto handle_unusual;
         continue;
@@ -433,64 +454,74 @@ uint8_t* PBDirSpec::_InternalSerialize(
     target = stream->WriteString(4, s, target);
   }
 
-  // repeated string texture_list = 5;
+  // repeated string art_logic_list = 5;
+  for (int i = 0, n = this->_internal_art_logic_list_size(); i < n; i++) {
+    const auto& s = this->_internal_art_logic_list(i);
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      s.data(), static_cast<int>(s.length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "mc.comm.PBDirSpec.art_logic_list");
+    target = stream->WriteString(5, s, target);
+  }
+
+  // repeated string texture_list = 6;
   for (int i = 0, n = this->_internal_texture_list_size(); i < n; i++) {
     const auto& s = this->_internal_texture_list(i);
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       s.data(), static_cast<int>(s.length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
       "mc.comm.PBDirSpec.texture_list");
-    target = stream->WriteString(5, s, target);
+    target = stream->WriteString(6, s, target);
   }
 
-  // repeated string model_list = 6;
+  // repeated string model_list = 7;
   for (int i = 0, n = this->_internal_model_list_size(); i < n; i++) {
     const auto& s = this->_internal_model_list(i);
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       s.data(), static_cast<int>(s.length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
       "mc.comm.PBDirSpec.model_list");
-    target = stream->WriteString(6, s, target);
+    target = stream->WriteString(7, s, target);
   }
 
-  // repeated string shader_program_list = 7;
+  // repeated string shader_program_list = 8;
   for (int i = 0, n = this->_internal_shader_program_list_size(); i < n; i++) {
     const auto& s = this->_internal_shader_program_list(i);
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       s.data(), static_cast<int>(s.length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
       "mc.comm.PBDirSpec.shader_program_list");
-    target = stream->WriteString(7, s, target);
+    target = stream->WriteString(8, s, target);
   }
 
-  // repeated string material_list = 8;
+  // repeated string material_list = 9;
   for (int i = 0, n = this->_internal_material_list_size(); i < n; i++) {
     const auto& s = this->_internal_material_list(i);
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       s.data(), static_cast<int>(s.length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
       "mc.comm.PBDirSpec.material_list");
-    target = stream->WriteString(8, s, target);
+    target = stream->WriteString(9, s, target);
   }
 
-  // repeated string scene_list = 9;
+  // repeated string scene_list = 10;
   for (int i = 0, n = this->_internal_scene_list_size(); i < n; i++) {
     const auto& s = this->_internal_scene_list(i);
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       s.data(), static_cast<int>(s.length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
       "mc.comm.PBDirSpec.scene_list");
-    target = stream->WriteString(9, s, target);
+    target = stream->WriteString(10, s, target);
   }
 
-  // repeated string node_list = 10;
+  // repeated string node_list = 11;
   for (int i = 0, n = this->_internal_node_list_size(); i < n; i++) {
     const auto& s = this->_internal_node_list(i);
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       s.data(), static_cast<int>(s.length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
       "mc.comm.PBDirSpec.node_list");
-    target = stream->WriteString(10, s, target);
+    target = stream->WriteString(11, s, target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -533,7 +564,15 @@ size_t PBDirSpec::ByteSizeLong() const {
       _impl_.shader_code_list_.Get(i));
   }
 
-  // repeated string texture_list = 5;
+  // repeated string art_logic_list = 5;
+  total_size += 1 *
+      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(_impl_.art_logic_list_.size());
+  for (int i = 0, n = _impl_.art_logic_list_.size(); i < n; i++) {
+    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+      _impl_.art_logic_list_.Get(i));
+  }
+
+  // repeated string texture_list = 6;
   total_size += 1 *
       ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(_impl_.texture_list_.size());
   for (int i = 0, n = _impl_.texture_list_.size(); i < n; i++) {
@@ -541,7 +580,7 @@ size_t PBDirSpec::ByteSizeLong() const {
       _impl_.texture_list_.Get(i));
   }
 
-  // repeated string model_list = 6;
+  // repeated string model_list = 7;
   total_size += 1 *
       ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(_impl_.model_list_.size());
   for (int i = 0, n = _impl_.model_list_.size(); i < n; i++) {
@@ -549,7 +588,7 @@ size_t PBDirSpec::ByteSizeLong() const {
       _impl_.model_list_.Get(i));
   }
 
-  // repeated string shader_program_list = 7;
+  // repeated string shader_program_list = 8;
   total_size += 1 *
       ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(_impl_.shader_program_list_.size());
   for (int i = 0, n = _impl_.shader_program_list_.size(); i < n; i++) {
@@ -557,7 +596,7 @@ size_t PBDirSpec::ByteSizeLong() const {
       _impl_.shader_program_list_.Get(i));
   }
 
-  // repeated string material_list = 8;
+  // repeated string material_list = 9;
   total_size += 1 *
       ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(_impl_.material_list_.size());
   for (int i = 0, n = _impl_.material_list_.size(); i < n; i++) {
@@ -565,7 +604,7 @@ size_t PBDirSpec::ByteSizeLong() const {
       _impl_.material_list_.Get(i));
   }
 
-  // repeated string scene_list = 9;
+  // repeated string scene_list = 10;
   total_size += 1 *
       ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(_impl_.scene_list_.size());
   for (int i = 0, n = _impl_.scene_list_.size(); i < n; i++) {
@@ -573,7 +612,7 @@ size_t PBDirSpec::ByteSizeLong() const {
       _impl_.scene_list_.Get(i));
   }
 
-  // repeated string node_list = 10;
+  // repeated string node_list = 11;
   total_size += 1 *
       ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(_impl_.node_list_.size());
   for (int i = 0, n = _impl_.node_list_.size(); i < n; i++) {
@@ -609,6 +648,7 @@ void PBDirSpec::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROT
   _this->_impl_.image_list_.MergeFrom(from._impl_.image_list_);
   _this->_impl_.bin_buffer_list_.MergeFrom(from._impl_.bin_buffer_list_);
   _this->_impl_.shader_code_list_.MergeFrom(from._impl_.shader_code_list_);
+  _this->_impl_.art_logic_list_.MergeFrom(from._impl_.art_logic_list_);
   _this->_impl_.texture_list_.MergeFrom(from._impl_.texture_list_);
   _this->_impl_.model_list_.MergeFrom(from._impl_.model_list_);
   _this->_impl_.shader_program_list_.MergeFrom(from._impl_.shader_program_list_);
@@ -640,6 +680,7 @@ void PBDirSpec::InternalSwap(PBDirSpec* other) {
   _impl_.image_list_.InternalSwap(&other->_impl_.image_list_);
   _impl_.bin_buffer_list_.InternalSwap(&other->_impl_.bin_buffer_list_);
   _impl_.shader_code_list_.InternalSwap(&other->_impl_.shader_code_list_);
+  _impl_.art_logic_list_.InternalSwap(&other->_impl_.art_logic_list_);
   _impl_.texture_list_.InternalSwap(&other->_impl_.texture_list_);
   _impl_.model_list_.InternalSwap(&other->_impl_.model_list_);
   _impl_.shader_program_list_.InternalSwap(&other->_impl_.shader_program_list_);

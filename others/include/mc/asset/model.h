@@ -19,7 +19,7 @@ namespace mc::asset
     class Model
     {
     public:
-        Model(AssetManager &am, const std::string &file_path);
+        Model(AssetManager &am, const std::string &r_name);
         ~Model();
 
     public:
@@ -32,7 +32,10 @@ namespace mc::asset
         void load(); // load to gl
 
     private:
+        const std::string m_r_name;
         const std::string m_file_path;
+        static const std::string s_scope; // bin_buffer
+
         MD5SUM m_key;
         std::shared_ptr<BinBuffer> m_bin_buffer;
 

@@ -19,7 +19,7 @@ namespace mc::asset
     class Texture
     {
     public:
-        Texture(AssetManager &am, const std::string &file_path);
+        Texture(AssetManager &am, const std::string &r_name);
         ~Texture();
 
     public:
@@ -29,7 +29,10 @@ namespace mc::asset
         void load(); // load to gl
 
     private:
+        const std::string m_r_name;
         const std::string m_file_path;
+        static const std::string s_scope; // bin_buffer
+
         mc::comm::PBTexture m_pb_data;
         unsigned int gl_id{};
         MD5SUM m_key;

@@ -38,12 +38,17 @@ namespace
 
 namespace mc::asset
 {
-    ShaderProgram::ShaderProgram(AssetManager &am, const std::string &file_path) : m_file_path{file_path}
+    using stdpath = std::filesystem::path;
+    const std::string ShaderProgram::s_scope{"shader_program"};
+
+    ShaderProgram::ShaderProgram(AssetManager &am, const std::string &r_name) : m_r_name{r_name},
+                                                                                m_file_path{(stdpath{am.GetBaseDir()} / stdpath{s_scope} / stdpath{r_name}).string()}
+
     {
-        std::ifstream t(file_path.data());
+        std::ifstream t(m_file_path.data());
         if (!m_pb_data.ParseFromIstream(&t))
         {
-            SPD_WARN("mc::asset::Texuture()", file_path);
+            SPD_WARN("mc::asset::Texuture()", m_file_path);
             return;
         }
         MD5SUM shader_code_key;
@@ -60,8 +65,10 @@ namespace mc::asset
             SPD_WARN("Can't find ShaderCode FS", m_pb_data.fs());
         }
         load();
-        mc::tools::MD5Sum(file_path, m_key.data);
-        am.Reg<ShaderProgram>(m_key, this);
+        {
+            mc::tools::MD5Sum(r_name, m_key.data);
+            am.Reg<ShaderProgram>(m_key, this);
+        }
     }
 
     ShaderProgram::~ShaderProgram()
