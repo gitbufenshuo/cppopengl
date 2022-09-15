@@ -23,10 +23,9 @@ import (
 */
 
 func _gen(baseDir, image string, mag, min, s, t int) {
-	var res comm.PBTexture
-	res.Image = path.Join(baseDir, "image", image)
 	{
-		finfo, err := os.Lstat(res.Image)
+		full_image_path := path.Join(baseDir, "image", image)
+		finfo, err := os.Lstat(full_image_path)
 		if err != nil {
 			return
 		}
@@ -34,11 +33,15 @@ func _gen(baseDir, image string, mag, min, s, t int) {
 			return
 		}
 	}
+	var res comm.PBTexture
+	res.Image = image
 	res.MagFilter = int32(mag)
 	res.MinFilter = int32(min)
 	res.WrapS = int32(s)
 	res.WrapT = int32(t)
-	lastfile := path.Join(baseDir, "texture", fmt.Sprintf("%s%d.texture.pb", image, time.Now().UnixMilli()%5))
+	new_name := fmt.Sprintf("%s%d.texture.pb", image, time.Now().UnixMilli()%5)
+	fmt.Println("Gen:", new_name)
+	lastfile := path.Join(baseDir, "texture", new_name)
 	data, _ := proto.Marshal(&res)
 	ioutil.WriteFile(lastfile, data, 0644)
 }

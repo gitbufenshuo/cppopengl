@@ -73,6 +73,7 @@ namespace
             SPD_WARN("loadSceneFromFile()", dir_spec_path);
             throw 1;
         }
+        am.SetBaseDir(pb_data.base_dir());
         // load Image
         for (int index = 0; index < pb_data.image_list_size(); ++index)
         {

@@ -34,6 +34,7 @@ func Main(baseDir string) {
 	jsondata, _ := json.Marshal(&res)
 	fmt.Println(string(jsondata))
 	protodata, _ := proto.Marshal(&res)
+	os.Remove("gogogo.pb.data")
 	ioutil.WriteFile("gogogo.pb.data", protodata, 0644)
 }
 
@@ -42,8 +43,8 @@ func onedir(res *comm.PBDirSpec, dir string, list *[]string) {
 	full_dir := path.Join(res.BaseDir, dir)
 	var visit = func(path string, f os.FileInfo, err error) error {
 		if f != nil && !f.IsDir() {
-			fmt.Printf("add: %s\n", path)
-			*list = append(*list, path)
+			fmt.Printf("	- add:[fname: %s]\n", f.Name())
+			*list = append(*list, f.Name())
 		}
 		return nil
 	}

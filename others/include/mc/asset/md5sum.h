@@ -3,6 +3,7 @@
 
 #include <cstddef>
 #include <iostream>
+#include <spdlog/fmt/ostr.h> // must be included
 
 namespace mc::asset
 {

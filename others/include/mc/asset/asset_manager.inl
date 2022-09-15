@@ -13,6 +13,10 @@ namespace mc::asset
     {
         return m_base_dir;
     }
+    inline void AssetManager::SetBaseDir(const std::string &base_dir)
+    {
+        m_base_dir = base_dir;
+    }
 
 #define FUNCTION_SPECIAL
     template <>

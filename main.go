@@ -6,6 +6,7 @@ import (
 	"os"
 	"time"
 
+	"gitee.com/onebook/cppopengl/bintools/start"
 	"gitee.com/onebook/cppopengl/bintools/stdirspec"
 	"gitee.com/onebook/cppopengl/bintools/stmaterial"
 	"gitee.com/onebook/cppopengl/bintools/stmodel"
@@ -23,6 +24,10 @@ func main() {
 	}
 	if os.Args[1] == "texture" {
 		sttexture.Main()
+		return
+	}
+	if os.Args[1] == "art" {
+		start.Main()
 		return
 	}
 	if os.Args[1] == "model" {

@@ -16,8 +16,8 @@ import (
 func _gen(baseDir, vs, fs string) {
 	var res comm.PBShaderProgram
 	//
-	res.Vs = path.Join(baseDir, "shader_code", vs)
-	res.Fs = path.Join(baseDir, "shader_code", fs)
+	res.Vs = vs
+	res.Fs = fs
 	//
 	data, _ := proto.Marshal(&res)
 	filename := fmt.Sprintf("%d%d%d%d%d.sp.pb", rand.Int()%10, rand.Int()%10, rand.Int()%10, rand.Int()%10, rand.Int()%10)

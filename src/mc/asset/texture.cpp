@@ -45,6 +45,7 @@ namespace mc::asset
 
     Texture::~Texture()
     {
+        SPD_INFO("Texture::~Texture() addr:{}", static_cast<void *>(this));
     }
     void Texture::Use()
     {

@@ -20,12 +20,10 @@ func _gen(baseDir, art_logic, tlist, shader_program string) {
 	{
 		segs := strings.Split(tlist, ",")
 		for _, onet := range segs {
-			res.TextureList = append(res.TextureList,
-				path.Join(baseDir, "texture", onet),
-			)
+			res.TextureList = append(res.TextureList, onet)
 		}
 	}
-	res.ShaderProgram = path.Join(baseDir, "shader_program", shader_program)
+	res.ShaderProgram = shader_program
 	protodata, _ := proto.Marshal(&res)
 	filename := fmt.Sprintf("%d%d%d%d%d.material.pb", rand.Int()%10, rand.Int()%10, rand.Int()%10, rand.Int()%10, rand.Int()%10)
 	fmt.Println("Gen: ", filename)

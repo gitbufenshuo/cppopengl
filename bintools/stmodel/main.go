@@ -94,7 +94,7 @@ func _gencube(baseDir, bin_buffer string, x, y, z, px, py, pz float32) {
 	ioutil.WriteFile(full_buffer_name, buffer.Bytes(), 0644)
 	// 2. model 文件
 	var model comm.PBModel
-	model.BinBuffer = full_buffer_name
+	model.BinBuffer = bin_buffer_name
 	model.Length = int32(buffer.Len())
 	model.EboLength = int32(len(base_cube_index) * 2) // 一个两字节
 	model.EboType = 5123                              // unsigned short
