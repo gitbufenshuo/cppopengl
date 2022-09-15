@@ -21,7 +21,6 @@ namespace mc::asset
 
     Material::Material(AssetManager &am, const std::string &r_name) : m_r_name{r_name},
                                                                       m_file_path{(stdpath{am.GetBaseDir()} / stdpath{s_scope} / stdpath{r_name}).string()}
-
     {
         std::ifstream t(m_file_path.data());
         if (!m_pb_data.ParseFromIstream(&t))
@@ -69,6 +68,10 @@ namespace mc::asset
     MD5SUM Material::GetKey()
     {
         return m_key;
+    }
+    std::shared_ptr<ArtLogic> Material::GetArtLogic()
+    {
+        return m_art_logic;
     }
 
 } // namespace mc::asset

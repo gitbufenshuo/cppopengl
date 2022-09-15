@@ -1,3 +1,8 @@
+namespace mc::low
+{
+    class GameObject;
+}
+
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 

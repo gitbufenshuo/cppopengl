@@ -109,7 +109,8 @@ namespace mc::low
                 continue;
             }
             // material tasks
-            _material->PostUniform(this, _gb);
+            auto art_logic{_material->GetArtLogic()};
+            art_logic->PostUniform(this, _gb);
             _gb->BeforeRenderUpdate(delta_time);
             // 遍历每一个 primitive model
             {

@@ -27,6 +27,7 @@ namespace mc::asset
     public:
         void Use();
         MD5SUM GetKey();
+        std::shared_ptr<ArtLogic> GetArtLogic();
 
     private:
         void load(); // load to gl

@@ -17,6 +17,7 @@ namespace mc::asset
 
 // mc::low
 #include <mc/engine.h>
+#include <mc/gameobject.h>
 
 #include <mc/asset/asset_manager.h>
 #include <mc/asset/md5sum.h>

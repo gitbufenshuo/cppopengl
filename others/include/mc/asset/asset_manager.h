@@ -29,7 +29,7 @@ namespace mc::asset
     public:
         inline AssetManager();
         inline const std::string &GetBaseDir();
-        inline void SetBaseDir(const std::string& base_dir);
+        inline void SetBaseDir(const std::string &base_dir);
 
     public:
         template <typename T>

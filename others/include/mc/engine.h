@@ -1,3 +1,7 @@
+namespace mc::low
+{
+    class Engine;
+}
 #ifndef ENGINE_H
 #define ENGINE_H
 
@@ -10,10 +14,6 @@
 
 #include <mc/gameobject.h>
 #include <mc/camera.h>
-#include <mc/shader_store.h>
-#include <mc/model_store.h>
-#include <mc/texture_store.h>
-#include <mc/material_store.h>
 #include <mc/keyinputsystem.h>
 
 // asset
@@ -39,10 +39,6 @@ namespace mc::low
 
         // asset
         std::shared_ptr<mc::asset::AssetManager> m_am;
-        ShaderStore m_shader_store;     // 这东西不用指针
-        ModelStore m_model_store;       // 这东西不用指针
-        TextureStore m_texture_store;   // 这东西不用指针
-        MaterialStore m_material_store; // 这东西不用指针
 
     public:
         // static
@@ -67,22 +63,6 @@ namespace mc::low
         void Run();
 
         void AddGameobject(GameObject *gb);
-        ShaderStore &GetShaderStore()
-        {
-            return m_shader_store;
-        }
-        ModelStore &GetModelStore()
-        {
-            return m_model_store;
-        }
-        TextureStore &GetTextureStore()
-        {
-            return m_texture_store;
-        }
-        MaterialStore &GetMaterialStore()
-        {
-            return m_material_store;
-        }
 
         void SetLightColor(glm::vec3 color)
         {
