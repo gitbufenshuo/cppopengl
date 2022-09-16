@@ -45,10 +45,10 @@ namespace mc::asset
         }
         {
             // ArtLogic create
-            auto &af{am.GetAF()};
+            auto &arf{am.GetARF()};
             mc::tools::MD5Sum(m_pb_data.art_logic(), _key.data);
             auto al{am.Get<ArtLogic>(_key)};
-            m_art_logic = af.Create(al->GetLogicName(), al->GetBinData());
+            m_art_logic = arf.Create(al->GetLogicName(), al->GetBinData());
             // set ArtLogic Texture
             for (auto one : m_texture_list)
             {

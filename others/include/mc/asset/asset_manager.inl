@@ -2,13 +2,19 @@
 
 namespace mc::asset
 {
-    inline AssetManager::AssetManager() : m_art_factory{std::make_shared<ArtLogicFactory>()}
+    inline AssetManager::AssetManager() : m_art_factory{std::make_shared<ArtLogicFactory>()},
+                                          m_act_factory{std::make_shared<ActLogicFactory>()}
     {
     }
-    inline ArtLogicFactory &AssetManager::GetAF()
+    inline ArtLogicFactory &AssetManager::GetARF()
     {
         return *m_art_factory;
     }
+    inline ActLogicFactory &AssetManager::GetACF()
+    {
+        return *m_act_factory;
+    }
+
     inline const std::string &AssetManager::GetBaseDir()
     {
         return m_base_dir;
@@ -68,6 +74,11 @@ namespace mc::asset
     inline Store<ArtLogic> &AssetManager::getStore()
     {
         return m_art_logic_store;
+    }
+    template <>
+    inline Store<ActLogic> &AssetManager::getStore()
+    {
+        return m_act_logic_store;
     }
 
 #undef FUNCTION_SPECIAL

@@ -146,9 +146,9 @@ namespace mc::asset
         }
         return res;
     }
-    void ArtLogicPhong::Register(ArtLogicFactory &af)
+    void ArtLogicPhong::Register(ArtLogicFactory &arf)
     {
-        af.Register("mc::asset::ArtLogicPhong", createFunc);
+        arf.Register("mc::asset::ArtLogicPhong", createFunc);
     }
 
     // public virtual

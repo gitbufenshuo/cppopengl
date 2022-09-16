@@ -21,6 +21,7 @@ namespace mc::asset
 #include <mc/asset/node.h>
 #include <mc/asset/scene.h>
 #include <mc/asset/art_logic.h>
+#include <mc/asset/act_logic.h>
 
 namespace mc::asset
 {
@@ -42,7 +43,8 @@ namespace mc::asset
         inline void Del(MD5SUM key);
 
     public:
-        inline ArtLogicFactory &GetAF();
+        inline ArtLogicFactory &GetARF();
+        inline ActLogicFactory &GetACF();
 
     private:
         template <typename T>
@@ -59,7 +61,9 @@ namespace mc::asset
         Store<Node> m_node_store;
         Store<Scene> m_scene_store;
         Store<ArtLogic> m_art_logic_store;
+        Store<ActLogic> m_act_logic_store;
         std::shared_ptr<ArtLogicFactory> m_art_factory;
+        std::shared_ptr<ActLogicFactory> m_act_factory;
         std::string m_base_dir;
     };
 }

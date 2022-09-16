@@ -29,8 +29,16 @@ namespace
         auto &am{*gogogo.GetAM()};
         // 这一步必须手动
         // 或者借助于命令行自动扫描生成
-        mc::asset::ArtLogicPhong::Register(am.GetAF());
+        mc::asset::ArtLogicPhong::Register(am.GetARF());
     }
+    void registActLogic(mc::low::Engine &gogogo)
+    {
+        auto &am{*gogogo.GetAM()};
+        // 这一步必须手动
+        // 或者借助于命令行自动扫描生成
+        mc::asset::ActLogicCamera::Register(am.GetACF());
+    }
+
 }
 
 namespace game::example_list::gltf_exp
