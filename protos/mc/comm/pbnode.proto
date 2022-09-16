@@ -24,6 +24,6 @@ message PBNode {
     repeated PBNode sub_list = 5; // 所有的子节点
 }
 
-message Scene {
+message PBScene {
     repeated PBNode root_list = 1; // 所有根节点
 }

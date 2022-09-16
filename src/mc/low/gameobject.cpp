@@ -36,29 +36,29 @@ namespace mc::low
     {
         return m_id;
     }
-    void GameObject::AddLogicSupport(LogicSupport *lg)
+    void GameObject::AddAct(std::shared_ptr<mc::asset::ActLogic> act)
     {
-        lg_list.push_back(lg);
+        act_list.push_back(act);
     }
     void GameObject::Update(double delta_time)
     {
-        for (auto onelg : lg_list)
+        for (auto one_act : act_list)
         {
-            onelg->Update(delta_time);
+            one_act->Update(delta_time);
         }
     }
     void GameObject::BeforeRenderUpdate(double delta_time)
     {
-        for (auto onelg : lg_list)
+        for (auto one_act : act_list)
         {
-            onelg->BeforeRenderUpdate(delta_time);
+            one_act->BeforeRenderUpdate(delta_time);
         }
     }
     void GameObject::AfterRenderUpdate(double delta_time)
     {
-        for (auto onelg : lg_list)
+        for (auto one_act : act_list)
         {
-            onelg->AfterRenderUpdate(delta_time);
+            one_act->AfterRenderUpdate(delta_time);
         }
     }
 

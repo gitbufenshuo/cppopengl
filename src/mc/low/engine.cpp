@@ -10,6 +10,7 @@
 
 namespace
 {
+    unsigned int frame_count{0};
     void gl_context_init()
     {
         glfwInit();
@@ -49,7 +50,7 @@ namespace
 
 namespace mc::low
 {
-    Engine::Engine(int width, int height, const char *name) : m_main_camera{new Camera{}}, m_width{width}, m_height{height}
+    Engine::Engine(int width, int height, const char *name) : m_main_camera{new Camera{}}, m_width{width}, m_height{height}, m_am{std::make_shared<mc::asset::AssetManager>()}
     {
         m_window = open_new_window(m_width, m_height, name);
         now_time = glfwGetTime();
@@ -109,7 +110,8 @@ namespace mc::low
                 continue;
             }
             // material tasks
-            _material->PostUniform(this, _gb);
+            auto art_logic{_material->GetArtLogic()};
+            art_logic->PostUniform(this, _gb);
             _gb->BeforeRenderUpdate(delta_time);
             // 遍历每一个 primitive model
             {
@@ -125,6 +127,7 @@ namespace mc::low
             // 画
             // 在画之后，遍历 logic_support
             _gb->AfterRenderUpdate(delta_time);
+            break;
         }
     }
     void Engine::update()
@@ -140,6 +143,11 @@ namespace mc::low
     {
         while (!glfwWindowShouldClose(m_window))
         {
+            ++frame_count;
+            if (frame_count > 600)
+            {
+                throw 1;
+            }
             update();
         }
         glfwTerminate();
@@ -163,4 +171,9 @@ namespace mc::low
             glDisable(GL_CULL_FACE);
         }
     }
+    std::shared_ptr<mc::asset::AssetManager> Engine::GetAM()
+    {
+        return m_am;
+    }
+
 }

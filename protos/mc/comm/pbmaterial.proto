@@ -5,7 +5,7 @@ package mc.comm;
 option go_package = "mc/comm";
 
 message PBMaterial {
-    string logic_class = 1;
+    string art_logic = 1;
     repeated string texture_list = 2;
     string shader_program = 3;
 }

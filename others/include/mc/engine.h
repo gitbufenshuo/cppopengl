@@ -1,7 +1,12 @@
+namespace mc::low
+{
+    class Engine;
+}
 #ifndef ENGINE_H
 #define ENGINE_H
 
 #include <unordered_map>
+#include <memory>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -9,11 +14,10 @@
 
 #include <mc/gameobject.h>
 #include <mc/camera.h>
-#include <mc/shader_store.h>
-#include <mc/model_store.h>
-#include <mc/texture_store.h>
-#include <mc/material_store.h>
 #include <mc/keyinputsystem.h>
+
+// asset
+#include <mc/asset/asset_manager.h>
 
 namespace mc::low
 {
@@ -32,10 +36,9 @@ namespace mc::low
         int m_height{800};
         glm::vec3 m_light_color{1.0f, 1.0f, 1.0f};
         glm::vec3 m_light_pos{0.0f, 0.0f, 0.0f};
-        ShaderStore m_shader_store;     // 这东西不用指针
-        ModelStore m_model_store;       // 这东西不用指针
-        TextureStore m_texture_store;   // 这东西不用指针
-        MaterialStore m_material_store; // 这东西不用指针
+
+        // asset
+        std::shared_ptr<mc::asset::AssetManager> m_am;
 
     public:
         // static
@@ -44,7 +47,8 @@ namespace mc::low
         static double s_cursor_YPOS;
         static double s_c_xdiff;
         static double s_c_ydiff;
-        static KeyInputSystem s_keyinput; // 键盘事件管理器
+        static KeyInputSystem s_keyinput;               // 键盘事件管理器
+        void LoadAssetAndCreate(const char *file_path); // 从文件中加载所有的资源
 
     private:
         void update();
@@ -52,6 +56,7 @@ namespace mc::low
         void standard_render();
 
     public:
+        std::shared_ptr<mc::asset::AssetManager> GetAM();
         Camera *GetCamera()
         {
             return m_main_camera;
@@ -59,22 +64,6 @@ namespace mc::low
         void Run();
 
         void AddGameobject(GameObject *gb);
-        ShaderStore &GetShaderStore()
-        {
-            return m_shader_store;
-        }
-        ModelStore &GetModelStore()
-        {
-            return m_model_store;
-        }
-        TextureStore &GetTextureStore()
-        {
-            return m_texture_store;
-        }
-        MaterialStore &GetMaterialStore()
-        {
-            return m_material_store;
-        }
 
         void SetLightColor(glm::vec3 color)
         {

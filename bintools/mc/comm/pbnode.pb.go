@@ -225,7 +225,7 @@ func (x *PBNode) GetSubList() []*PBNode {
 	return nil
 }
 
-type Scene struct {
+type PBScene struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -233,8 +233,8 @@ type Scene struct {
 	RootList []*PBNode `protobuf:"bytes,1,rep,name=root_list,json=rootList,proto3" json:"root_list,omitempty"` // 所有根节点
 }
 
-func (x *Scene) Reset() {
-	*x = Scene{}
+func (x *PBScene) Reset() {
+	*x = PBScene{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_mc_comm_pbnode_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -242,13 +242,13 @@ func (x *Scene) Reset() {
 	}
 }
 
-func (x *Scene) String() string {
+func (x *PBScene) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Scene) ProtoMessage() {}
+func (*PBScene) ProtoMessage() {}
 
-func (x *Scene) ProtoReflect() protoreflect.Message {
+func (x *PBScene) ProtoReflect() protoreflect.Message {
 	mi := &file_mc_comm_pbnode_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -260,12 +260,12 @@ func (x *Scene) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Scene.ProtoReflect.Descriptor instead.
-func (*Scene) Descriptor() ([]byte, []int) {
+// Deprecated: Use PBScene.ProtoReflect.Descriptor instead.
+func (*PBScene) Descriptor() ([]byte, []int) {
 	return file_mc_comm_pbnode_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *Scene) GetRootList() []*PBNode {
+func (x *PBScene) GetRootList() []*PBNode {
 	if x != nil {
 		return x.RootList
 	}
@@ -301,11 +301,11 @@ var file_mc_comm_pbnode_proto_rawDesc = []byte{
 	0x72, 0x69, 0x61, 0x6c, 0x12, 0x2a, 0x0a, 0x08, 0x73, 0x75, 0x62, 0x5f, 0x6c, 0x69, 0x73, 0x74,
 	0x18, 0x05, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0f, 0x2e, 0x6d, 0x63, 0x2e, 0x63, 0x6f, 0x6d, 0x6d,
 	0x2e, 0x50, 0x42, 0x4e, 0x6f, 0x64, 0x65, 0x52, 0x07, 0x73, 0x75, 0x62, 0x4c, 0x69, 0x73, 0x74,
-	0x22, 0x35, 0x0a, 0x05, 0x53, 0x63, 0x65, 0x6e, 0x65, 0x12, 0x2c, 0x0a, 0x09, 0x72, 0x6f, 0x6f,
-	0x74, 0x5f, 0x6c, 0x69, 0x73, 0x74, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0f, 0x2e, 0x6d,
-	0x63, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x2e, 0x50, 0x42, 0x4e, 0x6f, 0x64, 0x65, 0x52, 0x08, 0x72,
-	0x6f, 0x6f, 0x74, 0x4c, 0x69, 0x73, 0x74, 0x42, 0x09, 0x5a, 0x07, 0x6d, 0x63, 0x2f, 0x63, 0x6f,
-	0x6d, 0x6d, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x22, 0x37, 0x0a, 0x07, 0x50, 0x42, 0x53, 0x63, 0x65, 0x6e, 0x65, 0x12, 0x2c, 0x0a, 0x09, 0x72,
+	0x6f, 0x6f, 0x74, 0x5f, 0x6c, 0x69, 0x73, 0x74, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0f,
+	0x2e, 0x6d, 0x63, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x2e, 0x50, 0x42, 0x4e, 0x6f, 0x64, 0x65, 0x52,
+	0x08, 0x72, 0x6f, 0x6f, 0x74, 0x4c, 0x69, 0x73, 0x74, 0x42, 0x09, 0x5a, 0x07, 0x6d, 0x63, 0x2f,
+	0x63, 0x6f, 0x6d, 0x6d, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -325,14 +325,14 @@ var file_mc_comm_pbnode_proto_goTypes = []interface{}{
 	(*PBVec4)(nil),      // 0: mc.comm.PBVec4
 	(*PBTransform)(nil), // 1: mc.comm.PBTransform
 	(*PBNode)(nil),      // 2: mc.comm.PBNode
-	(*Scene)(nil),       // 3: mc.comm.Scene
+	(*PBScene)(nil),     // 3: mc.comm.PBScene
 }
 var file_mc_comm_pbnode_proto_depIdxs = []int32{
 	0, // 0: mc.comm.PBTransform.translate:type_name -> mc.comm.PBVec4
 	0, // 1: mc.comm.PBTransform.rotation:type_name -> mc.comm.PBVec4
 	1, // 2: mc.comm.PBNode.transform:type_name -> mc.comm.PBTransform
 	2, // 3: mc.comm.PBNode.sub_list:type_name -> mc.comm.PBNode
-	2, // 4: mc.comm.Scene.root_list:type_name -> mc.comm.PBNode
+	2, // 4: mc.comm.PBScene.root_list:type_name -> mc.comm.PBNode
 	5, // [5:5] is the sub-list for method output_type
 	5, // [5:5] is the sub-list for method input_type
 	5, // [5:5] is the sub-list for extension type_name
@@ -383,7 +383,7 @@ func file_mc_comm_pbnode_proto_init() {
 			}
 		}
 		file_mc_comm_pbnode_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Scene); i {
+			switch v := v.(*PBScene); i {
 			case 0:
 				return &v.state
 			case 1:

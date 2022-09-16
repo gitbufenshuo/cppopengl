@@ -49,22 +49,22 @@ namespace comm {
 class PBNode;
 struct PBNodeDefaultTypeInternal;
 extern PBNodeDefaultTypeInternal _PBNode_default_instance_;
+class PBScene;
+struct PBSceneDefaultTypeInternal;
+extern PBSceneDefaultTypeInternal _PBScene_default_instance_;
 class PBTransform;
 struct PBTransformDefaultTypeInternal;
 extern PBTransformDefaultTypeInternal _PBTransform_default_instance_;
 class PBVec4;
 struct PBVec4DefaultTypeInternal;
 extern PBVec4DefaultTypeInternal _PBVec4_default_instance_;
-class Scene;
-struct SceneDefaultTypeInternal;
-extern SceneDefaultTypeInternal _Scene_default_instance_;
 }  // namespace comm
 }  // namespace mc
 PROTOBUF_NAMESPACE_OPEN
 template<> ::mc::comm::PBNode* Arena::CreateMaybeMessage<::mc::comm::PBNode>(Arena*);
+template<> ::mc::comm::PBScene* Arena::CreateMaybeMessage<::mc::comm::PBScene>(Arena*);
 template<> ::mc::comm::PBTransform* Arena::CreateMaybeMessage<::mc::comm::PBTransform>(Arena*);
 template<> ::mc::comm::PBVec4* Arena::CreateMaybeMessage<::mc::comm::PBVec4>(Arena*);
-template<> ::mc::comm::Scene* Arena::CreateMaybeMessage<::mc::comm::Scene>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace mc {
 namespace comm {
@@ -674,24 +674,24 @@ class PBNode final :
 };
 // -------------------------------------------------------------------
 
-class Scene final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mc.comm.Scene) */ {
+class PBScene final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mc.comm.PBScene) */ {
  public:
-  inline Scene() : Scene(nullptr) {}
-  ~Scene() override;
-  explicit PROTOBUF_CONSTEXPR Scene(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline PBScene() : PBScene(nullptr) {}
+  ~PBScene() override;
+  explicit PROTOBUF_CONSTEXPR PBScene(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  Scene(const Scene& from);
-  Scene(Scene&& from) noexcept
-    : Scene() {
+  PBScene(const PBScene& from);
+  PBScene(PBScene&& from) noexcept
+    : PBScene() {
     *this = ::std::move(from);
   }
 
-  inline Scene& operator=(const Scene& from) {
+  inline PBScene& operator=(const PBScene& from) {
     CopyFrom(from);
     return *this;
   }
-  inline Scene& operator=(Scene&& from) noexcept {
+  inline PBScene& operator=(PBScene&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -714,20 +714,20 @@ class Scene final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const Scene& default_instance() {
+  static const PBScene& default_instance() {
     return *internal_default_instance();
   }
-  static inline const Scene* internal_default_instance() {
-    return reinterpret_cast<const Scene*>(
-               &_Scene_default_instance_);
+  static inline const PBScene* internal_default_instance() {
+    return reinterpret_cast<const PBScene*>(
+               &_PBScene_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     3;
 
-  friend void swap(Scene& a, Scene& b) {
+  friend void swap(PBScene& a, PBScene& b) {
     a.Swap(&b);
   }
-  inline void Swap(Scene* other) {
+  inline void Swap(PBScene* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -740,7 +740,7 @@ class Scene final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(Scene* other) {
+  void UnsafeArenaSwap(PBScene* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -748,14 +748,14 @@ class Scene final :
 
   // implements Message ----------------------------------------------
 
-  Scene* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<Scene>(arena);
+  PBScene* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<PBScene>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const Scene& from);
+  void CopyFrom(const PBScene& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const Scene& from) {
-    Scene::MergeImpl(*this, from);
+  void MergeFrom( const PBScene& from) {
+    PBScene::MergeImpl(*this, from);
   }
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
@@ -773,15 +773,15 @@ class Scene final :
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(Scene* other);
+  void InternalSwap(PBScene* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "mc.comm.Scene";
+    return "mc.comm.PBScene";
   }
   protected:
-  explicit Scene(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit PBScene(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -815,7 +815,7 @@ class Scene final :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::mc::comm::PBNode >&
       root_list() const;
 
-  // @@protoc_insertion_point(class_scope:mc.comm.Scene)
+  // @@protoc_insertion_point(class_scope:mc.comm.PBScene)
  private:
   class _Internal;
 
@@ -1440,45 +1440,45 @@ PBNode::sub_list() const {
 
 // -------------------------------------------------------------------
 
-// Scene
+// PBScene
 
 // repeated .mc.comm.PBNode root_list = 1;
-inline int Scene::_internal_root_list_size() const {
+inline int PBScene::_internal_root_list_size() const {
   return _impl_.root_list_.size();
 }
-inline int Scene::root_list_size() const {
+inline int PBScene::root_list_size() const {
   return _internal_root_list_size();
 }
-inline void Scene::clear_root_list() {
+inline void PBScene::clear_root_list() {
   _impl_.root_list_.Clear();
 }
-inline ::mc::comm::PBNode* Scene::mutable_root_list(int index) {
-  // @@protoc_insertion_point(field_mutable:mc.comm.Scene.root_list)
+inline ::mc::comm::PBNode* PBScene::mutable_root_list(int index) {
+  // @@protoc_insertion_point(field_mutable:mc.comm.PBScene.root_list)
   return _impl_.root_list_.Mutable(index);
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::mc::comm::PBNode >*
-Scene::mutable_root_list() {
-  // @@protoc_insertion_point(field_mutable_list:mc.comm.Scene.root_list)
+PBScene::mutable_root_list() {
+  // @@protoc_insertion_point(field_mutable_list:mc.comm.PBScene.root_list)
   return &_impl_.root_list_;
 }
-inline const ::mc::comm::PBNode& Scene::_internal_root_list(int index) const {
+inline const ::mc::comm::PBNode& PBScene::_internal_root_list(int index) const {
   return _impl_.root_list_.Get(index);
 }
-inline const ::mc::comm::PBNode& Scene::root_list(int index) const {
-  // @@protoc_insertion_point(field_get:mc.comm.Scene.root_list)
+inline const ::mc::comm::PBNode& PBScene::root_list(int index) const {
+  // @@protoc_insertion_point(field_get:mc.comm.PBScene.root_list)
   return _internal_root_list(index);
 }
-inline ::mc::comm::PBNode* Scene::_internal_add_root_list() {
+inline ::mc::comm::PBNode* PBScene::_internal_add_root_list() {
   return _impl_.root_list_.Add();
 }
-inline ::mc::comm::PBNode* Scene::add_root_list() {
+inline ::mc::comm::PBNode* PBScene::add_root_list() {
   ::mc::comm::PBNode* _add = _internal_add_root_list();
-  // @@protoc_insertion_point(field_add:mc.comm.Scene.root_list)
+  // @@protoc_insertion_point(field_add:mc.comm.PBScene.root_list)
   return _add;
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::mc::comm::PBNode >&
-Scene::root_list() const {
-  // @@protoc_insertion_point(field_list:mc.comm.Scene.root_list)
+PBScene::root_list() const {
+  // @@protoc_insertion_point(field_list:mc.comm.PBScene.root_list)
   return _impl_.root_list_;
 }
 

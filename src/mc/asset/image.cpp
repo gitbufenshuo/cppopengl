@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include <filesystem>
 
 #include <image/stb_image.h>
 
@@ -11,20 +12,24 @@
 
 namespace mc::asset
 {
+    using stdpath = std::filesystem::path;
+    const std::string Image::s_scope{"image"};
 
-    Image::Image(AssetManager &am, const std::string &file_path) : m_file_path{file_path}
+    Image::Image(AssetManager &am, const std::string &r_name) : m_r_name{r_name},
+                                                                m_file_path{(stdpath{am.GetBaseDir()} / stdpath{s_scope} / stdpath{r_name}).string()}
     {
         stbi_set_flip_vertically_on_load(true);
 
-        m_image_data = stbi_load(file_path.data(), &m_width, &m_height, &m_nrChannels, 0);
+        m_image_data = stbi_load(m_file_path.data(), &m_width, &m_height, &m_nrChannels, 0);
         if (!m_image_data)
         {
             throw 1;
         }
         //
-        mc::tools::MD5Sum(file_path, m_key.data);
-        //
-        am.Reg<Image>(m_key, this);
+        {
+            mc::tools::MD5Sum(r_name, m_key.data);
+            am.Reg<Image>(m_key, this);
+        }
     }
     Image::~Image()
     {

@@ -2,7 +2,9 @@
 #define MC_ASSET_MD5SUM_H
 
 #include <cstddef>
+#include <algorithm>
 #include <iostream>
+#include <spdlog/fmt/ostr.h> // must be included
 
 namespace mc::asset
 {
@@ -16,6 +18,10 @@ namespace mc::asset
             auto t_base{reinterpret_cast<const unsigned long long *>(data)};
             auto o_base{reinterpret_cast<const unsigned long long *>(other.data)};
             return (t_base[0] == o_base[0]) && (t_base[1] == o_base[1]);
+        }
+        MD5SUM()
+        {
+            std::fill(data, data + 16, 0);
         }
     };
 

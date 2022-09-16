@@ -2,12 +2,13 @@
 #define MESH_RENDER_H
 
 #include <vector>
+#include <memory>
 
 #include <mc/gameobject.h>
-#include <mc/material.h>
-#include <mc/model_store.h>
-#include <mc/material_store.h>
-#include <mc/tools_bound.h>
+
+// asset
+#include <mc/asset/material.h>
+#include <mc/asset/model.h>
 
 namespace mc::low
 {
@@ -15,31 +16,23 @@ namespace mc::low
     class MeshRender
     {
         GameObject *m_gameobject;
-        Bound m_bound;
-        MaterialP m_material;
+        std::shared_ptr<mc::asset::Material> m_material;
         //
     public:
         MeshRender();
 
     public:
-        Bound GetBound()
-        {
-            return m_bound;
-        }
         void SetGameobject(GameObject *gameobject);
-        void SetMaterial(MaterialP material);
-        MaterialP GetMaterial()
-        {
-            return m_material;
-        }
+        void SetMaterial(std::shared_ptr<mc::asset::Material> material);
+        std::shared_ptr<mc::asset::Material> GetMaterial();
     };
 
     class MeshFilter
     {
-        std::vector<ModelP> m_model_list;
+        std::vector<std::shared_ptr<mc::asset::Model>> m_model_list;
 
     public:
-        void AddModel(ModelP model)
+        void AddModel(std::shared_ptr<mc::asset::Model> model)
         {
             m_model_list.push_back(model);
         }
@@ -47,7 +40,7 @@ namespace mc::low
         {
             return m_model_list.size();
         }
-        ModelP GetModel(int index)
+        std::shared_ptr<mc::asset::Model> GetModel(int index)
         {
             return m_model_list[index];
         }

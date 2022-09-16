@@ -13,7 +13,6 @@ namespace game
         }
         // 每一帧，换 model 里面的 m_v_data1
         auto model(m_gb->GetMeshFilter()->GetModel(0));
-        model->TestChangeData1(s_time);
     }
     void FunctionDraw::BeforeRenderUpdate(double delta_time)
     {

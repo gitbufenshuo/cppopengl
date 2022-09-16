@@ -9,7 +9,7 @@
 
 namespace mc::low
 {
-    Transform::Transform()
+    Transform::Transform(float x, float y, float z) : m_translate{x, y, z}, m_local_dirty{true}
     {
     }
     void Transform::SetUpper(Transform *upper)

@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <filesystem>
 
 // glad
 #include <glad/glad.h>
@@ -16,16 +17,34 @@
 // log
 #include <mc/log/log.h>
 
+namespace
+{
+    void showPBDATA(mc::comm::PBModel &m_pb_data)
+    {
+        std::cout << "mc::asset::Model::showPBDATA "
+                  << m_pb_data.bin_buffer() << " "
+                  << m_pb_data.begin() << " "
+                  << m_pb_data.length() << " "
+                  << m_pb_data.ebo_length() << " "
+                  << m_pb_data.ebo_type() << std::endl;
+        throw 1;
+    }
+}
+
 namespace mc::asset
 {
+    using stdpath = std::filesystem::path;
+    const std::string Model::s_scope{"model"};
 
-    Model::Model(AssetManager &am, const std::string &file_path) : m_file_path{file_path}
+    Model::Model(AssetManager &am, const std::string &r_name) : m_r_name{r_name},
+                                                                m_file_path{(stdpath{am.GetBaseDir()} / stdpath{s_scope} / stdpath{r_name}).string()}
+
     {
 
-        std::ifstream t(file_path.data());
+        std::ifstream t(m_file_path.data());
         if (!m_pb_data.ParseFromIstream(&t))
         {
-            SPD_WARN("mc::asset::Texuture()", file_path);
+            SPD_WARN("mc::asset::Model()", m_file_path);
             return;
         }
         MD5SUM bin_buffer_key;
@@ -36,7 +55,10 @@ namespace mc::asset
             SPD_WARN("Can't find BinBuffer ", m_pb_data.bin_buffer());
         }
         load();
-        mc::tools::MD5Sum(file_path, m_key.data);
+        {
+            mc::tools::MD5Sum(r_name, m_key.data);
+            am.Reg<Model>(m_key, this);
+        }
     }
     Model::~Model()
     {
@@ -59,6 +81,15 @@ namespace mc::asset
         m_vbo_list.push_back(vbo);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glBufferData(GL_ARRAY_BUFFER, m_pb_data.length() - m_pb_data.ebo_length(), m_bin_buffer->GetData(m_pb_data.begin() + m_pb_data.ebo_length()), GL_STATIC_DRAW);
+        if (m_pb_data.ebo_type() == GL_UNSIGNED_INT)
+        {
+            m_ebo_count = m_pb_data.ebo_length() / 4;
+        }
+        else if (m_pb_data.ebo_type() == GL_UNSIGNED_SHORT)
+        {
+            m_ebo_count = m_pb_data.ebo_length() / 2;
+        }
+
         // 3. vertex attrib
         int total{0};
         int offset{0};
@@ -77,5 +108,12 @@ namespace mc::asset
     {
         glBindVertexArray(m_vao);
     }
-
+    int Model::GetEBOCount()
+    {
+        return m_ebo_count;
+    }
+    unsigned int Model::GetEBOType()
+    {
+        return m_pb_data.ebo_type();
+    }
 }

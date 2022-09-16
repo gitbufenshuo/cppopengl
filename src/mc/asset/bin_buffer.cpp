@@ -1,6 +1,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <filesystem>
 
 #include <mc/asset/asset_manager.h>
 #include <mc/asset/bin_buffer.h>
@@ -10,16 +11,22 @@
 
 namespace mc::asset
 {
-    BinBuffer::BinBuffer(AssetManager &am, const std::string &file_path) : m_file_path{file_path}
+    using stdpath = std::filesystem::path;
+    const std::string BinBuffer::s_scope{"bin_buffer"};
+
+    BinBuffer::BinBuffer(AssetManager &am, const std::string &r_name) : m_r_name{r_name},
+                                                                        m_file_path{(stdpath{am.GetBaseDir()} / stdpath{s_scope} / stdpath{r_name}).string()}
+
     {
-        std::ifstream t(file_path.data());
+        std::ifstream t(m_file_path.data());
         std::stringstream buffer;
         buffer << t.rdbuf();
         m_data = buffer.str();
         //
-        mc::tools::MD5Sum(file_path, m_key.data);
-        //
-        am.Reg<BinBuffer>(m_key, this);
+        {
+            mc::tools::MD5Sum(r_name, m_key.data);
+            am.Reg<BinBuffer>(m_key, this);
+        }
     }
     BinBuffer::~BinBuffer()
     {

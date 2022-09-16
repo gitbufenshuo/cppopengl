@@ -1,3 +1,8 @@
+namespace mc::asset
+{
+    class Texture;
+}
+
 #ifndef MC_ASSET_TEXTURE_H
 #define MC_ASSET_TEXTURE_H
 
@@ -11,19 +16,23 @@
 
 namespace mc::asset
 {
-    class AssetManager;
-
     class Texture
     {
     public:
-        Texture(AssetManager &am, const std::string &file_path);
+        Texture(AssetManager &am, const std::string &r_name);
         ~Texture();
+
+    public:
+        void Use();
 
     private:
         void load(); // load to gl
 
     private:
+        const std::string m_r_name;
         const std::string m_file_path;
+        static const std::string s_scope; // bin_buffer
+
         mc::comm::PBTexture m_pb_data;
         unsigned int gl_id{};
         MD5SUM m_key;
