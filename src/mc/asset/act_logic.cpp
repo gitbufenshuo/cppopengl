@@ -149,6 +149,19 @@ namespace mc::asset
             m_ctl_transform->Move(glm::vec3{0.0f, 0.0f, speed});
             // m_ctl_transform->Move(glm::vec3{0.0f, 0.0f, speed}, mc::low::Space::World);
         }
+
+        if (mc::low::Engine::s_keyinput.KeyStateDown(69))
+        {
+            // E key
+            m_ctl_transform->Move(glm::vec3{0.0f, -speed, 0.0f}, mc::low::Space::World);
+            // m_ctl_transform->Move(glm::vec3{0.0f, 0.0f, -speed}, mc::low::Space::World);
+        }
+        else if (mc::low::Engine::s_keyinput.KeyStateDown(81))
+        {
+            // Q key
+            m_ctl_transform->Move(glm::vec3{0.0f, speed, 0.0f}, mc::low::Space::World);
+            // m_ctl_transform->Move(glm::vec3{0.0f, 0.0f, speed}, mc::low::Space::World);
+        }
     }
     void ActLogicCamera::BeforeRenderUpdate(double delta_time) {}
     void ActLogicCamera::AfterRenderUpdate(double delta_time) {}

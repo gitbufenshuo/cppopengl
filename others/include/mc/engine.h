@@ -35,7 +35,7 @@ namespace mc::low
         int m_width{800};
         int m_height{800};
         glm::vec3 m_light_color{1.0f, 1.0f, 1.0f};
-        glm::vec3 m_light_pos{0.0f, 0.0f, 0.0f};
+        glm::vec3 m_light_pos{-60.0f, 60.0f, -60.0f};
 
         // asset
         std::shared_ptr<mc::asset::AssetManager> m_am;

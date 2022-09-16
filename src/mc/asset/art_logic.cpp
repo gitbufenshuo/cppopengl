@@ -168,6 +168,7 @@ namespace mc::asset
             m_sp->Uniform("ma_Proj", eg->GetCamera()->GetProjMat());
             m_sp->Uniform("lightPos", eg->GetLightPos());
             m_sp->Uniform("lightColor", eg->GetLightColor());
+            m_sp->Uniform("viewPos", eg->GetCamera()->GetTransform()->GetWorldPos());
         }
         {
             m_sp->Uniform("material.ambient", m_ambient);
