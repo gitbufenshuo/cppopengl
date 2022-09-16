@@ -184,12 +184,13 @@ class PBDirSpec final :
     kBinBufferListFieldNumber = 3,
     kShaderCodeListFieldNumber = 4,
     kArtLogicListFieldNumber = 5,
-    kTextureListFieldNumber = 6,
-    kModelListFieldNumber = 7,
-    kShaderProgramListFieldNumber = 8,
-    kMaterialListFieldNumber = 9,
-    kSceneListFieldNumber = 10,
-    kNodeListFieldNumber = 11,
+    kActLogicListFieldNumber = 6,
+    kTextureListFieldNumber = 7,
+    kModelListFieldNumber = 8,
+    kShaderProgramListFieldNumber = 9,
+    kMaterialListFieldNumber = 10,
+    kSceneListFieldNumber = 11,
+    kNodeListFieldNumber = 12,
     kBaseDirFieldNumber = 1,
   };
   // repeated string image_list = 2;
@@ -288,7 +289,31 @@ class PBDirSpec final :
   std::string* _internal_add_art_logic_list();
   public:
 
-  // repeated string texture_list = 6;
+  // repeated string act_logic_list = 6;
+  int act_logic_list_size() const;
+  private:
+  int _internal_act_logic_list_size() const;
+  public:
+  void clear_act_logic_list();
+  const std::string& act_logic_list(int index) const;
+  std::string* mutable_act_logic_list(int index);
+  void set_act_logic_list(int index, const std::string& value);
+  void set_act_logic_list(int index, std::string&& value);
+  void set_act_logic_list(int index, const char* value);
+  void set_act_logic_list(int index, const char* value, size_t size);
+  std::string* add_act_logic_list();
+  void add_act_logic_list(const std::string& value);
+  void add_act_logic_list(std::string&& value);
+  void add_act_logic_list(const char* value);
+  void add_act_logic_list(const char* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& act_logic_list() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_act_logic_list();
+  private:
+  const std::string& _internal_act_logic_list(int index) const;
+  std::string* _internal_add_act_logic_list();
+  public:
+
+  // repeated string texture_list = 7;
   int texture_list_size() const;
   private:
   int _internal_texture_list_size() const;
@@ -312,7 +337,7 @@ class PBDirSpec final :
   std::string* _internal_add_texture_list();
   public:
 
-  // repeated string model_list = 7;
+  // repeated string model_list = 8;
   int model_list_size() const;
   private:
   int _internal_model_list_size() const;
@@ -336,7 +361,7 @@ class PBDirSpec final :
   std::string* _internal_add_model_list();
   public:
 
-  // repeated string shader_program_list = 8;
+  // repeated string shader_program_list = 9;
   int shader_program_list_size() const;
   private:
   int _internal_shader_program_list_size() const;
@@ -360,7 +385,7 @@ class PBDirSpec final :
   std::string* _internal_add_shader_program_list();
   public:
 
-  // repeated string material_list = 9;
+  // repeated string material_list = 10;
   int material_list_size() const;
   private:
   int _internal_material_list_size() const;
@@ -384,7 +409,7 @@ class PBDirSpec final :
   std::string* _internal_add_material_list();
   public:
 
-  // repeated string scene_list = 10;
+  // repeated string scene_list = 11;
   int scene_list_size() const;
   private:
   int _internal_scene_list_size() const;
@@ -408,7 +433,7 @@ class PBDirSpec final :
   std::string* _internal_add_scene_list();
   public:
 
-  // repeated string node_list = 11;
+  // repeated string node_list = 12;
   int node_list_size() const;
   private:
   int _internal_node_list_size() const;
@@ -458,6 +483,7 @@ class PBDirSpec final :
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> bin_buffer_list_;
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> shader_code_list_;
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> art_logic_list_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> act_logic_list_;
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> texture_list_;
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> model_list_;
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> shader_program_list_;
@@ -831,7 +857,82 @@ PBDirSpec::mutable_art_logic_list() {
   return &_impl_.art_logic_list_;
 }
 
-// repeated string texture_list = 6;
+// repeated string act_logic_list = 6;
+inline int PBDirSpec::_internal_act_logic_list_size() const {
+  return _impl_.act_logic_list_.size();
+}
+inline int PBDirSpec::act_logic_list_size() const {
+  return _internal_act_logic_list_size();
+}
+inline void PBDirSpec::clear_act_logic_list() {
+  _impl_.act_logic_list_.Clear();
+}
+inline std::string* PBDirSpec::add_act_logic_list() {
+  std::string* _s = _internal_add_act_logic_list();
+  // @@protoc_insertion_point(field_add_mutable:mc.comm.PBDirSpec.act_logic_list)
+  return _s;
+}
+inline const std::string& PBDirSpec::_internal_act_logic_list(int index) const {
+  return _impl_.act_logic_list_.Get(index);
+}
+inline const std::string& PBDirSpec::act_logic_list(int index) const {
+  // @@protoc_insertion_point(field_get:mc.comm.PBDirSpec.act_logic_list)
+  return _internal_act_logic_list(index);
+}
+inline std::string* PBDirSpec::mutable_act_logic_list(int index) {
+  // @@protoc_insertion_point(field_mutable:mc.comm.PBDirSpec.act_logic_list)
+  return _impl_.act_logic_list_.Mutable(index);
+}
+inline void PBDirSpec::set_act_logic_list(int index, const std::string& value) {
+  _impl_.act_logic_list_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:mc.comm.PBDirSpec.act_logic_list)
+}
+inline void PBDirSpec::set_act_logic_list(int index, std::string&& value) {
+  _impl_.act_logic_list_.Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:mc.comm.PBDirSpec.act_logic_list)
+}
+inline void PBDirSpec::set_act_logic_list(int index, const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.act_logic_list_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:mc.comm.PBDirSpec.act_logic_list)
+}
+inline void PBDirSpec::set_act_logic_list(int index, const char* value, size_t size) {
+  _impl_.act_logic_list_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:mc.comm.PBDirSpec.act_logic_list)
+}
+inline std::string* PBDirSpec::_internal_add_act_logic_list() {
+  return _impl_.act_logic_list_.Add();
+}
+inline void PBDirSpec::add_act_logic_list(const std::string& value) {
+  _impl_.act_logic_list_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:mc.comm.PBDirSpec.act_logic_list)
+}
+inline void PBDirSpec::add_act_logic_list(std::string&& value) {
+  _impl_.act_logic_list_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:mc.comm.PBDirSpec.act_logic_list)
+}
+inline void PBDirSpec::add_act_logic_list(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.act_logic_list_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:mc.comm.PBDirSpec.act_logic_list)
+}
+inline void PBDirSpec::add_act_logic_list(const char* value, size_t size) {
+  _impl_.act_logic_list_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:mc.comm.PBDirSpec.act_logic_list)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+PBDirSpec::act_logic_list() const {
+  // @@protoc_insertion_point(field_list:mc.comm.PBDirSpec.act_logic_list)
+  return _impl_.act_logic_list_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+PBDirSpec::mutable_act_logic_list() {
+  // @@protoc_insertion_point(field_mutable_list:mc.comm.PBDirSpec.act_logic_list)
+  return &_impl_.act_logic_list_;
+}
+
+// repeated string texture_list = 7;
 inline int PBDirSpec::_internal_texture_list_size() const {
   return _impl_.texture_list_.size();
 }
@@ -906,7 +1007,7 @@ PBDirSpec::mutable_texture_list() {
   return &_impl_.texture_list_;
 }
 
-// repeated string model_list = 7;
+// repeated string model_list = 8;
 inline int PBDirSpec::_internal_model_list_size() const {
   return _impl_.model_list_.size();
 }
@@ -981,7 +1082,7 @@ PBDirSpec::mutable_model_list() {
   return &_impl_.model_list_;
 }
 
-// repeated string shader_program_list = 8;
+// repeated string shader_program_list = 9;
 inline int PBDirSpec::_internal_shader_program_list_size() const {
   return _impl_.shader_program_list_.size();
 }
@@ -1056,7 +1157,7 @@ PBDirSpec::mutable_shader_program_list() {
   return &_impl_.shader_program_list_;
 }
 
-// repeated string material_list = 9;
+// repeated string material_list = 10;
 inline int PBDirSpec::_internal_material_list_size() const {
   return _impl_.material_list_.size();
 }
@@ -1131,7 +1232,7 @@ PBDirSpec::mutable_material_list() {
   return &_impl_.material_list_;
 }
 
-// repeated string scene_list = 10;
+// repeated string scene_list = 11;
 inline int PBDirSpec::_internal_scene_list_size() const {
   return _impl_.scene_list_.size();
 }
@@ -1206,7 +1307,7 @@ PBDirSpec::mutable_scene_list() {
   return &_impl_.scene_list_;
 }
 
-// repeated string node_list = 11;
+// repeated string node_list = 12;
 inline int PBDirSpec::_internal_node_list_size() const {
   return _impl_.node_list_.size();
 }

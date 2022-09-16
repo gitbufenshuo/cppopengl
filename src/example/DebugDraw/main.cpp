@@ -14,12 +14,21 @@
 // comm headers
 
 using mlGB = mc::low::GameObject;
-using mlRender = mc::low::MeshRender;
-using mlFilter = mc::low::MeshFilter;
 namespace
 {
+    void registActLogic(mc::low::Engine &gogogo)
+    {
+        auto &am{*gogogo.GetAM()};
+        // 这一步必须手动
+        // 或者借助于命令行自动扫描生成
+        game::BoxDraw::Register(am.GetACF());
+    }
+
     std::vector<mlGB *> GenSome(mc::low::Engine &gogogo)
     {
+        auto &am{*gogogo.GetAM()};
+        auto &act_factory{am.GetACF()};
+
         std::vector<mlGB *> res;
         int row = 1;
         int col = 1;
@@ -31,7 +40,7 @@ namespace
                 auto *one = new mlGB{&gogogo};
                 one->GetTransform()->SetLocalEuler(0.0f, 0.0f, 0.0f);
                 one->GetTransform()->SetLocalTranslate(0.0f, 0.0f, -20.0f);
-                // one->AddLogicSupport(new game::BoxDraw{one});
+                one->AddAct(act_factory.Create(one, "game::act_logic::BoxDraw", ""));
                 res[row_idx * col + col_idx] = one;
             }
         }
@@ -49,6 +58,7 @@ namespace game::example_list::DebugDraw
     {
         mc::low::Engine gogogo{1600, 900, "Hello MC"};
         gogogo.Setup(ClientsetUp);
+        registActLogic(gogogo);
         {
             auto list = GenSome(gogogo);
             for (auto one : list)

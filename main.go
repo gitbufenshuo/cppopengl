@@ -6,6 +6,7 @@ import (
 	"os"
 	"time"
 
+	"gitee.com/onebook/cppopengl/bintools/stact"
 	"gitee.com/onebook/cppopengl/bintools/start"
 	"gitee.com/onebook/cppopengl/bintools/stdirspec"
 	"gitee.com/onebook/cppopengl/bintools/stmaterial"
@@ -28,6 +29,10 @@ func main() {
 	}
 	if os.Args[1] == "art" {
 		start.Main()
+		return
+	}
+	if os.Args[1] == "act" {
+		stact.Main()
 		return
 	}
 	if os.Args[1] == "model" {

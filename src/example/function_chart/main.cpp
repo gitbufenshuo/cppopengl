@@ -16,5 +16,6 @@ namespace game::example_list::function_chart
 {
     int Main()
     {
+        return 0;
     }
 }

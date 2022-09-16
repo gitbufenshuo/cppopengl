@@ -550,34 +550,34 @@ class PBNode final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kLogicSupportListFieldNumber = 2,
+    kActLogicListFieldNumber = 2,
     kModelListFieldNumber = 3,
     kSubListFieldNumber = 5,
     kMaterialFieldNumber = 4,
     kTransformFieldNumber = 1,
   };
-  // repeated string logic_support_list = 2;
-  int logic_support_list_size() const;
+  // repeated string act_logic_list = 2;
+  int act_logic_list_size() const;
   private:
-  int _internal_logic_support_list_size() const;
+  int _internal_act_logic_list_size() const;
   public:
-  void clear_logic_support_list();
-  const std::string& logic_support_list(int index) const;
-  std::string* mutable_logic_support_list(int index);
-  void set_logic_support_list(int index, const std::string& value);
-  void set_logic_support_list(int index, std::string&& value);
-  void set_logic_support_list(int index, const char* value);
-  void set_logic_support_list(int index, const char* value, size_t size);
-  std::string* add_logic_support_list();
-  void add_logic_support_list(const std::string& value);
-  void add_logic_support_list(std::string&& value);
-  void add_logic_support_list(const char* value);
-  void add_logic_support_list(const char* value, size_t size);
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& logic_support_list() const;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_logic_support_list();
+  void clear_act_logic_list();
+  const std::string& act_logic_list(int index) const;
+  std::string* mutable_act_logic_list(int index);
+  void set_act_logic_list(int index, const std::string& value);
+  void set_act_logic_list(int index, std::string&& value);
+  void set_act_logic_list(int index, const char* value);
+  void set_act_logic_list(int index, const char* value, size_t size);
+  std::string* add_act_logic_list();
+  void add_act_logic_list(const std::string& value);
+  void add_act_logic_list(std::string&& value);
+  void add_act_logic_list(const char* value);
+  void add_act_logic_list(const char* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& act_logic_list() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_act_logic_list();
   private:
-  const std::string& _internal_logic_support_list(int index) const;
-  std::string* _internal_add_logic_support_list();
+  const std::string& _internal_act_logic_list(int index) const;
+  std::string* _internal_add_act_logic_list();
   public:
 
   // repeated string model_list = 3;
@@ -662,7 +662,7 @@ class PBNode final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> logic_support_list_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> act_logic_list_;
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> model_list_;
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::mc::comm::PBNode > sub_list_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr material_;
@@ -1198,79 +1198,79 @@ inline void PBNode::set_allocated_transform(::mc::comm::PBTransform* transform) 
   // @@protoc_insertion_point(field_set_allocated:mc.comm.PBNode.transform)
 }
 
-// repeated string logic_support_list = 2;
-inline int PBNode::_internal_logic_support_list_size() const {
-  return _impl_.logic_support_list_.size();
+// repeated string act_logic_list = 2;
+inline int PBNode::_internal_act_logic_list_size() const {
+  return _impl_.act_logic_list_.size();
 }
-inline int PBNode::logic_support_list_size() const {
-  return _internal_logic_support_list_size();
+inline int PBNode::act_logic_list_size() const {
+  return _internal_act_logic_list_size();
 }
-inline void PBNode::clear_logic_support_list() {
-  _impl_.logic_support_list_.Clear();
+inline void PBNode::clear_act_logic_list() {
+  _impl_.act_logic_list_.Clear();
 }
-inline std::string* PBNode::add_logic_support_list() {
-  std::string* _s = _internal_add_logic_support_list();
-  // @@protoc_insertion_point(field_add_mutable:mc.comm.PBNode.logic_support_list)
+inline std::string* PBNode::add_act_logic_list() {
+  std::string* _s = _internal_add_act_logic_list();
+  // @@protoc_insertion_point(field_add_mutable:mc.comm.PBNode.act_logic_list)
   return _s;
 }
-inline const std::string& PBNode::_internal_logic_support_list(int index) const {
-  return _impl_.logic_support_list_.Get(index);
+inline const std::string& PBNode::_internal_act_logic_list(int index) const {
+  return _impl_.act_logic_list_.Get(index);
 }
-inline const std::string& PBNode::logic_support_list(int index) const {
-  // @@protoc_insertion_point(field_get:mc.comm.PBNode.logic_support_list)
-  return _internal_logic_support_list(index);
+inline const std::string& PBNode::act_logic_list(int index) const {
+  // @@protoc_insertion_point(field_get:mc.comm.PBNode.act_logic_list)
+  return _internal_act_logic_list(index);
 }
-inline std::string* PBNode::mutable_logic_support_list(int index) {
-  // @@protoc_insertion_point(field_mutable:mc.comm.PBNode.logic_support_list)
-  return _impl_.logic_support_list_.Mutable(index);
+inline std::string* PBNode::mutable_act_logic_list(int index) {
+  // @@protoc_insertion_point(field_mutable:mc.comm.PBNode.act_logic_list)
+  return _impl_.act_logic_list_.Mutable(index);
 }
-inline void PBNode::set_logic_support_list(int index, const std::string& value) {
-  _impl_.logic_support_list_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set:mc.comm.PBNode.logic_support_list)
+inline void PBNode::set_act_logic_list(int index, const std::string& value) {
+  _impl_.act_logic_list_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:mc.comm.PBNode.act_logic_list)
 }
-inline void PBNode::set_logic_support_list(int index, std::string&& value) {
-  _impl_.logic_support_list_.Mutable(index)->assign(std::move(value));
-  // @@protoc_insertion_point(field_set:mc.comm.PBNode.logic_support_list)
+inline void PBNode::set_act_logic_list(int index, std::string&& value) {
+  _impl_.act_logic_list_.Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:mc.comm.PBNode.act_logic_list)
 }
-inline void PBNode::set_logic_support_list(int index, const char* value) {
+inline void PBNode::set_act_logic_list(int index, const char* value) {
   GOOGLE_DCHECK(value != nullptr);
-  _impl_.logic_support_list_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:mc.comm.PBNode.logic_support_list)
+  _impl_.act_logic_list_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:mc.comm.PBNode.act_logic_list)
 }
-inline void PBNode::set_logic_support_list(int index, const char* value, size_t size) {
-  _impl_.logic_support_list_.Mutable(index)->assign(
+inline void PBNode::set_act_logic_list(int index, const char* value, size_t size) {
+  _impl_.act_logic_list_.Mutable(index)->assign(
     reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:mc.comm.PBNode.logic_support_list)
+  // @@protoc_insertion_point(field_set_pointer:mc.comm.PBNode.act_logic_list)
 }
-inline std::string* PBNode::_internal_add_logic_support_list() {
-  return _impl_.logic_support_list_.Add();
+inline std::string* PBNode::_internal_add_act_logic_list() {
+  return _impl_.act_logic_list_.Add();
 }
-inline void PBNode::add_logic_support_list(const std::string& value) {
-  _impl_.logic_support_list_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:mc.comm.PBNode.logic_support_list)
+inline void PBNode::add_act_logic_list(const std::string& value) {
+  _impl_.act_logic_list_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:mc.comm.PBNode.act_logic_list)
 }
-inline void PBNode::add_logic_support_list(std::string&& value) {
-  _impl_.logic_support_list_.Add(std::move(value));
-  // @@protoc_insertion_point(field_add:mc.comm.PBNode.logic_support_list)
+inline void PBNode::add_act_logic_list(std::string&& value) {
+  _impl_.act_logic_list_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:mc.comm.PBNode.act_logic_list)
 }
-inline void PBNode::add_logic_support_list(const char* value) {
+inline void PBNode::add_act_logic_list(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
-  _impl_.logic_support_list_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:mc.comm.PBNode.logic_support_list)
+  _impl_.act_logic_list_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:mc.comm.PBNode.act_logic_list)
 }
-inline void PBNode::add_logic_support_list(const char* value, size_t size) {
-  _impl_.logic_support_list_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:mc.comm.PBNode.logic_support_list)
+inline void PBNode::add_act_logic_list(const char* value, size_t size) {
+  _impl_.act_logic_list_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:mc.comm.PBNode.act_logic_list)
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
-PBNode::logic_support_list() const {
-  // @@protoc_insertion_point(field_list:mc.comm.PBNode.logic_support_list)
-  return _impl_.logic_support_list_;
+PBNode::act_logic_list() const {
+  // @@protoc_insertion_point(field_list:mc.comm.PBNode.act_logic_list)
+  return _impl_.act_logic_list_;
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
-PBNode::mutable_logic_support_list() {
-  // @@protoc_insertion_point(field_mutable_list:mc.comm.PBNode.logic_support_list)
-  return &_impl_.logic_support_list_;
+PBNode::mutable_act_logic_list() {
+  // @@protoc_insertion_point(field_mutable_list:mc.comm.PBNode.act_logic_list)
+  return &_impl_.act_logic_list_;
 }
 
 // repeated string model_list = 3;

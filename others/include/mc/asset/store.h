@@ -3,6 +3,7 @@
 
 #include <unordered_map>
 #include <memory>
+#include <string>
 
 #include <mc/asset/md5sum.h>
 
@@ -25,6 +26,7 @@ namespace mc::asset
     public:
         void Register(MD5SUM key, T *data);
         Elem Get(MD5SUM key = MD5SUM{});
+        Elem Get(const std::string &r_name);
         void Del(MD5SUM key);
 
     private:

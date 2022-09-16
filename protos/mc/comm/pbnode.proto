@@ -18,7 +18,7 @@ message PBTransform {
 
 message PBNode {
     PBTransform transform = 1;
-    repeated string logic_support_list = 2;
+    repeated string act_logic_list = 2;
     repeated string model_list = 3; // 一个 node 会有多个 mesh
     string material = 4;
     repeated PBNode sub_list = 5; // 所有的子节点

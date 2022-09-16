@@ -124,7 +124,6 @@ namespace mc::low
                 }
             }
             _gb->AfterRenderUpdate(delta_time);
-            break;
         }
     }
     void Engine::update()
@@ -141,10 +140,6 @@ namespace mc::low
         while (!glfwWindowShouldClose(m_window))
         {
             ++frame_count;
-            if (frame_count > 600)
-            {
-                throw 1;
-            }
             update();
         }
         glfwTerminate();

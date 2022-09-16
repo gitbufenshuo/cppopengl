@@ -40,6 +40,16 @@ namespace
             newgb->SetMeshFilter(mf);
             newgb->SetMeshRender(mr);
         }
+        {
+            // act logic
+            auto &act_factory{am.GetACF()};
+            for (int index = 0; index < one_node.act_logic_list_size(); ++index)
+            {
+                auto metaActLogic{am.Get<mc::asset::ActLogic>(one_node.act_logic_list(index))};
+                auto realActLogic{act_factory.Create(newgb, metaActLogic->GetLogicName(), metaActLogic->GetBinData())};
+                newgb->AddAct(realActLogic);
+            }
+        }
         if (up)
         {
             newgb->GetTransform()->SetUpper(up);
@@ -101,6 +111,11 @@ namespace mc::low
         for (int index = 0; index < pb_data.art_logic_list_size(); ++index)
         {
             new mc::asset::ArtLogic{am, pb_data.art_logic_list(index)};
+        }
+        // load ActLogic
+        for (int index = 0; index < pb_data.act_logic_list_size(); ++index)
+        {
+            new mc::asset::ActLogic{am, pb_data.act_logic_list(index)};
         }
         // load Texture
         for (int index = 0; index < pb_data.texture_list_size(); ++index)

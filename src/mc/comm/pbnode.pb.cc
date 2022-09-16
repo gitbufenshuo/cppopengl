@@ -54,7 +54,7 @@ struct PBTransformDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PBTransformDefaultTypeInternal _PBTransform_default_instance_;
 PROTOBUF_CONSTEXPR PBNode::PBNode(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.logic_support_list_)*/{}
+    /*decltype(_impl_.act_logic_list_)*/{}
   , /*decltype(_impl_.model_list_)*/{}
   , /*decltype(_impl_.sub_list_)*/{}
   , /*decltype(_impl_.material_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
@@ -114,7 +114,7 @@ const uint32_t TableStruct_mc_2fcomm_2fpbnode_2eproto::offsets[] PROTOBUF_SECTIO
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::mc::comm::PBNode, _impl_.transform_),
-  PROTOBUF_FIELD_OFFSET(::mc::comm::PBNode, _impl_.logic_support_list_),
+  PROTOBUF_FIELD_OFFSET(::mc::comm::PBNode, _impl_.act_logic_list_),
   PROTOBUF_FIELD_OFFSET(::mc::comm::PBNode, _impl_.model_list_),
   PROTOBUF_FIELD_OFFSET(::mc::comm::PBNode, _impl_.material_),
   PROTOBUF_FIELD_OFFSET(::mc::comm::PBNode, _impl_.sub_list_),
@@ -145,16 +145,16 @@ const char descriptor_table_protodef_mc_2fcomm_2fpbnode_2eproto[] PROTOBUF_SECTI
   "4\022\t\n\001w\030\001 \001(\002\022\t\n\001x\030\002 \001(\002\022\t\n\001y\030\003 \001(\002\022\t\n\001z\030"
   "\004 \001(\002\"T\n\013PBTransform\022\"\n\ttranslate\030\001 \001(\0132"
   "\017.mc.comm.PBVec4\022!\n\010rotation\030\002 \001(\0132\017.mc."
-  "comm.PBVec4\"\226\001\n\006PBNode\022\'\n\ttransform\030\001 \001("
-  "\0132\024.mc.comm.PBTransform\022\032\n\022logic_support"
-  "_list\030\002 \003(\t\022\022\n\nmodel_list\030\003 \003(\t\022\020\n\010mater"
-  "ial\030\004 \001(\t\022!\n\010sub_list\030\005 \003(\0132\017.mc.comm.PB"
-  "Node\"-\n\007PBScene\022\"\n\troot_list\030\001 \003(\0132\017.mc."
-  "comm.PBNodeB\tZ\007mc/commb\006proto3"
+  "comm.PBVec4\"\222\001\n\006PBNode\022\'\n\ttransform\030\001 \001("
+  "\0132\024.mc.comm.PBTransform\022\026\n\016act_logic_lis"
+  "t\030\002 \003(\t\022\022\n\nmodel_list\030\003 \003(\t\022\020\n\010material\030"
+  "\004 \001(\t\022!\n\010sub_list\030\005 \003(\0132\017.mc.comm.PBNode"
+  "\"-\n\007PBScene\022\"\n\troot_list\030\001 \003(\0132\017.mc.comm"
+  ".PBNodeB\tZ\007mc/commb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_mc_2fcomm_2fpbnode_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_mc_2fcomm_2fpbnode_2eproto = {
-    false, false, 390, descriptor_table_protodef_mc_2fcomm_2fpbnode_2eproto,
+    false, false, 386, descriptor_table_protodef_mc_2fcomm_2fpbnode_2eproto,
     "mc/comm/pbnode.proto",
     &descriptor_table_mc_2fcomm_2fpbnode_2eproto_once, nullptr, 0, 4,
     schemas, file_default_instances, TableStruct_mc_2fcomm_2fpbnode_2eproto::offsets,
@@ -737,7 +737,7 @@ PBNode::PBNode(const PBNode& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   PBNode* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.logic_support_list_){from._impl_.logic_support_list_}
+      decltype(_impl_.act_logic_list_){from._impl_.act_logic_list_}
     , decltype(_impl_.model_list_){from._impl_.model_list_}
     , decltype(_impl_.sub_list_){from._impl_.sub_list_}
     , decltype(_impl_.material_){}
@@ -764,7 +764,7 @@ inline void PBNode::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.logic_support_list_){arena}
+      decltype(_impl_.act_logic_list_){arena}
     , decltype(_impl_.model_list_){arena}
     , decltype(_impl_.sub_list_){arena}
     , decltype(_impl_.material_){}
@@ -788,7 +788,7 @@ PBNode::~PBNode() {
 
 inline void PBNode::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.logic_support_list_.~RepeatedPtrField();
+  _impl_.act_logic_list_.~RepeatedPtrField();
   _impl_.model_list_.~RepeatedPtrField();
   _impl_.sub_list_.~RepeatedPtrField();
   _impl_.material_.Destroy();
@@ -805,7 +805,7 @@ void PBNode::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.logic_support_list_.Clear();
+  _impl_.act_logic_list_.Clear();
   _impl_.model_list_.Clear();
   _impl_.sub_list_.Clear();
   _impl_.material_.ClearToEmpty();
@@ -830,16 +830,16 @@ const char* PBNode::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
         } else
           goto handle_unusual;
         continue;
-      // repeated string logic_support_list = 2;
+      // repeated string act_logic_list = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
           ptr -= 1;
           do {
             ptr += 1;
-            auto str = _internal_add_logic_support_list();
+            auto str = _internal_add_act_logic_list();
             ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
             CHK_(ptr);
-            CHK_(::_pbi::VerifyUTF8(str, "mc.comm.PBNode.logic_support_list"));
+            CHK_(::_pbi::VerifyUTF8(str, "mc.comm.PBNode.act_logic_list"));
             if (!ctx->DataAvailable(ptr)) break;
           } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
         } else
@@ -919,13 +919,13 @@ uint8_t* PBNode::_InternalSerialize(
         _Internal::transform(this).GetCachedSize(), target, stream);
   }
 
-  // repeated string logic_support_list = 2;
-  for (int i = 0, n = this->_internal_logic_support_list_size(); i < n; i++) {
-    const auto& s = this->_internal_logic_support_list(i);
+  // repeated string act_logic_list = 2;
+  for (int i = 0, n = this->_internal_act_logic_list_size(); i < n; i++) {
+    const auto& s = this->_internal_act_logic_list(i);
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       s.data(), static_cast<int>(s.length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "mc.comm.PBNode.logic_support_list");
+      "mc.comm.PBNode.act_logic_list");
     target = stream->WriteString(2, s, target);
   }
 
@@ -973,12 +973,12 @@ size_t PBNode::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated string logic_support_list = 2;
+  // repeated string act_logic_list = 2;
   total_size += 1 *
-      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(_impl_.logic_support_list_.size());
-  for (int i = 0, n = _impl_.logic_support_list_.size(); i < n; i++) {
+      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(_impl_.act_logic_list_.size());
+  for (int i = 0, n = _impl_.act_logic_list_.size(); i < n; i++) {
     total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-      _impl_.logic_support_list_.Get(i));
+      _impl_.act_logic_list_.Get(i));
   }
 
   // repeated string model_list = 3;
@@ -1028,7 +1028,7 @@ void PBNode::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBU
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  _this->_impl_.logic_support_list_.MergeFrom(from._impl_.logic_support_list_);
+  _this->_impl_.act_logic_list_.MergeFrom(from._impl_.act_logic_list_);
   _this->_impl_.model_list_.MergeFrom(from._impl_.model_list_);
   _this->_impl_.sub_list_.MergeFrom(from._impl_.sub_list_);
   if (!from._internal_material().empty()) {
@@ -1057,7 +1057,7 @@ void PBNode::InternalSwap(PBNode* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  _impl_.logic_support_list_.InternalSwap(&other->_impl_.logic_support_list_);
+  _impl_.act_logic_list_.InternalSwap(&other->_impl_.act_logic_list_);
   _impl_.model_list_.InternalSwap(&other->_impl_.model_list_);
   _impl_.sub_list_.InternalSwap(&other->_impl_.sub_list_);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(

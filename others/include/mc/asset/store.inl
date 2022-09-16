@@ -2,6 +2,8 @@
 #include <typeinfo>
 // asset
 #include <mc/asset/store.h>
+// tools
+#include <mc/tools/md5.h>
 
 namespace mc::asset
 {
@@ -27,9 +29,20 @@ namespace mc::asset
         auto it{m_store.find(key)};
         if (it == m_store.end())
         {
-            std::cout << "[NOT FOUND] Store<T>::Get() " << typeid(T).name() << std::endl;
+            std::cout << "[NOT FOUND] Store<T>::Get() " << key << " " << typeid(T).name() << std::endl;
         }
         return m_store[key];
+    }
+
+    template <class T>
+    typename Store<T>::Elem Store<T>::Get(const std::string &r_name)
+    {
+        MD5SUM key{};
+        if (!r_name.empty())
+        {
+            mc::tools::MD5Sum(r_name, key.data);
+        }
+        return Get(key);
     }
 
     template <class T>

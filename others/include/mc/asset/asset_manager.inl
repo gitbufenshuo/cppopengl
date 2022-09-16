@@ -1,3 +1,5 @@
+#include <string>
+
 #include <mc/asset/asset_manager.h>
 
 namespace mc::asset
@@ -95,6 +97,13 @@ namespace mc::asset
     {
         auto &store{getStore<T>()};
         return store.Get(key);
+    }
+
+    template <typename T>
+    inline typename Store<T>::Elem AssetManager::Get(const std::string &r_name)
+    {
+        auto &store{getStore<T>()};
+        return store.Get(r_name);
     }
 
     template <typename T>

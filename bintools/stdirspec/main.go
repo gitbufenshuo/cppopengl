@@ -25,6 +25,7 @@ func Main(baseDir string) {
 	onedir(&res, "bin_buffer", &res.BinBufferList)
 	onedir(&res, "shader_code", &res.ShaderCodeList)
 	onedir(&res, "art_logic", &res.ArtLogicList)
+	onedir(&res, "act_logic", &res.ActLogicList)
 	onedir(&res, "texture", &res.TextureList)
 	onedir(&res, "model", &res.ModelList)
 	onedir(&res, "shader_program", &res.ShaderProgramList)

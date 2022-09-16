@@ -47,6 +47,7 @@ namespace game::example_list::gltf_exp
     {
         mc::low::Engine gogogo{800, 800, "Hello Scene Load"};
         registArtLogic(gogogo);
+        registActLogic(gogogo);
         gogogo.LoadAssetAndCreate("gogogo.pb.data");
         gogogo.Run();
         return 0;
