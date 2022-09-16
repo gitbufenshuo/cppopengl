@@ -123,7 +123,7 @@ namespace mc::asset
         m_now_pitch = std::clamp(m_now_pitch, -89.0f, 89.0f);
         m_ctl_transform->SetLocalEuler(m_now_pitch, m_now_yaw, 0.0f);
         // camera translate
-        speed *= 2.0f;
+        speed *= 15.0f;
         if (mc::low::Engine::s_keyinput.KeyStateDown(65))
         {
             // A key

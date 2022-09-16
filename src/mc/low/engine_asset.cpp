@@ -25,10 +25,10 @@ namespace
         newgb->GetTransform()->SetLocalTranslate(one_node.transform().translate().x(),
                                                  one_node.transform().translate().y(),
                                                  one_node.transform().translate().z());
-        newgb->GetTransform()->SetLocalRotation(one_node.transform().translate().w(),
-                                                one_node.transform().translate().x(),
-                                                one_node.transform().translate().y(),
-                                                one_node.transform().translate().z());
+        newgb->GetTransform()->SetLocalRotation(one_node.transform().rotation().w(),
+                                                one_node.transform().rotation().x(),
+                                                one_node.transform().rotation().y(),
+                                                one_node.transform().rotation().z());
         {
             // mesh filter
             auto mf{new mc::low::MeshFilter{}};
