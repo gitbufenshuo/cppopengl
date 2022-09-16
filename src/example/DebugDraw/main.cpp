@@ -6,12 +6,9 @@
 #include <mc/gameobject.h>
 
 #include <mc/mesh_render.h>
-#include <mc/logic_support.h>
 
 // game headers
-#include <game/logic/function_draw.h>
-#include <game/logic/camera_logic.h>
-#include <game/logic/box_draw.h>
+#include <game/act_logic/box_draw.h>
 #include <game/example/example_list.h>
 
 // comm headers
@@ -34,7 +31,7 @@ namespace
                 auto *one = new mlGB{&gogogo};
                 one->GetTransform()->SetLocalEuler(0.0f, 0.0f, 0.0f);
                 one->GetTransform()->SetLocalTranslate(0.0f, 0.0f, -20.0f);
-                one->AddLogicSupport(new game::BoxDraw{one});
+                // one->AddLogicSupport(new game::BoxDraw{one});
                 res[row_idx * col + col_idx] = one;
             }
         }

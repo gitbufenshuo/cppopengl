@@ -2,15 +2,21 @@
 #define GAME_LOGIC_FUNCTION_DRAW_H
 
 #include <mc/gameobject.h>
-#include <mc/logic_support.h>
+
+#include <mc/asset/act_logic.h>
 
 namespace game
 {
-    class FunctionDraw : public mc::low::LogicSupport
+    class ArtLogicFunctionDraw : public mc::asset::ActLogic
     {
+    private:
+        static std::shared_ptr<ActLogic> createFunc(mc::low::GameObject *gb, const std::string &bin_data);
+
     public:
-        // constructors
-        FunctionDraw(mc::low::GameObject *gb) : mc::low::LogicSupport{gb} {}
+        ~ArtLogicFunctionDraw() override;
+
+    public:
+        static void Register(mc::asset::ActLogicFactory &acf);
 
     public:
         void Update(double delta_time) override;

@@ -123,9 +123,6 @@ namespace mc::low
                     glDrawElements(GL_TRIANGLES, _model->GetEBOCount(), _model->GetEBOType(), 0);
                 }
             }
-            // 在画之前，遍历 logic_support
-            // 画
-            // 在画之后，遍历 logic_support
             _gb->AfterRenderUpdate(delta_time);
             break;
         }
