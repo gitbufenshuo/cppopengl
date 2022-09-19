@@ -11,7 +11,10 @@ namespace mc::low
     {
         return m_filter;
     }
-
+    bool GameObject::GetDeleted()
+    {
+        return m_deleted;
+    }
     void GameObject::SetMeshRender(MeshRender *mr)
     {
         m_render = mr;

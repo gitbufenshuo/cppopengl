@@ -1,5 +1,6 @@
 #ifndef TRANSFORM_H
 #define TRANSFORM_H
+#include <mc/gameobject.h>
 //
 #include <glm/gtx/quaternion.hpp>
 #include <glm/glm.hpp>
@@ -15,11 +16,14 @@ namespace mc::low
     {
     public:
         // constructors;
-        Transform(float x = 0.0f, float y = 0.0f, float z = 0.0f);
+        Transform(GameObject *gb = nullptr, float x = 0.0f, float y = 0.0f, float z = 0.0f);
 
     public:
         void SetUpper(Transform *upper);
         Transform &GetUpper() const;
+        GameObject *GetGB() const;
+        int SubSize();
+        Transform *Sub(int index);
         const glm::mat4 &GetLocalMat();
         const glm::mat4 &GetWorldMat();
         glm::vec3 GetWorldPos();
@@ -46,6 +50,7 @@ namespace mc::low
         bool updateLocal();
         void udpateAxis();
         //
+        GameObject *m_gb;
         glm::vec3 m_scale{1.0f, 1.0f, 1.0f};
         glm::quat m_rotation{1.0f, 0.0f, 0.0f, 0.0f}; // 四元数
         glm::vec3 m_translate{0.0f, 0.0f, 0.0f};
@@ -60,6 +65,7 @@ namespace mc::low
         unsigned int m_world_up_version{0};   // 我使用的上一层的 world mat 版本
         unsigned int m_world_self_version{1}; // 我自己的 world mat 版本
         //
+        std::vector<Transform *> m_sublist; // 我的一级子节点列表
     };
 }
 

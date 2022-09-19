@@ -1,20 +1,51 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 #include <glm/glm.hpp>
 
 #include <mc/transform.h>
+#include <mc/gameobject.h>
 
 #include <mc/glmex/vec.h>
 
 namespace mc::low
 {
-    Transform::Transform(float x, float y, float z) : m_translate{x, y, z}, m_local_dirty{true}
+    Transform::Transform(GameObject *gb, float x, float y, float z) : m_gb{gb}, m_translate{x, y, z}, m_local_dirty{true}
     {
+    }
+    GameObject *Transform::GetGB() const
+    {
+        return m_gb;
+    }
+    int Transform::SubSize()
+    {
+        return m_sublist.size();
+    }
+    Transform *Transform::Sub(int index)
+    {
+        return m_sublist[index];
     }
     void Transform::SetUpper(Transform *upper)
     {
+        if (upper == m_upper)
+        {
+            return;
+        }
+        //
+        if (!m_upper)
+        {
+            // 原来有上级, 将自己从上级的 sublist 中删除
+            auto it = std::find(m_upper->m_sublist.begin(), m_upper->m_sublist.end(), this);
+            *it = m_upper->m_sublist.back();
+            m_upper->m_sublist.pop_back();
+        }
         m_upper = upper;
+        if (m_upper)
+        {
+            // 如果新的上级非空
+            m_upper->m_sublist.push_back(this);
+        }
     }
     Transform &Transform::GetUpper() const
     {

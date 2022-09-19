@@ -31,6 +31,7 @@ namespace mc::low
         MeshFilter *m_filter;
         std::vector<std::shared_ptr<mc::asset::ActLogic>> act_list;
         Engine *m_engine;
+        bool m_deleted{false}; // 是否已经被删除
 
     public:
         GameObject(Engine *m_engine = nullptr);
@@ -41,6 +42,7 @@ namespace mc::low
         void SetMeshFilter(MeshFilter *mf);
         void SetID(int id);
         int GetID();
+        bool GetDeleted();
         void AddAct(std::shared_ptr<mc::asset::ActLogic> act);
         void Update(double delta_time);
         void BeforeRenderUpdate(double delta_time);

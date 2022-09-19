@@ -81,11 +81,10 @@ namespace
 
 namespace mc::low
 {
-    void Engine::LoadAssetAndCreate(const char *file_path)
+    void Engine::loadAsset(const char *file_path, mc::comm::PBDirSpec &pb_data)
     {
         auto &am{*GetAM()};
         std::ifstream t(file_path);
-        mc::comm::PBDirSpec pb_data;
         if (!pb_data.ParseFromIstream(&t))
         {
             SPD_WARN("loadSceneFromFile()", file_path);
@@ -142,6 +141,14 @@ namespace mc::low
         {
             new mc::asset::Scene{am, pb_data.scene_list(index)};
         }
-        createDefualtScene(this, pb_data);
+    }
+    void Engine::LoadAssetAndCreate(const char *file_path, bool createScene)
+    {
+        mc::comm::PBDirSpec pb_data;
+        loadAsset(file_path, pb_data);
+        if (createScene)
+        {
+            createDefualtScene(this, pb_data);
+        }
     }
 }

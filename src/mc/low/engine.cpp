@@ -80,8 +80,20 @@ namespace mc::low
         for (auto &pair : m_gameobjects)
         {
             auto _gb = pair.second;
+            if (_gb->GetDeleted())
+            {
+                // 如果已经删了，就跳过
+                continue;
+            }
             _gb->Update(delta_time);
         }
+        // 将 gameobject 从 engine 中删掉
+        for (auto one_gb_id : m_deleted_id)
+        {
+            m_gameobjects.erase(one_gb_id);
+        }
+        // 清空列表
+        m_deleted_id.resize(0);
     }
     void Engine::standard_render()
     {
@@ -126,11 +138,15 @@ namespace mc::low
             _gb->AfterRenderUpdate(delta_time);
         }
     }
+    void Engine::after_render_logic()
+    {
+    }
+
     void Engine::update()
     {
         logic_update();
         standard_render();
-
+        after_render_logic();
         glfwSwapBuffers(m_window);
         glfwPollEvents();
     }
@@ -150,6 +166,29 @@ namespace mc::low
         m_gameobjects.insert(std::pair{game_object->GetID(), game_object});
         std::cout << "[Engine::AddGameobject] " << game_object->GetID() << std::endl;
     }
+
+    void Engine::markGBDel(GameObject *game_object)
+    {
+        m_deleted_id.push_back(game_object->GetID());
+        //
+        auto tr{game_object->GetTransform()};
+        for (int index = 0; index < tr->SubSize(); ++index)
+        {
+            auto sub_tr{tr->Sub(index)};
+            markGBDel(sub_tr->GetGB());
+        }
+    }
+
+    void Engine::DelGameobject(GameObject *game_object)
+    {
+        std::cout << "User [Engine::DelGameobject] " << game_object->GetID() << std::endl;
+        // 先从节点树(Transform)上拆除此 gb
+        auto tr{game_object->GetTransform()};
+        tr->SetUpper(nullptr);
+        // 遍历此 tr 的下级, 将本身和所有下级的gb 都标记成 deleted
+        markGBDel(game_object);
+    }
+
     // static
     // static for gl op
     void Engine::S_GL_EnableFaceCull(bool zhi)

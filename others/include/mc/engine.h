@@ -16,6 +16,9 @@ namespace mc::low
 #include <mc/camera.h>
 #include <mc/keyinputsystem.h>
 
+// comm headers
+#include <mc/comm/pbdirspec.pb.h>
+
 // asset
 #include <mc/asset/asset_manager.h>
 
@@ -36,7 +39,8 @@ namespace mc::low
         int m_height{800};
         glm::vec3 m_light_color{1.0f, 1.0f, 1.0f};
         glm::vec3 m_light_pos{-60.0f, 60.0f, -60.0f};
-
+        // deleted id
+        std::vector<int> m_deleted_id;
         // asset
         std::shared_ptr<mc::asset::AssetManager> m_am;
 
@@ -47,13 +51,16 @@ namespace mc::low
         static double s_cursor_YPOS;
         static double s_c_xdiff;
         static double s_c_ydiff;
-        static KeyInputSystem s_keyinput;               // 键盘事件管理器
-        void LoadAssetAndCreate(const char *file_path); // 从文件中加载所有的资源
+        static KeyInputSystem s_keyinput;                                         // 键盘事件管理器
+        void LoadAssetAndCreate(const char *file_path, bool createScene = false); // 从文件中加载所有的资源
 
     private:
+        void markGBDel(GameObject *gb);
         void update();
         void logic_update();
+        void after_render_logic();
         void standard_render();
+        void loadAsset(const char *file_path, mc::comm::PBDirSpec &pb_data);
 
     public:
         std::shared_ptr<mc::asset::AssetManager> GetAM();
@@ -64,6 +71,7 @@ namespace mc::low
         void Run();
 
         void AddGameobject(GameObject *gb);
+        void DelGameobject(GameObject *gb); // 删除某个gb
 
         void SetLightColor(glm::vec3 color)
         {
