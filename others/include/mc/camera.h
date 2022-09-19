@@ -1,5 +1,12 @@
+namespace mc::low
+{
+    class Camera;
+}
 #ifndef CAMERA_H
 #define CAMERA_H
+
+#include <memory>
+
 #include <glm/glm.hpp>
 #include <mc/transform.h>
 
@@ -21,7 +28,7 @@ namespace mc::low
 
     private:
         // view
-        Transform m_transform{0.0f, 0.0f, 5.0f};
+        std::unique_ptr<Transform> m_transform;
         unsigned int m_camera_version{0};
         glm::mat4 m_view_mat; // view matrix
         // projection

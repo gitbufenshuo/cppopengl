@@ -1,3 +1,7 @@
+namespace mc::low
+{
+    class Transform;
+}
 #ifndef TRANSFORM_H
 #define TRANSFORM_H
 #include <mc/gameobject.h>

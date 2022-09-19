@@ -1,17 +1,18 @@
+#include <memory>
 #include <mc/camera.h>
 namespace mc::low
 {
-    Camera::Camera()
+    Camera::Camera() : m_transform{std::make_unique<Transform>(nullptr, 0.0f, 0.0f, 5.0f)}
     {
     }
     void Camera::updateViewMat()
     {
-        auto camera_world_mat = m_transform.GetWorldMat();
-        if (m_camera_version == m_transform.GetSelfVersion())
+        auto camera_world_mat = m_transform->GetWorldMat();
+        if (m_camera_version == m_transform->GetSelfVersion())
         {
             return;
         }
-        m_camera_version = m_transform.GetSelfVersion();
+        m_camera_version = m_transform->GetSelfVersion();
 
         glm::vec4 _pos{0.0f, 0.0f, 0.0f, 1.0f};
         glm::vec4 _target{0.0f, 0.0f, -1.0f, 1.0f};
@@ -51,7 +52,7 @@ namespace mc::low
     }
     Transform *Camera::GetTransform()
     {
-        return &m_transform;
+        return m_transform.get();
     }
 
 }

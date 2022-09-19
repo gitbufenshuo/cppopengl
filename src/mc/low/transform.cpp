@@ -33,7 +33,7 @@ namespace mc::low
             return;
         }
         //
-        if (!m_upper)
+        if (m_upper)
         {
             // 原来有上级, 将自己从上级的 sublist 中删除
             auto it = std::find(m_upper->m_sublist.begin(), m_upper->m_sublist.end(), this);

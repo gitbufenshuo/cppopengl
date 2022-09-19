@@ -28,7 +28,7 @@ namespace mc::low
         return m_transform;
     }
 
-    GameObject::GameObject(Engine *engine) : m_transform{new Transform{}}, m_engine{engine}
+    GameObject::GameObject(Engine *engine) : m_transform{new Transform{this}}, m_engine{engine}
     {
     }
     void GameObject::SetID(int id)
