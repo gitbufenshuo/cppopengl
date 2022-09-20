@@ -30,7 +30,7 @@ namespace
         {
             // mesh filter
             auto mf{new mc::low::MeshFilter{}};
-            mf->AddModel(am.Get<mc::asset::Model>("cube-3d-shape.obj.model.pb")); // 可以直接用资源名称获取
+            mf->AddModel(am.Get<mc::asset::Model>("52517.model.pb")); // 可以直接用资源名称获取
             // mesh render
             auto mr{new mc::low::MeshRender{}};
             mr->SetGameobject(newgb);
