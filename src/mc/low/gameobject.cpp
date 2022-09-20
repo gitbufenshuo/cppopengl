@@ -11,7 +11,13 @@ namespace mc::low
     {
         return m_filter;
     }
-    bool GameObject::GetDeleted()
+
+    void GameObject::MarkDeleted()
+    {
+        m_deleted = true;
+    }
+
+    bool GameObject::GetDeleted() const
     {
         return m_deleted;
     }
@@ -25,10 +31,10 @@ namespace mc::low
     }
     Transform *GameObject::GetTransform()
     {
-        return m_transform;
+        return m_transform.get();
     }
 
-    GameObject::GameObject(Engine *engine) : m_transform{new Transform{this}}, m_engine{engine}
+    GameObject::GameObject(Engine *engine) : m_transform{std::make_unique<Transform>(this)}, m_engine{engine}
     {
     }
     void GameObject::SetID(int id)

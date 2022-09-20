@@ -11,6 +11,9 @@ namespace game
     {
         auto res{std::make_shared<ActLogicRotate>()};
         res->m_gb = gb;
+        res->m_ctl_transform = gb->GetTransform();
+        res->m_speed = 1.0f;
+        return res;
     }
 
     void ActLogicRotate::Register(mc::asset::ActLogicFactory &acf)
@@ -21,9 +24,10 @@ namespace game
 
     void ActLogicRotate::Update(double delta_time)
     {
+        m_time += static_cast<float>(delta_time);
         if (mc::low::Engine::s_keyinput.KeyStateDown(80))
         {
-            m_gb->GetTransform()->Rotate(1.0f, 0.0f, 0.0f, delta_time);
+            m_ctl_transform->Rotate(1.0f * m_speed, 0.0f, 0.0f, delta_time);
         }
     }
 

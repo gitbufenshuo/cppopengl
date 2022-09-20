@@ -28,7 +28,7 @@ namespace mc::low
     class Engine
     {
         int m_next_id{1};
-        std::unordered_map<int, GameObject *> m_gameobjects;
+        std::unordered_map<int, std::unique_ptr<GameObject>> m_gameobjects;
         GLFWwindow *m_window;
         Camera *m_main_camera;
         double now_time{};

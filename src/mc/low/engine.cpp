@@ -1,5 +1,6 @@
 #include <iostream>
 #include <utility>
+#include <memory>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -79,7 +80,7 @@ namespace mc::low
         // 遍历各个 gameobject，执行 logicsupport 上的 Update 函数
         for (auto &pair : m_gameobjects)
         {
-            auto _gb = pair.second;
+            auto _gb = pair.second.get();
             if (_gb->GetDeleted())
             {
                 // 如果已经删了，就跳过
@@ -102,7 +103,7 @@ namespace mc::low
         // 遍历各个 gameobject, 画出来
         for (auto &pair : m_gameobjects)
         {
-            auto _gb = pair.second;
+            auto _gb = pair.second.get();
             auto mr = pair.second->GetMeshRender();
             if (!mr)
             {
@@ -163,13 +164,14 @@ namespace mc::low
     void Engine::AddGameobject(GameObject *game_object)
     {
         game_object->SetID(m_next_id++);
-        m_gameobjects.insert(std::pair{game_object->GetID(), game_object});
+        m_gameobjects.insert(std::pair{game_object->GetID(), std::unique_ptr<GameObject>{game_object}});
         std::cout << "[Engine::AddGameobject] " << game_object->GetID() << std::endl;
     }
 
     void Engine::markGBDel(GameObject *game_object)
     {
         m_deleted_id.push_back(game_object->GetID());
+        game_object->MarkDeleted();
         //
         auto tr{game_object->GetTransform()};
         for (int index = 0; index < tr->SubSize(); ++index)
@@ -206,5 +208,4 @@ namespace mc::low
     {
         return m_am;
     }
-
 }

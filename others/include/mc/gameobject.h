@@ -26,7 +26,7 @@ namespace mc::low
     {
         int m_id;
         std::string m_name;
-        Transform *m_transform;
+        std::unique_ptr<Transform> m_transform;
         MeshRender *m_render;
         MeshFilter *m_filter;
         std::vector<std::shared_ptr<mc::asset::ActLogic>> act_list;
@@ -42,7 +42,8 @@ namespace mc::low
         void SetMeshFilter(MeshFilter *mf);
         void SetID(int id);
         int GetID();
-        bool GetDeleted();
+        void MarkDeleted();
+        bool GetDeleted() const;
         void AddAct(std::shared_ptr<mc::asset::ActLogic> act);
         void Update(double delta_time);
         void BeforeRenderUpdate(double delta_time);
