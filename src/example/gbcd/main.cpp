@@ -27,14 +27,14 @@ namespace
 
 }
 
-namespace game::example_list::gltf_exp
+namespace game::example_list::gbcd
 {
     int Main()
     {
-        mc::low::Engine gogogo{800, 800, "Hello Scene Load"};
+        mc::low::Engine gogogo{800, 800, "Hello gbcd"};
         registArtLogic(gogogo);
         registActLogic(gogogo);
-        gogogo.LoadAssetAndCreate("gogogo.pb.data", true);
+        gogogo.LoadAssetAndCreate("gogogo.pb.data", false);
         gogogo.Run();
         return 0;
     }

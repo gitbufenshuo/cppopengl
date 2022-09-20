@@ -26,5 +26,12 @@ namespace game::example_list::cube_transform
     const std::string g_name{"cube_transform"};
     int Main();
 }
+namespace game::example_list::gbcd
+{
+    const std::string g_name{"gbcd"};
+    int Main();
+}
+// placeholder
+
 
 #endif

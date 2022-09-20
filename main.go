@@ -6,6 +6,8 @@ import (
 	"os"
 	"time"
 
+	"gitee.com/onebook/cppopengl/bintools/app"
+	"gitee.com/onebook/cppopengl/bintools/objconvert"
 	"gitee.com/onebook/cppopengl/bintools/stact"
 	"gitee.com/onebook/cppopengl/bintools/start"
 	"gitee.com/onebook/cppopengl/bintools/stdirspec"
@@ -51,5 +53,12 @@ func main() {
 		stscene.Main()
 		return
 	}
-
+	if os.Args[1] == "obj" {
+		objconvert.Main()
+		return
+	}
+	if os.Args[1] == "app" {
+		app.Main()
+		return
+	}
 }
