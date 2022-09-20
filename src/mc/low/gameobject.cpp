@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <mc/gameobject.h>
 #include <mc/engine.h>
 
@@ -37,6 +39,13 @@ namespace mc::low
     GameObject::GameObject(Engine *engine) : m_transform{std::make_unique<Transform>(this)}, m_engine{engine}
     {
     }
+    GameObject::~GameObject()
+    {
+        delete m_render;
+        delete m_filter;
+        // std::cout << "~GameObject() " << m_id << std::endl;
+    }
+
     void GameObject::SetID(int id)
     {
         m_id = id;
@@ -69,6 +78,10 @@ namespace mc::low
         {
             one_act->AfterRenderUpdate(delta_time);
         }
+    }
+    void GameObject::Destroy()
+    {
+        m_engine->DelGameobject(this);
     }
 
 }

@@ -35,6 +35,7 @@ namespace mc::low
 
     public:
         GameObject(Engine *m_engine = nullptr);
+        ~GameObject();
         MeshRender *GetMeshRender();
         MeshFilter *GetMeshFilter();
         Transform *GetTransform();
@@ -52,6 +53,7 @@ namespace mc::low
         {
             return m_engine;
         }
+        void Destroy();
     };
 }
 

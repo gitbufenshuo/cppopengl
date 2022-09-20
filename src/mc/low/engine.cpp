@@ -77,6 +77,12 @@ namespace mc::low
         delta_time = now_time - last_time;
         // std::cout << "frame interval: " << delta_time << " framerate: " << 1.0 / (delta_time) << std::endl;
         last_time = now_time;
+        // 遍历 m_append 这是即将加入 egine 的 gameobject
+        for (auto one_gb : m_append)
+        {
+            m_gameobjects.insert(std::pair{one_gb->GetID(), std::unique_ptr<GameObject>{one_gb}});
+        }
+        m_append.clear();
         // 遍历各个 gameobject，执行 logicsupport 上的 Update 函数
         for (auto &pair : m_gameobjects)
         {
@@ -164,8 +170,9 @@ namespace mc::low
     void Engine::AddGameobject(GameObject *game_object)
     {
         game_object->SetID(m_next_id++);
-        m_gameobjects.insert(std::pair{game_object->GetID(), std::unique_ptr<GameObject>{game_object}});
-        std::cout << "[Engine::AddGameobject] " << game_object->GetID() << std::endl;
+        m_append.push_back(game_object);
+        // m_gameobjects.insert(std::pair{game_object->GetID(), std::unique_ptr<GameObject>{game_object}});
+        std::cout << "User [Engine::AddGameobject] " << game_object->GetID() << std::endl;
     }
 
     void Engine::markGBDel(GameObject *game_object)
@@ -189,6 +196,10 @@ namespace mc::low
         tr->SetUpper(nullptr);
         // 遍历此 tr 的下级, 将本身和所有下级的gb 都标记成 deleted
         markGBDel(game_object);
+    }
+    int Engine::GameObjectSize()
+    {
+        return m_gameobjects.size();
     }
 
     // static

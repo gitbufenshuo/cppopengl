@@ -41,6 +41,7 @@ namespace mc::low
         glm::vec3 m_light_pos{-60.0f, 60.0f, -60.0f};
         // deleted id
         std::vector<int> m_deleted_id;
+        std::vector<GameObject *> m_append; // 新进来的gameobject
         // asset
         std::shared_ptr<mc::asset::AssetManager> m_am;
 
@@ -72,7 +73,7 @@ namespace mc::low
 
         void AddGameobject(GameObject *gb);
         void DelGameobject(GameObject *gb); // 删除某个gb
-
+        int GameObjectSize();
         void SetLightColor(glm::vec3 color)
         {
             m_light_color = color;

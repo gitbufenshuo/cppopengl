@@ -301,15 +301,10 @@ namespace mc::low
         IncLocalTranslate(equition_right.x - equition_left.x, equition_right.y - equition_left.y, equition_right.z - equition_left.z);
     }
 
-    /*
-        修改 local m_rotation，使得本 transform 最终
-        1. 本transform 的 y轴 指向 worldUp ( 暂时的，这个为了算 x轴 指向)
-        2. 本transform 的 z轴 指向 target
-    */
-    void Transform::LookAt(Transform *target, const glm::vec3 &worldUp)
+    // target 是一个世界坐标
+    void Transform::LookAt(glm::vec3 target_pos, const glm::vec3 &worldUp)
     {
         updateBranch();
-        const glm::vec3 &target_pos{target->GetWorldPos()};
         const glm::vec3 &now_origin{m_world_pos};
         // 先计算 最终的 world_x world_y world_z
         auto z_dir = glm::normalize(target_pos - now_origin);
@@ -319,15 +314,10 @@ namespace mc::low
         auto final_x = x_dir + now_origin;
         auto final_y = y_dir + now_origin;
         // 求 m6_inverse
-        glm::mat4 m6;
+        glm::mat4 m6{1.0f};
         if (m_upper)
         {
             // 有上级
-            m6 = m_upper->GetWorldMat();
-        }
-        else
-        {
-            // 没有上级
             m6 = m_upper->GetWorldMat();
         }
         glm::mat4 localT{1.0f};
@@ -364,6 +354,16 @@ namespace mc::low
 
         m_rotation = glm::toQuat(m6);
         m_local_dirty = true;
+    }
+    /*
+        修改 local m_rotation，使得本 transform 最终
+        1. 本transform 的 y轴 指向 worldUp ( 暂时的，这个为了算 x轴 指向)
+        2. 本transform 的 z轴 指向 target
+    */
+    void Transform::LookAt(Transform *target, const glm::vec3 &worldUp)
+    {
+        const glm::vec3 &target_pos{target->GetWorldPos()};
+        LookAt(target_pos, worldUp);
     }
 
     void Transform::SetLocalRotation(float w, float x, float y, float z)

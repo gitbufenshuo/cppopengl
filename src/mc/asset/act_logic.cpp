@@ -39,7 +39,7 @@ namespace mc::asset
     }
     ActLogic::~ActLogic()
     {
-        std::cout << " ActLogic Clear" << std::endl;
+        // std::cout << " ActLogic Clear" << std::endl;
     }
     MD5SUM ActLogic::GetKey() { return m_key; }
     const std::string &ActLogic::GetLogicName()
