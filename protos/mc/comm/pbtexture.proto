@@ -6,8 +6,11 @@ option go_package = "mc/comm";
 
 message PBTexture {
     int32 magFilter = 1;
-    int32 minFilter = 2;
+    int32 minFilter = 2; // GL_LINEAR 0x2601 9729
     int32 wrapS = 3;
     int32 wrapT = 4;
     string image = 5;
+    int32 wrapR = 6; // GL_CLAMP_TO_EDGE 0x812F 33071
+    repeated string image_list = 7;
+    int32 texture_type = 8; // 3553(GL_TEXTURE_2D) 34067(GL_TEXTURE_CUBE_MAP)
 }

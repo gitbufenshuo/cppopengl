@@ -5,13 +5,20 @@
 // mc low headers
 #include <mc/engine.h>
 #include <mc/gameobject.h>
+#include <mc/camera_skybox.h>
 
 // asset headers
+#include <mc/asset/texture.h>
+#include <mc/asset/shader_program.h>
+#include <mc/asset/model.h>
 #include <mc/asset/act_logic.h>
 #include <mc/asset/art_logic.h>
 
 // game headers
 #include <game/act_logic/gbcd.h>
+
+// game headers
+#include <game/art_logic/cubemap.h> // skybox
 
 // log
 #include <mc/log/log.h>
@@ -24,6 +31,7 @@ namespace
         // 这一步必须手动
         // 或者借助于命令行自动扫描生成
         mc::asset::ArtLogicPhong::Register(am.GetARF());
+        game::ArtLogicCubemap::Register(am.GetARF());
     }
     void registActLogic(mc::low::Engine &gogogo)
     {
@@ -32,6 +40,24 @@ namespace
         // 或者借助于命令行自动扫描生成
         mc::asset::ActLogicCamera::Register(am.GetACF());
         game::ActLogicGBCD::Register(am.GetACF());
+    }
+    // 手动创建一个skybox
+    void createSkybox(mc::low::Engine &gogogo)
+    {
+        auto &am{*gogogo.GetAM()};
+        auto &art_factory{am.GetARF()};
+
+        //
+        auto newskybox{new mc::low::Skybox{&gogogo}};
+        gogogo.GetCamera()->SetSkybox(newskybox);
+        //
+        newskybox->SetArtLogic(art_factory.Create("game::art_logic::ArtLogicCubemap", ""));
+        newskybox->AddTexture(am.Get<mc::asset::Texture>("skybox.cubemap.pb"));
+        newskybox->SetShaderProgram(std::make_shared<mc::asset::ShaderProgram>(
+            mc::low::Skybox::s_vcode, mc::low::Skybox::s_fcode));
+        newskybox->SetModel(mc::asset::Model::CreateCubemap());
+        //
+        gogogo.GetCamera()->SetSkybox(newskybox);
     }
     // 手动生成场景
     void sceneInitCustom(mc::low::Engine &gogogo)
@@ -96,6 +122,7 @@ namespace game::example_list::gbcd
         registActLogic(gogogo);
         gogogo.LoadAssetAndCreate("gogogo.pb.data", false);
         sceneInitCustom(gogogo);
+        createSkybox(gogogo); // 测试 skybox
         gogogo.Run();
         return 0;
     }

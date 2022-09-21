@@ -71,6 +71,29 @@ namespace mc::asset
         }
     }
 
+    ShaderProgram::ShaderProgram(const std::string &v_code, const std::string &f_code)
+    {
+        char compileLog[512];
+        unsigned int vid = compile(GL_VERTEX_SHADER, v_code.data(), compileLog);
+        unsigned int fid = compile(GL_FRAGMENT_SHADER, f_code.data(), compileLog);
+        gl_id = glCreateProgram();
+        glAttachShader(gl_id, vid);
+        glAttachShader(gl_id, fid);
+        glLinkProgram(gl_id);
+        // check for linking errors
+        int success;
+        glGetProgramiv(gl_id, GL_LINK_STATUS, &success);
+        if (!success)
+        {
+            std::fill(compileLog, compileLog + 512, 0);
+            glGetProgramInfoLog(gl_id, 512, nullptr, compileLog);
+            std::cout << compileLog << std::endl;
+            throw 1;
+        }
+        glDeleteShader(vid);
+        glDeleteShader(fid);
+    }
+
     ShaderProgram::~ShaderProgram()
     {
     }

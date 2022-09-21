@@ -22,6 +22,8 @@ namespace mc::asset
     {
     public:
         ShaderProgram(AssetManager &am, const std::string &r_name);
+        ShaderProgram(const std::string &v_code, const std::string &f_code);
+
         ~ShaderProgram();
 
     public:

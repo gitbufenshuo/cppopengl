@@ -180,12 +180,39 @@ class PBTexture final :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kImageListFieldNumber = 7,
     kImageFieldNumber = 5,
     kMagFilterFieldNumber = 1,
     kMinFilterFieldNumber = 2,
     kWrapSFieldNumber = 3,
     kWrapTFieldNumber = 4,
+    kWrapRFieldNumber = 6,
+    kTextureTypeFieldNumber = 8,
   };
+  // repeated string image_list = 7;
+  int image_list_size() const;
+  private:
+  int _internal_image_list_size() const;
+  public:
+  void clear_image_list();
+  const std::string& image_list(int index) const;
+  std::string* mutable_image_list(int index);
+  void set_image_list(int index, const std::string& value);
+  void set_image_list(int index, std::string&& value);
+  void set_image_list(int index, const char* value);
+  void set_image_list(int index, const char* value, size_t size);
+  std::string* add_image_list();
+  void add_image_list(const std::string& value);
+  void add_image_list(std::string&& value);
+  void add_image_list(const char* value);
+  void add_image_list(const char* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& image_list() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_image_list();
+  private:
+  const std::string& _internal_image_list(int index) const;
+  std::string* _internal_add_image_list();
+  public:
+
   // string image = 5;
   void clear_image();
   const std::string& image() const;
@@ -236,6 +263,24 @@ class PBTexture final :
   void _internal_set_wrapt(int32_t value);
   public:
 
+  // int32 wrapR = 6;
+  void clear_wrapr();
+  int32_t wrapr() const;
+  void set_wrapr(int32_t value);
+  private:
+  int32_t _internal_wrapr() const;
+  void _internal_set_wrapr(int32_t value);
+  public:
+
+  // int32 texture_type = 8;
+  void clear_texture_type();
+  int32_t texture_type() const;
+  void set_texture_type(int32_t value);
+  private:
+  int32_t _internal_texture_type() const;
+  void _internal_set_texture_type(int32_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:mc.comm.PBTexture)
  private:
   class _Internal;
@@ -244,11 +289,14 @@ class PBTexture final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> image_list_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr image_;
     int32_t magfilter_;
     int32_t minfilter_;
     int32_t wraps_;
     int32_t wrapt_;
+    int32_t wrapr_;
+    int32_t texture_type_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -393,6 +441,121 @@ inline void PBTexture::set_allocated_image(std::string* image) {
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   // @@protoc_insertion_point(field_set_allocated:mc.comm.PBTexture.image)
+}
+
+// int32 wrapR = 6;
+inline void PBTexture::clear_wrapr() {
+  _impl_.wrapr_ = 0;
+}
+inline int32_t PBTexture::_internal_wrapr() const {
+  return _impl_.wrapr_;
+}
+inline int32_t PBTexture::wrapr() const {
+  // @@protoc_insertion_point(field_get:mc.comm.PBTexture.wrapR)
+  return _internal_wrapr();
+}
+inline void PBTexture::_internal_set_wrapr(int32_t value) {
+  
+  _impl_.wrapr_ = value;
+}
+inline void PBTexture::set_wrapr(int32_t value) {
+  _internal_set_wrapr(value);
+  // @@protoc_insertion_point(field_set:mc.comm.PBTexture.wrapR)
+}
+
+// repeated string image_list = 7;
+inline int PBTexture::_internal_image_list_size() const {
+  return _impl_.image_list_.size();
+}
+inline int PBTexture::image_list_size() const {
+  return _internal_image_list_size();
+}
+inline void PBTexture::clear_image_list() {
+  _impl_.image_list_.Clear();
+}
+inline std::string* PBTexture::add_image_list() {
+  std::string* _s = _internal_add_image_list();
+  // @@protoc_insertion_point(field_add_mutable:mc.comm.PBTexture.image_list)
+  return _s;
+}
+inline const std::string& PBTexture::_internal_image_list(int index) const {
+  return _impl_.image_list_.Get(index);
+}
+inline const std::string& PBTexture::image_list(int index) const {
+  // @@protoc_insertion_point(field_get:mc.comm.PBTexture.image_list)
+  return _internal_image_list(index);
+}
+inline std::string* PBTexture::mutable_image_list(int index) {
+  // @@protoc_insertion_point(field_mutable:mc.comm.PBTexture.image_list)
+  return _impl_.image_list_.Mutable(index);
+}
+inline void PBTexture::set_image_list(int index, const std::string& value) {
+  _impl_.image_list_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:mc.comm.PBTexture.image_list)
+}
+inline void PBTexture::set_image_list(int index, std::string&& value) {
+  _impl_.image_list_.Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:mc.comm.PBTexture.image_list)
+}
+inline void PBTexture::set_image_list(int index, const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.image_list_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:mc.comm.PBTexture.image_list)
+}
+inline void PBTexture::set_image_list(int index, const char* value, size_t size) {
+  _impl_.image_list_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:mc.comm.PBTexture.image_list)
+}
+inline std::string* PBTexture::_internal_add_image_list() {
+  return _impl_.image_list_.Add();
+}
+inline void PBTexture::add_image_list(const std::string& value) {
+  _impl_.image_list_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:mc.comm.PBTexture.image_list)
+}
+inline void PBTexture::add_image_list(std::string&& value) {
+  _impl_.image_list_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:mc.comm.PBTexture.image_list)
+}
+inline void PBTexture::add_image_list(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.image_list_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:mc.comm.PBTexture.image_list)
+}
+inline void PBTexture::add_image_list(const char* value, size_t size) {
+  _impl_.image_list_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:mc.comm.PBTexture.image_list)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+PBTexture::image_list() const {
+  // @@protoc_insertion_point(field_list:mc.comm.PBTexture.image_list)
+  return _impl_.image_list_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+PBTexture::mutable_image_list() {
+  // @@protoc_insertion_point(field_mutable_list:mc.comm.PBTexture.image_list)
+  return &_impl_.image_list_;
+}
+
+// int32 texture_type = 8;
+inline void PBTexture::clear_texture_type() {
+  _impl_.texture_type_ = 0;
+}
+inline int32_t PBTexture::_internal_texture_type() const {
+  return _impl_.texture_type_;
+}
+inline int32_t PBTexture::texture_type() const {
+  // @@protoc_insertion_point(field_get:mc.comm.PBTexture.texture_type)
+  return _internal_texture_type();
+}
+inline void PBTexture::_internal_set_texture_type(int32_t value) {
+  
+  _impl_.texture_type_ = value;
+}
+inline void PBTexture::set_texture_type(int32_t value) {
+  _internal_set_texture_type(value);
+  // @@protoc_insertion_point(field_set:mc.comm.PBTexture.texture_type)
 }
 
 #ifdef __GNUC__

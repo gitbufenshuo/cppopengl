@@ -20,6 +20,7 @@ namespace mc::asset
     {
     public:
         Model(AssetManager &am, const std::string &r_name);
+        Model() = default;
         ~Model();
 
     public:
@@ -27,6 +28,9 @@ namespace mc::asset
         void Use();
         int GetEBOCount();
         unsigned int GetEBOType();
+
+    public:
+        static std::shared_ptr<Model> CreateCubemap();
 
     private:
         void load(); // load to gl
@@ -44,6 +48,7 @@ namespace mc::asset
         std::vector<unsigned int> m_vbo_list;
         unsigned int m_ebo;
         int m_ebo_count;
+        int m_ebo_type;
     };
 }
 #endif

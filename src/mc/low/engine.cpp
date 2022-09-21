@@ -144,6 +144,10 @@ namespace mc::low
             }
             _gb->AfterRenderUpdate(delta_time);
         }
+        // draw skybox
+        glDepthFunc(GL_LEQUAL);
+        m_main_camera->DrawSkybox();
+        glDepthFunc(GL_LESS);
     }
     void Engine::after_render_logic()
     {

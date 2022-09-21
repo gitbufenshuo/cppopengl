@@ -55,4 +55,16 @@ namespace mc::low
         return m_transform.get();
     }
 
+    void Camera::SetSkybox(Skybox *sbox)
+    {
+        m_skybox.reset(sbox);
+    }
+    void Camera::DrawSkybox()
+    {
+        if (m_skybox)
+        {
+            m_skybox->Draw();
+        }
+    }
+
 }

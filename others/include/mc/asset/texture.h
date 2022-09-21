@@ -26,7 +26,9 @@ namespace mc::asset
         void Use();
 
     private:
-        void load(); // load to gl
+        void load(AssetManager &am);            // load to gl
+        void load_cubemap(AssetManager &am);    // load to gl
+        void load_texture_2d(AssetManager &am); // load to gl
 
     private:
         const std::string m_r_name;

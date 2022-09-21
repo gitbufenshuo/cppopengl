@@ -8,6 +8,8 @@ namespace mc::low
 #include <memory>
 
 #include <glm/glm.hpp>
+
+#include <mc/camera_skybox.h>
 #include <mc/transform.h>
 
 namespace mc::low
@@ -21,6 +23,8 @@ namespace mc::low
         Transform *GetTransform();
         const glm::mat4 &GetViewMat();
         const glm::mat4 &GetProjMat();
+        void SetSkybox(Skybox *);
+        void DrawSkybox();
 
     private:
         void updateViewMat();
@@ -38,6 +42,7 @@ namespace mc::low
         float m_fov{45.0f};      // fov in degree
         bool m_proj_dirty{true}; // 是否需要更新 m_view_mat
         glm::mat4 m_proj_mat;    // projection matrix
+        std::unique_ptr<Skybox> m_skybox{};
     };
 }
 

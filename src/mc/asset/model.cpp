@@ -84,10 +84,12 @@ namespace mc::asset
         if (m_pb_data.ebo_type() == GL_UNSIGNED_INT)
         {
             m_ebo_count = m_pb_data.ebo_length() / 4;
+            m_ebo_type = GL_UNSIGNED_INT;
         }
         else if (m_pb_data.ebo_type() == GL_UNSIGNED_SHORT)
         {
             m_ebo_count = m_pb_data.ebo_length() / 2;
+            m_ebo_type = GL_UNSIGNED_SHORT;
         }
 
         // 3. vertex attrib
@@ -97,8 +99,10 @@ namespace mc::asset
         {
             total += m_pb_data.attrib(location);
         }
+
         for (int location = 0; location < m_pb_data.attrib_size(); ++location)
         {
+
             glVertexAttribPointer(location, m_pb_data.attrib(location), GL_FLOAT, GL_FALSE, total * sizeof(float), (void *)(offset * sizeof(float)));
             glEnableVertexAttribArray(location);
             offset += m_pb_data.attrib(location);
@@ -114,6 +118,6 @@ namespace mc::asset
     }
     unsigned int Model::GetEBOType()
     {
-        return m_pb_data.ebo_type();
+        return m_ebo_type;
     }
 }

@@ -14,6 +14,7 @@ namespace mc::asset
         std::cout << "[Store<T>::Register] "
                   << typeid(T).name() << " "
                   << data << " "
+                  << key << " "
                   << std::endl;
         m_store.insert(std::pair{key, Elem{data}});
     }
