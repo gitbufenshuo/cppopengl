@@ -31,7 +31,13 @@ namespace game::example_list::gbcd
     const std::string g_name{"gbcd"};
     int Main();
 }
+namespace game::example_list::math
+{
+    const std::string g_name{"math"};
+    int Main();
+}
 // placeholder
+
 
 
 #endif

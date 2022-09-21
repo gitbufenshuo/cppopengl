@@ -18,6 +18,14 @@ namespace mc::glmex
             std::cout << std::endl;
         }
     }
+    inline void showVec(const glm::vec4 &input)
+    {
+        std::cout << "---show vec---" << std::endl;
+        std::cout << input.x << ", "
+                  << input.y << ", "
+                  << input.z << ", "
+                  << input.w << std::endl;
+    }
 
 }
 

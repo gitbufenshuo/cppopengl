@@ -52,6 +52,13 @@ void reg_entry(std::unordered_map<std::string, entry_func> &entry_list)
 				game::example_list::gbcd::g_name,
 				one));
 	}
+	{
+		entry_func one{game::example_list::math::Main};
+		entry_list.insert(
+			std::pair(
+				game::example_list::math::g_name,
+				one));
+	}
 	// placeholder
 }
 
