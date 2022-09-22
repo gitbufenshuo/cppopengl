@@ -1136,8 +1136,8 @@ namespace game
 
     public:
         void Update(double delta_time) override;
-        void BeforeRenderUpdate(double delta_time) override;
-        void AfterRenderUpdate(double delta_time) override;
+        void BeforeRenderUpdate(double delta_time, unsigned int layer) override;
+        void AfterRenderUpdate(double delta_time, unsigned int layer) override;
     };
 }
 #endif // !BOX_DRAW_H

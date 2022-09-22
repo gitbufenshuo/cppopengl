@@ -24,10 +24,10 @@ namespace game
         m_time += static_cast<float>(delta_time);
         m_gb->GetTransform()->SetLocalTranslate(glm::sin(m_time * 1.28) * 5.0f, glm::cos(delta_time), glm::cos(m_time * 1.28) * 5.0f);
     }
-    void ActLogicTranslate::BeforeRenderUpdate(double delta_time)
+    void ActLogicTranslate::BeforeRenderUpdate(double delta_time, unsigned int layer)
     {
     }
-    void ActLogicTranslate::AfterRenderUpdate(double delta_time)
+    void ActLogicTranslate::AfterRenderUpdate(double delta_time, unsigned int layer)
     {
     }
 }

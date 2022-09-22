@@ -78,8 +78,8 @@ namespace game
         move(delta_time);
         life(delta_time);
     }
-    void ActLogicGBCD::BeforeRenderUpdate(double delta_time) {}
-    void ActLogicGBCD::AfterRenderUpdate(double delta_time) {}
+    void ActLogicGBCD::BeforeRenderUpdate(double delta_time, unsigned int layer) {}
+    void ActLogicGBCD::AfterRenderUpdate(double delta_time, unsigned int layer) {}
     //
     void ActLogicGBCD::accArt()
     {

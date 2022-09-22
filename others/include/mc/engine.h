@@ -60,7 +60,9 @@ namespace mc::low
         void update();
         void logic_update();
         void after_render_logic();
-        void standard_render();
+        void standard_render(); // 普通渲染 gameobject
+        void outline_render();  // 绘制轮廓
+        void draw_skybox();     // 绘制天空盒子
         void loadAsset(const char *file_path, mc::comm::PBDirSpec &pb_data);
 
     public:

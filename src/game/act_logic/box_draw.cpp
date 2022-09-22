@@ -71,12 +71,12 @@ namespace game
 
         maindraw.DrawOctant(tree, {0, 0, 1, 0});
     }
-    void BoxDraw::AfterRenderUpdate(double delta_time)
+    void BoxDraw::AfterRenderUpdate(double delta_time, unsigned int layer)
     {
 
         maindraw.Flush();
     }
-    void BoxDraw::BeforeRenderUpdate(double delta_time)
+    void BoxDraw::BeforeRenderUpdate(double delta_time, unsigned int layer)
     {
     }
     BoxDraw::DebugDraw::DebugDraw()

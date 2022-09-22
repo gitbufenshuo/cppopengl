@@ -83,5 +83,20 @@ namespace mc::asset
     Material::Material(const Material &other) : m_art_logic{other.m_art_logic->Clone()}
     {
     }
+    void Material::SetRenderBit(unsigned int bit, bool set)
+    {
+        if (!set)
+        {
+            m_render_bit |= (~bit);
+        }
+        else
+        {
+            m_render_bit |= (bit);
+        }
+    }
+    bool Material::GetRenderBit(unsigned int bit)
+    {
+        return m_render_bit & bit;
+    }
 
 } // namespace mc::asset

@@ -37,8 +37,8 @@ namespace mc::asset
 
     public:
         virtual void Update(double delta_time){};
-        virtual void BeforeRenderUpdate(double delta_time){};
-        virtual void AfterRenderUpdate(double delta_time){};
+        virtual void BeforeRenderUpdate(double delta_time, unsigned int layer){};
+        virtual void AfterRenderUpdate(double delta_time, unsigned int layer){};
 
     public:
         MD5SUM GetKey();
@@ -95,8 +95,8 @@ namespace mc::asset
 
     public:
         void Update(double delta_time) override;
-        void BeforeRenderUpdate(double delta_time) override;
-        void AfterRenderUpdate(double delta_time) override;
+        void BeforeRenderUpdate(double delta_time, unsigned int layer) override;
+        void AfterRenderUpdate(double delta_time, unsigned int layer) override;
     };
 
 }

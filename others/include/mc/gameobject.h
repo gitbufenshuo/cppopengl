@@ -47,8 +47,8 @@ namespace mc::low
         bool GetDeleted() const;
         void AddAct(std::shared_ptr<mc::asset::ActLogic> act);
         void Update(double delta_time);
-        void BeforeRenderUpdate(double delta_time);
-        void AfterRenderUpdate(double delta_time);
+        void BeforeRenderUpdate(double delta_time, unsigned int layer = 0);
+        void AfterRenderUpdate(double delta_time, unsigned int layer = 0);
         Engine *GetEngine()
         {
             return m_engine;

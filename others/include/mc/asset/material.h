@@ -18,6 +18,7 @@ namespace mc::asset
 
 namespace mc::asset
 {
+    inline constexpr unsigned int RENDER_LAYER_OUTLINE = 0x01; // 画轮廓
     class Material
     {
     public:
@@ -29,6 +30,8 @@ namespace mc::asset
         MD5SUM GetKey();
         std::shared_ptr<ArtLogic> GetArtLogic();
         Material(const Material &other);
+        void SetRenderBit(unsigned int bit, bool set);
+        bool GetRenderBit(unsigned int bit);
 
     private:
         void load(); // load to gl
@@ -43,6 +46,7 @@ namespace mc::asset
         std::vector<std::shared_ptr<Texture>> m_texture_list;
         std::shared_ptr<ShaderProgram> m_program;
         std::shared_ptr<ArtLogic> m_art_logic;
+        unsigned int m_render_bit{0};
     };
 }
 #endif

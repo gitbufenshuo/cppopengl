@@ -29,11 +29,11 @@ namespace game
         // 每一帧，换 model 里面的 m_v_data1
         auto model(m_gb->GetMeshFilter()->GetModel(0));
     }
-    void ArtLogicFunctionDraw::BeforeRenderUpdate(double delta_time)
+    void ArtLogicFunctionDraw::BeforeRenderUpdate(double delta_time, unsigned int layer)
     {
         mc::low::Engine::S_GL_EnableFaceCull(false);
     }
-    void ArtLogicFunctionDraw::AfterRenderUpdate(double delta_time)
+    void ArtLogicFunctionDraw::AfterRenderUpdate(double delta_time, unsigned int layer)
     {
         mc::low::Engine::S_GL_EnableFaceCull(true);
     }

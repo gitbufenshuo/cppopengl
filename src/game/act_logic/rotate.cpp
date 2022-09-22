@@ -31,10 +31,10 @@ namespace game
         }
     }
 
-    void ActLogicRotate::BeforeRenderUpdate(double delta_time)
+    void ActLogicRotate::BeforeRenderUpdate(double delta_time, unsigned int layer)
     {
     }
-    void ActLogicRotate::AfterRenderUpdate(double delta_time)
+    void ActLogicRotate::AfterRenderUpdate(double delta_time, unsigned int layer)
     {
     }
 }

@@ -65,18 +65,18 @@ namespace mc::low
             one_act->Update(delta_time);
         }
     }
-    void GameObject::BeforeRenderUpdate(double delta_time)
+    void GameObject::BeforeRenderUpdate(double delta_time, unsigned int layer)
     {
         for (auto one_act : act_list)
         {
-            one_act->BeforeRenderUpdate(delta_time);
+            one_act->BeforeRenderUpdate(delta_time, layer);
         }
     }
-    void GameObject::AfterRenderUpdate(double delta_time)
+    void GameObject::AfterRenderUpdate(double delta_time, unsigned int layer)
     {
         for (auto one_act : act_list)
         {
-            one_act->AfterRenderUpdate(delta_time);
+            one_act->AfterRenderUpdate(delta_time, layer);
         }
     }
     void GameObject::Destroy()

@@ -22,10 +22,10 @@ namespace game
     {
         m_gb->GetTransform()->LookAt(m_ctl_transform);
     }
-    void ActLogicLookat::BeforeRenderUpdate(double delta_time)
+    void ActLogicLookat::BeforeRenderUpdate(double delta_time, unsigned int layer)
     {
     }
-    void ActLogicLookat::AfterRenderUpdate(double delta_time)
+    void ActLogicLookat::AfterRenderUpdate(double delta_time, unsigned int layer)
     {
     }
 }
