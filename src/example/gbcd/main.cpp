@@ -120,7 +120,7 @@ namespace game::example_list::gbcd
         registActLogic(gogogo);
         gogogo.LoadAssetAndCreate("gogogo.pb.data", false);
         sceneInitCustom(gogogo);
-        // createSkybox(gogogo); // 测试 skybox
+        createSkybox(gogogo); // 测试 skybox
         gogogo.Run();
         return 0;
     }
