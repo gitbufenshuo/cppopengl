@@ -55,9 +55,9 @@ namespace mc::low
         return m_transform.get();
     }
 
-    void Camera::SetSkybox(Skybox *sbox)
+    void Camera::SetSkybox(Skybox *sky_box)
     {
-        m_skybox.reset(sbox);
+        m_skybox = std::unique_ptr<Skybox>{sky_box};
     }
     void Camera::DrawSkybox()
     {

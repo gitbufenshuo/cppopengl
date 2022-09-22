@@ -56,8 +56,6 @@ namespace
         newskybox->SetShaderProgram(std::make_shared<mc::asset::ShaderProgram>(
             mc::low::Skybox::s_vcode, mc::low::Skybox::s_fcode));
         newskybox->SetModel(mc::asset::Model::CreateCubemap());
-        //
-        gogogo.GetCamera()->SetSkybox(newskybox);
     }
     // 手动生成场景
     void sceneInitCustom(mc::low::Engine &gogogo)

@@ -1,4 +1,7 @@
 #include <memory>
+
+#include <glad/glad.h>
+
 #include <mc/camera_skybox.h>
 
 namespace mc::low
@@ -13,7 +16,7 @@ namespace mc::low
         uniform mat4 uni_Proj;
 
         void main() {
-            io_UV = aPos;
+            io_UV = vec3(aPos.x, aPos.y, -aPos.z);
 
             vec4 pos = uni_Proj * uni_View * vec4(aPos, 1.0);
             gl_Position = pos.xyww;
@@ -49,18 +52,17 @@ namespace mc::low
 
     void Skybox::SetShaderProgram(std::shared_ptr<mc::asset::ShaderProgram> prog)
     {
-        m_program = prog;
+        m_art_logic->SetShaderProgram(prog);
     }
     void Skybox::SetModel(std::shared_ptr<mc::asset::Model> model)
     {
         m_model = model;
-        std::cout << "m_model addr" << m_model.get() << std::endl;
     }
     void Skybox::Draw()
     {
-        std::cout << "m_model addr" << m_model.get() << std::endl;
         m_art_logic->PostUniform(m_engine, nullptr);
         m_model->Use();
+        glDrawElements(GL_TRIANGLES, m_model->GetEBOCount(), m_model->GetEBOType(), 0);
     }
 
 }

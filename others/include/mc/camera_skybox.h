@@ -30,7 +30,6 @@ namespace mc::low
         static const char *s_fcode;
 
     private:
-        std::shared_ptr<mc::asset::ShaderProgram> m_program;
         std::shared_ptr<mc::asset::ArtLogic> m_art_logic;
         std::shared_ptr<mc::asset::Model> m_model;
         Engine *m_engine;

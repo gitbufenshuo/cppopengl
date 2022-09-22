@@ -117,9 +117,9 @@ namespace mc::asset
     {
         float speed = 1.0f * static_cast<float>(delta_time);
         float xdiff = static_cast<float>(mc::low::Engine::s_c_xdiff);
-        m_now_yaw -= xdiff * speed;
+        m_now_yaw -= xdiff * speed * 3.0f;
         float ydiff = static_cast<float>(mc::low::Engine::s_c_ydiff);
-        m_now_pitch -= ydiff * speed;
+        m_now_pitch -= ydiff * speed * 3.0f;
         m_now_pitch = std::clamp(m_now_pitch, -89.0f, 89.0f);
         m_ctl_transform->SetLocalEuler(m_now_pitch, m_now_yaw, 0.0f);
         // camera translate
