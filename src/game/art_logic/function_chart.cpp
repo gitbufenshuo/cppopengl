@@ -12,7 +12,7 @@ namespace game
     }
     void ArtLogicFunctionChart::Register(mc::asset::ArtLogicFactory &af)
     {
-        af.Register("game::art_logic::ArtLogicFunctionChart", createFunc);
+        af.Register(s_class_name, createFunc);
     }
     // public virtual
     ArtLogicFunctionChart::~ArtLogicFunctionChart()
@@ -40,9 +40,10 @@ namespace game
     {
         m_texture = texture;
     }
-    void ArtLogicFunctionChart::ShowMe()
+    const std::string &ArtLogicFunctionChart::ShowMe()
     {
-        std::cout << "game::art_logic::ArtLogicFunctionChart" << std::endl;
+        std::cout << s_class_name << std::endl;
+        return s_class_name;
     }
 
 }

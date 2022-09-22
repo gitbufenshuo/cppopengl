@@ -140,5 +140,9 @@ namespace mc::asset
     {
         glUniform1f(glGetUniformLocation(gl_id, _name), input);
     }
+    void ShaderProgram::Uniform(const char *_name, const int input)
+    {
+        glUniform1i(glGetUniformLocation(gl_id, _name), input);
+    }
 
 } // namespace mc::asset

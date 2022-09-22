@@ -12,7 +12,7 @@ namespace game
     }
     void ArtLogicCubemap::Register(mc::asset::ArtLogicFactory &af)
     {
-        af.Register("game::art_logic::ArtLogicCubemap", createFunc);
+        af.Register(s_class_name, createFunc);
     }
     // public virtual
     ArtLogicCubemap::~ArtLogicCubemap()
@@ -41,9 +41,10 @@ namespace game
     {
         m_texture = texture;
     }
-    void ArtLogicCubemap::ShowMe()
+    const std::string &ArtLogicCubemap::ShowMe()
     {
-        std::cout << "game::art_logic::ArtLogicCubemap" << std::endl;
+        std::cout << s_class_name << std::endl;
+        return s_class_name;
     }
 
 }

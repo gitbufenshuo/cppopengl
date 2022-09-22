@@ -98,6 +98,7 @@ namespace mc::asset
 
 namespace mc::asset
 {
+    const std::string ArtLogicPhong::s_class_name{"mc::asset::ArtLogicPhong"};
     std::shared_ptr<ArtLogic> ArtLogicPhong::createFunc(const std::string &bin_data)
     {
         auto res{std::make_shared<ArtLogicPhong>()};
@@ -148,7 +149,7 @@ namespace mc::asset
     }
     void ArtLogicPhong::Register(ArtLogicFactory &arf)
     {
-        arf.Register("mc::asset::ArtLogicPhong", createFunc);
+        arf.Register(s_class_name, createFunc);
     }
 
     // public virtual
@@ -164,6 +165,7 @@ namespace mc::asset
         }
         // 传一些 uniform
         {
+            m_sp->Uniform("ma_outline", m_outline);
             m_sp->Uniform("ma_View", eg->GetCamera()->GetViewMat());
             m_sp->Uniform("ma_Proj", eg->GetCamera()->GetProjMat());
             m_sp->Uniform("lightPos", eg->GetLightPos());
@@ -188,9 +190,15 @@ namespace mc::asset
     {
         m_texture = texture;
     }
-    void ArtLogicPhong::ShowMe()
+    const std::string &ArtLogicPhong::ShowMe()
     {
-        std::cout << "mc::asset::ArtLogicPhong" << std::endl;
+        std::cout << s_class_name << std::endl;
+        return s_class_name;
+    }
+    // custom public
+    void ArtLogicPhong::SetOutline(int outline)
+    {
+        m_outline = outline;
     }
 
 }

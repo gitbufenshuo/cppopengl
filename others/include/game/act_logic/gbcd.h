@@ -8,6 +8,7 @@
 #include <mc/transform.h>
 
 #include <mc/asset/act_logic.h>
+#include <mc/asset/art_logic.h>
 
 namespace game
 {
@@ -28,6 +29,7 @@ namespace game
         void AfterRenderUpdate(double delta_time) override;
 
     private:
+        void accArt();
         void move(double delta_time);
         void life(double delta_time);
 
@@ -37,6 +39,8 @@ namespace game
         float m_time{0.0f};
         glm::vec3 m_outdir{0.05f, 0.05f, 0.05f};
         int moving_state{};
+        int m_outline{0};
+        mc::asset::ArtLogicPhong *m_phong_ins{nullptr};
     };
 }
 

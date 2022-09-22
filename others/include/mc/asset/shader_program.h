@@ -32,6 +32,7 @@ namespace mc::asset
         void Uniform(const char *_name, const glm::mat4 &input);
         void Uniform(const char *_name, const glm::vec3 &input);
         void Uniform(const char *_name, const float input);
+        void Uniform(const char *_name, const int input);
 
     private:
         void load(); // load to gl

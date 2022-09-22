@@ -2,6 +2,7 @@
 #define GAME_FUNCTION_CHART_H
 
 #include <memory>
+#include <string>
 
 #include <mc/engine.h>
 
@@ -16,6 +17,7 @@ namespace game
         std::shared_ptr<mc::asset::Texture> m_texture;
 
     private:
+        static inline const std::string s_class_name{"game::art_logic::ArtLogicFunctionChart"};
         static std::shared_ptr<ArtLogic> createFunc(const std::string &bin_data);
 
     public:
@@ -29,7 +31,7 @@ namespace game
         void PostUniform(mc::low::Engine *eg, mc::low::GameObject *gb) override;
         void SetShaderProgram(std::shared_ptr<mc::asset::ShaderProgram> sp) override;
         void AddTexture(std::shared_ptr<mc::asset::Texture> texture) override;
-        void ShowMe() override;
+        const std::string &ShowMe() override;
     };
 
 }

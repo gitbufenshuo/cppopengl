@@ -30,13 +30,15 @@ namespace mc::asset
 {
     class ArtLogic
     {
+        static inline const std::string s_class_name{"mc::asset::ArtLogic"};
+
     public:
         ArtLogic() = default;
         ArtLogic(AssetManager &am, const std::string &r_name);
         virtual void PostUniform(mc::low::Engine *eg, mc::low::GameObject *gb) {}
         virtual void SetShaderProgram(std::shared_ptr<ShaderProgram> sp) {}
         virtual void AddTexture(std::shared_ptr<Texture> texture) {}
-        virtual void ShowMe() {}
+        virtual const std::string &ShowMe() { return s_class_name; }
         virtual ~ArtLogic();
 
     public:
@@ -70,12 +72,19 @@ namespace mc::asset
 
     class ArtLogicPhong : public ArtLogic
     {
+    public: // custom
+        void SetOutline(int outline);
+
+    private:
+        static const std::string s_class_name;
+
     private:
         glm::vec3 m_ambient;
         glm::vec3 m_diffuse;
         glm::vec3 m_specular;
         float m_shininess;
         std::string m_m_name; // 材质名字
+        int m_outline{0};
 
         std::shared_ptr<ShaderProgram> m_sp;
         std::shared_ptr<Texture> m_texture;
@@ -94,7 +103,7 @@ namespace mc::asset
         void PostUniform(mc::low::Engine *eg, mc::low::GameObject *gb) override;
         void SetShaderProgram(std::shared_ptr<ShaderProgram> sp) override;
         void AddTexture(std::shared_ptr<Texture> texture) override;
-        void ShowMe() override;
+        const std::string &ShowMe() override;
     };
 }
 #endif

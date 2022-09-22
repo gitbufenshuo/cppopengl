@@ -8,6 +8,7 @@
 
 namespace
 {
+    int g_gbcount{0};
     using move_func = void (*)(mc::low::Transform *tr, glm::vec3 dir);
     void move_0(mc::low::Transform *tr, glm::vec3 dir)
     {
@@ -23,6 +24,7 @@ namespace
         move_1};
     void createNew(mc::low::Engine *eg, glm::vec3 pos)
     {
+        ++g_gbcount;
         // 生成一个 普通 object
         auto &am{*eg->GetAM()};
         auto newgb{new mc::low::GameObject{eg}};
@@ -61,6 +63,7 @@ namespace game
         res->m_gb = gb;
         res->m_tr = gb->GetTransform();
         res->m_eg = gb->GetEngine();
+        res->m_outline = g_gbcount % 2;
         return res;
     }
     void ActLogicGBCD::Register(mc::asset::ActLogicFactory &acf)
@@ -72,12 +75,23 @@ namespace game
     }
     void ActLogicGBCD::Update(double delta_time)
     {
+        accArt();
         move(delta_time);
         life(delta_time);
     }
     void ActLogicGBCD::BeforeRenderUpdate(double delta_time) {}
     void ActLogicGBCD::AfterRenderUpdate(double delta_time) {}
     //
+    void ActLogicGBCD::accArt()
+    {
+        if (!m_phong_ins)
+        {
+            auto arl{m_gb->GetMeshRender()->GetMaterial()->GetArtLogic()};
+            m_phong_ins = static_cast<mc::asset::ArtLogicPhong *>(arl.get());
+        }
+        m_phong_ins->SetOutline(m_outline);
+    }
+
     void ActLogicGBCD::move(double delta_time)
     {
         auto worlpos{m_tr->GetWorldPos()};

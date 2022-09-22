@@ -3,6 +3,7 @@
 
 // std
 #include <memory>
+#include <string>
 
 // low
 #include <mc/engine.h>
@@ -16,6 +17,9 @@ namespace game
 {
     class ArtLogicBlinnPhongPoint : public mc::asset::ArtLogic
     {
+
+    private:
+        static inline const std::string s_class_name{"game::art_logic::ArtLogicBlinnPhongPoint"};
 
     private:
         glm::vec3 m_ambient;
@@ -42,7 +46,7 @@ namespace game
         void PostUniform(mc::low::Engine *eg, mc::low::GameObject *gb) override;
         void SetShaderProgram(std::shared_ptr<mc::asset::ShaderProgram> sp) override;
         void AddTexture(std::shared_ptr<mc::asset::Texture> texture) override;
-        void ShowMe() override;
+        const std::string &ShowMe() override;
     };
 }
 #endif

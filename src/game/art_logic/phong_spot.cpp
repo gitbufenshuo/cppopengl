@@ -60,7 +60,7 @@ namespace game
     }
     void ArtLogicPhongSpot::Register(mc::asset::ArtLogicFactory &af)
     {
-        af.Register("game::art_logic::ArtLogicPhongSpot", createFunc);
+        af.Register(s_class_name, createFunc);
     }
 
     void ArtLogicPhongSpot::PostUniform(mc::low::Engine *eg, mc::low::GameObject *gb)
@@ -99,9 +99,10 @@ namespace game
     {
         m_texture = texture;
     }
-    void ArtLogicPhongSpot::ShowMe()
+    const std::string &ArtLogicPhongSpot::ShowMe()
     {
-        std::cout << "game::art_logic::ArtLogicPhongSpot" << std::endl;
+        std::cout << s_class_name << std::endl;
+        return s_class_name;
     }
 
 }

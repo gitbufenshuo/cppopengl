@@ -12,7 +12,7 @@ namespace game
     }
     void ArtLogicSimple::Register(mc::asset::ArtLogicFactory &af)
     {
-        af.Register("game::art_logic::ArtLogicSimple", createFunc);
+        af.Register(s_class_name, createFunc);
     }
     // public virtual
     ArtLogicSimple::~ArtLogicSimple()
@@ -36,9 +36,10 @@ namespace game
     {
         m_texture = texture;
     }
-    void ArtLogicSimple::ShowMe()
+    const std::string &ArtLogicSimple::ShowMe()
     {
-        std::cout << "game::art_logic::ArtLogicSimple" << std::endl;
+        std::cout << s_class_name << std::endl;
+        return s_class_name;
     }
 
 }
