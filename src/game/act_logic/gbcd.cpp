@@ -24,7 +24,6 @@ namespace
         move_1};
     void createNew(mc::low::Engine *eg, glm::vec3 pos)
     {
-        ++g_gbcount;
         // 生成一个 普通 object
         auto &am{*eg->GetAM()};
         auto newgb{new mc::low::GameObject{eg}};
@@ -36,7 +35,7 @@ namespace
             // mesh render
             auto mr{new mc::low::MeshRender{}};
             mr->SetGameobject(newgb);
-            mr->SetMaterial(am.Get<mc::asset::Material>()); // 暂时
+            mr->SetMaterial(std::make_shared<mc::asset::Material>(*am.Get<mc::asset::Material>())); // 复制一份
             newgb->SetMeshFilter(mf);
             newgb->SetMeshRender(mr);
         }
@@ -63,7 +62,7 @@ namespace game
         res->m_gb = gb;
         res->m_tr = gb->GetTransform();
         res->m_eg = gb->GetEngine();
-        res->m_outline = g_gbcount % 2;
+        res->m_outline = ++g_gbcount % 2;
         return res;
     }
     void ActLogicGBCD::Register(mc::asset::ActLogicFactory &acf)
@@ -117,7 +116,11 @@ namespace game
         std::cout << "gameobject_count: " << m_eg->GameObjectSize() << " " << delta_time << std::endl;
         m_time = 0.0f;
         // 生成三个新的
-        if (delta_time > 0.02)
+        if (g_gbcount > 3)
+        {
+            return;
+        }
+        if (delta_time > 0.016)
         {
             return;
         }

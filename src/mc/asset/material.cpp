@@ -80,5 +80,8 @@ namespace mc::asset
     {
         return m_art_logic;
     }
+    Material::Material(const Material &other) : m_art_logic{other.m_art_logic->Clone()}
+    {
+    }
 
 } // namespace mc::asset

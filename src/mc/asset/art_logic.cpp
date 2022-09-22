@@ -156,6 +156,10 @@ namespace mc::asset
     ArtLogicPhong::~ArtLogicPhong()
     {
     }
+    std::shared_ptr<ArtLogic> ArtLogicPhong::Clone()
+    {
+        return std::make_shared<ArtLogicPhong>(*this);
+    }
     void ArtLogicPhong::PostUniform(mc::low::Engine *eg, mc::low::GameObject *gb)
     {
         m_sp->Use();
