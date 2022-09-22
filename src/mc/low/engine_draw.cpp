@@ -34,8 +34,8 @@ namespace mc::low
             }
             // material tasks
             auto art_logic{_material->GetArtLogic()};
-            art_logic->PostUniform(this, one_gb);
             one_gb->BeforeRenderUpdate(delta_time);
+            art_logic->PostUniform(this, one_gb);
             // 遍历每一个 primitive model
             {
                 int model_size = _mesh_filter->modelsize();
@@ -50,7 +50,7 @@ namespace mc::low
         }
         //
         glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
-        glStencilMask(0x00);
+        glStencilMask(0xFF);
         glDisable(GL_DEPTH_TEST);
         //
         for (auto one_gb : g_outline_list)
@@ -75,8 +75,8 @@ namespace mc::low
             }
             // material tasks
             auto art_logic{_material->GetArtLogic()};
+            one_gb->BeforeRenderUpdate(delta_time, mc::asset::RENDER_LAYER_OUTLINE);
             art_logic->PostUniform(this, one_gb);
-            one_gb->BeforeRenderUpdate(delta_time);
             // 遍历每一个 primitive model
             {
                 int model_size = _mesh_filter->modelsize();
@@ -87,11 +87,13 @@ namespace mc::low
                     glDrawElements(GL_TRIANGLES, _model->GetEBOCount(), _model->GetEBOType(), 0);
                 }
             }
-            one_gb->AfterRenderUpdate(delta_time);
+            one_gb->AfterRenderUpdate(delta_time, mc::asset::RENDER_LAYER_OUTLINE);
         }
+        g_outline_list.resize(0);
         //
+        glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+        glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
         glStencilMask(0xFF);
-        glStencilFunc(GL_ALWAYS, 0, 0xFF);
         glEnable(GL_DEPTH_TEST);
     }
 
@@ -99,6 +101,9 @@ namespace mc::low
     {
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+        glEnable(GL_STENCIL_TEST);
+        glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+        glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
         // 画普通的物体
         glStencilMask(0x00);

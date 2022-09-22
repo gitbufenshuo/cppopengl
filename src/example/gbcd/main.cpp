@@ -96,7 +96,7 @@ namespace
                 // mesh render
                 auto mr{new mc::low::MeshRender{}};
                 mr->SetGameobject(newgb);
-                mr->SetMaterial(am.Get<mc::asset::Material>()); // 暂时
+                mr->SetMaterial(std::make_shared<mc::asset::Material>(*am.Get<mc::asset::Material>())); // 复制一份
                 newgb->SetMeshFilter(mf);
                 newgb->SetMeshRender(mr);
             }

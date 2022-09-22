@@ -119,10 +119,6 @@ namespace mc::low
 
     void Engine::Run()
     {
-        glEnable(GL_STENCIL_TEST);
-        glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
-        glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-
         while (!glfwWindowShouldClose(m_window))
         {
             ++frame_count;

@@ -62,7 +62,7 @@ namespace game
         res->m_gb = gb;
         res->m_tr = gb->GetTransform();
         res->m_eg = gb->GetEngine();
-        res->m_outline = ++g_gbcount % 2;
+        res->m_outline = (++g_gbcount) % 2;
         return res;
     }
     void ActLogicGBCD::Register(mc::asset::ActLogicFactory &acf)
@@ -78,7 +78,20 @@ namespace game
         move(delta_time);
         life(delta_time);
     }
-    void ActLogicGBCD::BeforeRenderUpdate(double delta_time, unsigned int layer) {}
+    void ActLogicGBCD::BeforeRenderUpdate(double delta_time, unsigned int layer)
+    {
+        if (m_phong_ins)
+        {
+            if (layer == 1)
+            {
+                m_phong_ins->SetOutline(1);
+            }
+            else
+            {
+                m_phong_ins->SetOutline(0);
+            }
+        }
+    }
     void ActLogicGBCD::AfterRenderUpdate(double delta_time, unsigned int layer) {}
     //
     void ActLogicGBCD::accArt()
@@ -87,8 +100,11 @@ namespace game
         {
             auto arl{m_gb->GetMeshRender()->GetMaterial()->GetArtLogic()};
             m_phong_ins = static_cast<mc::asset::ArtLogicPhong *>(arl.get());
+            if (m_outline == 1)
+            {
+                m_gb->GetMeshRender()->GetMaterial()->SetRenderBit(1, true);
+            }
         }
-        m_phong_ins->SetOutline(m_outline);
     }
 
     void ActLogicGBCD::move(double delta_time)
@@ -116,11 +132,7 @@ namespace game
         std::cout << "gameobject_count: " << m_eg->GameObjectSize() << " " << delta_time << std::endl;
         m_time = 0.0f;
         // 生成三个新的
-        if (g_gbcount > 3)
-        {
-            return;
-        }
-        if (delta_time > 0.016)
+        if (g_gbcount > 10)
         {
             return;
         }
