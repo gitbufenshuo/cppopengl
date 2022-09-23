@@ -73,8 +73,9 @@ namespace mc::asset
 
     class ArtLogicPhong : public ArtLogic
     {
-    public: // custom
+    public: // custom uniform
         void SetOutline(int outline);
+        void SetAmbient(float v1);
 
     private:
         static const std::string s_class_name;

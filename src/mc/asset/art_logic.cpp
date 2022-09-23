@@ -205,5 +205,11 @@ namespace mc::asset
     {
         m_outline = outline;
     }
+    void ArtLogicPhong::SetAmbient(float v1)
+    {
+        m_ambient.x = v1;
+        m_ambient.y = v1;
+        m_ambient.z = v1;
+    }
 
 }

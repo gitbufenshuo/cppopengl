@@ -108,6 +108,7 @@ namespace game
             append_model(am.Get<mc::asset::Model>("52517.model.pb"));
             append_model(am.Get<mc::asset::Model>("low-poly-fox-by-pixelmannen.obj.model.pb"));
         }
+        return;
         if (static_cast<int>(m_time) % 2 == 0)
         {
             m_gb->GetMeshFilter()->SetModel(0, g_model_list[0]);
@@ -120,7 +121,7 @@ namespace game
 
     void ActLogicGBCD::move(double delta_time)
     {
-        m_gb->GetTransform()->Rotate(1.0f, 0.0f, 0.0f, 1.0f * delta_time);
+        m_gb->GetTransform()->Rotate(0.0f, 1.0f, 0.0f, 1.0f * delta_time);
         return;
     }
     void ActLogicGBCD::life(double delta_time)
