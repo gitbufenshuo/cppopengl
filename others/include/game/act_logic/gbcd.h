@@ -31,6 +31,7 @@ namespace game
     private:
         void accArt();
         void move(double delta_time);
+        void changeModel();
         void life(double delta_time);
 
     private:
@@ -38,7 +39,7 @@ namespace game
         mc::low::Engine *m_eg;
         float m_time{0.0f};
         glm::vec3 m_outdir{0.05f, 0.05f, 0.05f};
-        int moving_state{};
+
         int m_outline{0};
         mc::asset::ArtLogicPhong *m_phong_ins{nullptr};
     };

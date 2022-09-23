@@ -11,6 +11,7 @@ namespace game
     {
         auto res{std::make_shared<ActLogicTranslate>()};
         res->m_gb = gb;
+        return res;
     }
 
     void ActLogicTranslate::Register(mc::asset::ActLogicFactory &acf)

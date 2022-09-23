@@ -36,6 +36,10 @@ namespace mc::low
         {
             m_model_list.push_back(model);
         }
+        void SetModel(int index, std::shared_ptr<mc::asset::Model> model)
+        {
+            m_model_list[index] = model;
+        }
         int modelsize()
         {
             return m_model_list.size();

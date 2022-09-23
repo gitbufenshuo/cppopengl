@@ -86,27 +86,36 @@ namespace
             gogogo.AddGameobject(newgb);
         }
         {
-            // 生成一个 普通 object
-            auto newgb{new mc::low::GameObject{&gogogo}};
-            newgb->GetTransform()->SetLocalTranslate(0.0f, 0.0f, 0.0f);
+            // 生成三个 普通 object
+            mc::low::Transform *prev{};
+            for (int ge = 0; ge < 3; ++ge)
             {
-                // mesh filter
-                auto mf{new mc::low::MeshFilter{}};
-                mf->AddModel(am.Get<mc::asset::Model>("cube-3d-shape.obj.model.pb")); // 可以直接用资源名称获取
-                // mesh render
-                auto mr{new mc::low::MeshRender{}};
-                mr->SetGameobject(newgb);
-                mr->SetMaterial(std::make_shared<mc::asset::Material>(*am.Get<mc::asset::Material>())); // 复制一份
-                newgb->SetMeshFilter(mf);
-                newgb->SetMeshRender(mr);
+                auto newgb{new mc::low::GameObject{&gogogo}};
+                newgb->GetTransform()->SetLocalTranslate(1.0f, 0.0f, 0.0f);
+                if (prev)
+                {
+                    newgb->GetTransform()->SetUpper(prev);
+                }
+                prev = newgb->GetTransform();
+                {
+                    // mesh filter
+                    auto mf{new mc::low::MeshFilter{}};
+                    mf->AddModel(am.Get<mc::asset::Model>("cube-3d-shape.obj.model.pb")); // 可以直接用资源名称获取
+                    // mesh render
+                    auto mr{new mc::low::MeshRender{}};
+                    mr->SetGameobject(newgb);
+                    mr->SetMaterial(std::make_shared<mc::asset::Material>(*am.Get<mc::asset::Material>())); // 复制一份
+                    newgb->SetMeshFilter(mf);
+                    newgb->SetMeshRender(mr);
+                }
+                {
+                    // act logic
+                    auto &act_factory{am.GetACF()};
+                    auto realActLogic{act_factory.Create(newgb, "game::act_logic::ActLogicGBCD", "")};
+                    newgb->AddAct(realActLogic);
+                }
+                gogogo.AddGameobject(newgb);
             }
-            {
-                // act logic
-                auto &act_factory{am.GetACF()};
-                auto realActLogic{act_factory.Create(newgb, "game::act_logic::ActLogicGBCD", "")};
-                newgb->AddAct(realActLogic);
-            }
-            gogogo.AddGameobject(newgb);
         }
     }
 }

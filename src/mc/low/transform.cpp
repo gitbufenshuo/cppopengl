@@ -87,6 +87,18 @@ namespace mc::low
         updateBranch();
         return m_world_mat;
     }
+
+    /**
+     * @brief 使用者必须先用过包含 updateBranch 函数 的函数
+     * 为了效率，这里不调用 updateBranch
+     *
+     * @return const glm::mat4&
+     */
+    const glm::mat3 &Transform::GetNormalMat()
+    {
+        return m_normal_mat;
+    }
+
     void Transform::Translate(float x, float y, float z)
     {
         m_local_dirty = true;
@@ -153,8 +165,9 @@ namespace mc::low
                 {
                     // 如果上级变了
                     up_changed = true;
-                    m_world_up_version = now_t->m_upper->m_world_self_version;
-                    m_world_mat = now_t->m_upper->m_world_mat * m_local_mat;
+                    now_t->m_world_up_version = now_t->m_upper->m_world_self_version;
+                    now_t->m_world_mat = now_t->m_upper->m_world_mat * now_t->m_local_mat;
+                    now_t->m_normal_mat = glm::transpose(glm::inverse(now_t->m_world_mat));
                 }
                 else
                 {
@@ -162,7 +175,8 @@ namespace mc::low
                     up_changed = false;
                     if (local_changed)
                     {
-                        m_world_mat = now_t->m_upper->m_world_mat * m_local_mat;
+                        now_t->m_world_mat = now_t->m_upper->m_world_mat * now_t->m_local_mat;
+                        now_t->m_normal_mat = glm::transpose(glm::inverse(now_t->m_world_mat));
                     }
                 }
             }
@@ -171,6 +185,7 @@ namespace mc::low
                 // 没有上级 (这就是root)
                 up_changed = false;
                 now_t->m_world_mat = now_t->m_local_mat;
+                now_t->m_normal_mat = glm::transpose(glm::inverse(now_t->m_world_mat));
             }
             if (local_changed || up_changed)
             {

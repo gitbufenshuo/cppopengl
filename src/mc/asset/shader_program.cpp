@@ -128,6 +128,10 @@ namespace mc::asset
     {
         return m_key;
     }
+    void ShaderProgram::Uniform(const char *_name, const glm::mat3 &input)
+    {
+        glUniformMatrix3fv(glGetUniformLocation(gl_id, _name), 1, GL_FALSE, &input[0][0]);
+    }
     void ShaderProgram::Uniform(const char *_name, const glm::mat4 &input)
     {
         glUniformMatrix4fv(glGetUniformLocation(gl_id, _name), 1, GL_FALSE, &input[0][0]);

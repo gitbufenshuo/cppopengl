@@ -169,21 +169,22 @@ namespace mc::asset
         }
         // 传一些 uniform
         {
-            m_sp->Uniform("ma_outline", m_outline);
-            m_sp->Uniform("ma_View", eg->GetCamera()->GetViewMat());
-            m_sp->Uniform("ma_Proj", eg->GetCamera()->GetProjMat());
-            m_sp->Uniform("lightPos", eg->GetLightPos());
-            m_sp->Uniform("lightColor", eg->GetLightColor());
-            m_sp->Uniform("viewPos", eg->GetCamera()->GetTransform()->GetWorldPos());
+            m_sp->Uniform("uni_outline", m_outline);
+            m_sp->Uniform("uni_View", eg->GetCamera()->GetViewMat());
+            m_sp->Uniform("uni_Proj", eg->GetCamera()->GetProjMat());
+            m_sp->Uniform("uni_lightPos", eg->GetLightPos());
+            m_sp->Uniform("uni_lightColor", eg->GetLightColor());
+            m_sp->Uniform("uni_viewPos", eg->GetCamera()->GetTransform()->GetWorldPos());
         }
         {
-            m_sp->Uniform("material.ambient", m_ambient);
-            m_sp->Uniform("material.diffuse", m_diffuse);
-            m_sp->Uniform("material.specular", m_specular);
-            m_sp->Uniform("material.shininess", m_shininess);
+            m_sp->Uniform("uni_material.ambient", m_ambient);
+            m_sp->Uniform("uni_material.diffuse", m_diffuse);
+            m_sp->Uniform("uni_material.specular", m_specular);
+            m_sp->Uniform("uni_material.shininess", m_shininess);
         }
         {
-            m_sp->Uniform("ma_Model", gb->GetTransform()->GetWorldMat());
+            m_sp->Uniform("uni_Model", gb->GetTransform()->GetWorldMat());
+            m_sp->Uniform("uni_Normal", gb->GetTransform()->GetNormalMat());
         }
     }
     void ArtLogicPhong::SetShaderProgram(std::shared_ptr<ShaderProgram> sp)

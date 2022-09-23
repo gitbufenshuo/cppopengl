@@ -39,6 +39,7 @@ namespace game
         res->m_gb = gb;
         res->maindraw.Create();
         tree.InsertDrawable(&draw);
+        return res;
     }
     void BoxDraw::Register(mc::asset::ActLogicFactory &acf)
     {
@@ -384,10 +385,10 @@ namespace game
     static constexpr glm::vec3 world_right{1.0f, 0.0f, 0.0f};    // +x axis
     static constexpr glm::vec3 world_up{0.0f, 1.0f, 0.0f};       // +y axis
     static constexpr glm::vec3 world_forward{0.0f, 0.0f, -1.0f}; // -z axis
-    Transform::Transform() : transform(identity), position(origin), rotation(eye),
-                             right(world_right), up(world_up), forward(world_forward),
+    Transform::Transform() : position(origin), rotation(eye), transform(identity),
                              euler_x(0.0f), euler_y(0.0f), euler_z(0.0f),
-                             scale_x(1.0f), scale_y(1.0f), scale_z(1.0f) {}
+                             scale_x(1.0f), scale_y(1.0f), scale_z(1.0f),
+                             up(world_up), forward(world_forward), right(world_right) {}
 
     void Transform::Translate(const glm::vec3 &vector, Space space)
     {
