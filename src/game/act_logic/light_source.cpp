@@ -31,7 +31,7 @@ namespace game
         // y and z
         auto y = glm::sin(m_time * 3.14f * 0.5f);
         auto z = glm::cos(m_time * 3.14f * 0.5f);
-        m_gb->GetTransform()->SetLocalTranslate(m_x, y * 5.0f, z * 5.0f);
+        m_gb->GetTransform()->SetLocalTranslate(m_x, y * 5.0f + 5.0f, z * 5.0f);
         //
         m_gb->GetEngine()->SetLightPos(m_gb->GetTransform()->GetWorldPos());
     }
