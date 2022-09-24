@@ -124,7 +124,7 @@ namespace
             // 搞一个地面
             auto newgb{new mc::low::GameObject{&gogogo}};
             newgb->GetTransform()->SetLocalTranslate(0.0f, -2.0f, 0.0f);
-            newgb->GetTransform()->SetLocalScale(20.0f, 1.0f, 16.0f);
+            newgb->GetTransform()->SetLocalScale(50.0f, 1.0f, 50.0f);
             {
                 // mesh filter
                 auto mf{new mc::low::MeshFilter{}};
