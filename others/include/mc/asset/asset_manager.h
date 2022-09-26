@@ -12,6 +12,7 @@ namespace mc::asset
 // asset
 #include <mc/asset/store.h>
 #include <mc/asset/image.h>
+#include <mc/asset/light.h>
 #include <mc/asset/shader_code.h>
 #include <mc/asset/bin_buffer.h>
 #include <mc/asset/texture.h>
@@ -40,7 +41,7 @@ namespace mc::asset
         inline typename Store<T>::Elem Get(MD5SUM key = MD5SUM{});
 
         template <typename T>
-        inline typename Store<T>::Elem Get(const std::string& r_name);
+        inline typename Store<T>::Elem Get(const std::string &r_name);
 
         template <typename T>
         inline void Del(MD5SUM key);
@@ -55,6 +56,7 @@ namespace mc::asset
 
     private:
         Store<Image> m_image_store;
+        Store<Light> m_light_store;
         Store<ShaderCode> m_shader_code_store;
         Store<BinBuffer> m_bin_buffer_store;
         Store<Texture> m_texture_store;

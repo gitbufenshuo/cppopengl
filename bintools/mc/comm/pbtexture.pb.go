@@ -26,13 +26,13 @@ type PBTexture struct {
 	unknownFields protoimpl.UnknownFields
 
 	MagFilter   int32    `protobuf:"varint,1,opt,name=magFilter,proto3" json:"magFilter,omitempty"`
-	MinFilter   int32    `protobuf:"varint,2,opt,name=minFilter,proto3" json:"minFilter,omitempty"`
+	MinFilter   int32    `protobuf:"varint,2,opt,name=minFilter,proto3" json:"minFilter,omitempty"` // GL_LINEAR 0x2601 9729
 	WrapS       int32    `protobuf:"varint,3,opt,name=wrapS,proto3" json:"wrapS,omitempty"`
 	WrapT       int32    `protobuf:"varint,4,opt,name=wrapT,proto3" json:"wrapT,omitempty"`
 	Image       string   `protobuf:"bytes,5,opt,name=image,proto3" json:"image,omitempty"`
-	WrapR       int32    `protobuf:"varint,6,opt,name=wrapR,proto3" json:"wrapR,omitempty"`
+	WrapR       int32    `protobuf:"varint,6,opt,name=wrapR,proto3" json:"wrapR,omitempty"` // GL_CLAMP_TO_EDGE 0x812F 33071
 	ImageList   []string `protobuf:"bytes,7,rep,name=image_list,json=imageList,proto3" json:"image_list,omitempty"`
-	TextureType int32    `protobuf:"varint,8,opt,name=texture_type,json=textureType,proto3" json:"texture_type,omitempty"` // 3553(GL_TEXTURE_2D) 34097(GL_TEXTURE_CUBE_MAP)
+	TextureType int32    `protobuf:"varint,8,opt,name=texture_type,json=textureType,proto3" json:"texture_type,omitempty"` // 3553(GL_TEXTURE_2D) 34067(GL_TEXTURE_CUBE_MAP)
 }
 
 func (x *PBTexture) Reset() {

@@ -17,4 +17,5 @@ message PBDirSpec {
     repeated string material_list = 10;
     repeated string scene_list = 11;
     repeated string node_list = 12;
+    repeated string light_list = 13;
 }

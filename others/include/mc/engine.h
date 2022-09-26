@@ -21,6 +21,7 @@ namespace mc::low
 
 // asset
 #include <mc/asset/asset_manager.h>
+#include <mc/asset/light.h>
 
 namespace mc::low
 {
@@ -37,8 +38,12 @@ namespace mc::low
         double delta_time{};
         int m_width{800};
         int m_height{800};
+
+        // light source
         glm::vec3 m_light_color{1.0f, 1.0f, 1.0f};
         glm::vec3 m_light_pos{-60.0f, 60.0f, -60.0f};
+        std::vector<std::shared_ptr<mc::asset::Light>> m_light_list;
+
         // deleted id
         std::vector<int> m_deleted_id;
         std::vector<GameObject *> m_append; // 新进来的gameobject
@@ -76,6 +81,7 @@ namespace mc::low
         void AddGameobject(GameObject *gb);
         void DelGameobject(GameObject *gb); // 删除某个gb
         int GameObjectSize();
+
         void SetLightColor(glm::vec3 color)
         {
             m_light_color = color;

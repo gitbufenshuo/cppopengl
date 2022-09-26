@@ -124,7 +124,25 @@ namespace
             // 搞一个地面
             auto newgb{new mc::low::GameObject{&gogogo}};
             newgb->GetTransform()->SetLocalTranslate(0.0f, -2.0f, 0.0f);
-            newgb->GetTransform()->SetLocalScale(50.0f, 1.0f, 50.0f);
+            newgb->GetTransform()->SetLocalScale(150.0f, 1.0f, 150.0f);
+            {
+                // mesh filter
+                auto mf{new mc::low::MeshFilter{}};
+                mf->AddModel(am.Get<mc::asset::Model>("52517.model.pb")); // 可以直接用资源名称获取
+                // mesh render
+                auto mr{new mc::low::MeshRender{}};
+                mr->SetGameobject(newgb);
+                mr->SetMaterial(std::make_shared<mc::asset::Material>(*am.Get<mc::asset::Material>())); // 复制一份
+                newgb->SetMeshFilter(mf);
+                newgb->SetMeshRender(mr);
+            }
+            gogogo.AddGameobject(newgb);
+        }
+        {
+            // 搞三个围墙
+            auto newgb{new mc::low::GameObject{&gogogo}};
+            newgb->GetTransform()->SetLocalTranslate(0.0f, 0.0f, -50.0f);
+            newgb->GetTransform()->SetLocalScale(150.0f, 50.0f, 1.0f);
             {
                 // mesh filter
                 auto mf{new mc::low::MeshFilter{}};

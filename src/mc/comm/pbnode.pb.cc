@@ -82,9 +82,41 @@ struct PBSceneDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PBSceneDefaultTypeInternal _PBScene_default_instance_;
+PROTOBUF_CONSTEXPR PBVec3::PBVec3(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.w_)*/0
+  , /*decltype(_impl_.x_)*/0
+  , /*decltype(_impl_.y_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct PBVec3DefaultTypeInternal {
+  PROTOBUF_CONSTEXPR PBVec3DefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~PBVec3DefaultTypeInternal() {}
+  union {
+    PBVec3 _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PBVec3DefaultTypeInternal _PBVec3_default_instance_;
+PROTOBUF_CONSTEXPR PBLight::PBLight(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.pos_)*/nullptr
+  , /*decltype(_impl_.forward_)*/nullptr
+  , /*decltype(_impl_.color_)*/nullptr
+  , /*decltype(_impl_.attenuation_)*/nullptr
+  , /*decltype(_impl_.kind_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct PBLightDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR PBLightDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~PBLightDefaultTypeInternal() {}
+  union {
+    PBLight _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PBLightDefaultTypeInternal _PBLight_default_instance_;
 }  // namespace comm
 }  // namespace mc
-static ::_pb::Metadata file_level_metadata_mc_2fcomm_2fpbnode_2eproto[4];
+static ::_pb::Metadata file_level_metadata_mc_2fcomm_2fpbnode_2eproto[6];
 static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_mc_2fcomm_2fpbnode_2eproto = nullptr;
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_mc_2fcomm_2fpbnode_2eproto = nullptr;
 
@@ -125,12 +157,34 @@ const uint32_t TableStruct_mc_2fcomm_2fpbnode_2eproto::offsets[] PROTOBUF_SECTIO
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::mc::comm::PBScene, _impl_.root_list_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::mc::comm::PBVec3, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::mc::comm::PBVec3, _impl_.w_),
+  PROTOBUF_FIELD_OFFSET(::mc::comm::PBVec3, _impl_.x_),
+  PROTOBUF_FIELD_OFFSET(::mc::comm::PBVec3, _impl_.y_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::mc::comm::PBLight, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::mc::comm::PBLight, _impl_.pos_),
+  PROTOBUF_FIELD_OFFSET(::mc::comm::PBLight, _impl_.forward_),
+  PROTOBUF_FIELD_OFFSET(::mc::comm::PBLight, _impl_.color_),
+  PROTOBUF_FIELD_OFFSET(::mc::comm::PBLight, _impl_.attenuation_),
+  PROTOBUF_FIELD_OFFSET(::mc::comm::PBLight, _impl_.kind_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::mc::comm::PBVec4)},
   { 10, -1, -1, sizeof(::mc::comm::PBTransform)},
   { 18, -1, -1, sizeof(::mc::comm::PBNode)},
   { 29, -1, -1, sizeof(::mc::comm::PBScene)},
+  { 36, -1, -1, sizeof(::mc::comm::PBVec3)},
+  { 45, -1, -1, sizeof(::mc::comm::PBLight)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -138,6 +192,8 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::mc::comm::_PBTransform_default_instance_._instance,
   &::mc::comm::_PBNode_default_instance_._instance,
   &::mc::comm::_PBScene_default_instance_._instance,
+  &::mc::comm::_PBVec3_default_instance_._instance,
+  &::mc::comm::_PBLight_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_mc_2fcomm_2fpbnode_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -150,13 +206,18 @@ const char descriptor_table_protodef_mc_2fcomm_2fpbnode_2eproto[] PROTOBUF_SECTI
   "t\030\002 \003(\t\022\022\n\nmodel_list\030\003 \003(\t\022\020\n\010material\030"
   "\004 \001(\t\022!\n\010sub_list\030\005 \003(\0132\017.mc.comm.PBNode"
   "\"-\n\007PBScene\022\"\n\troot_list\030\001 \003(\0132\017.mc.comm"
-  ".PBNodeB\tZ\007mc/commb\006proto3"
+  ".PBNode\")\n\006PBVec3\022\t\n\001w\030\001 \001(\002\022\t\n\001x\030\002 \001(\002\022"
+  "\t\n\001y\030\003 \001(\002\"\235\001\n\007PBLight\022\034\n\003pos\030\001 \001(\0132\017.mc"
+  ".comm.PBVec3\022 \n\007forward\030\002 \001(\0132\017.mc.comm."
+  "PBVec3\022\036\n\005color\030\003 \001(\0132\017.mc.comm.PBVec3\022$"
+  "\n\013attenuation\030\004 \001(\0132\017.mc.comm.PBVec3\022\014\n\004"
+  "kind\030\005 \001(\005B\tZ\007mc/commb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_mc_2fcomm_2fpbnode_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_mc_2fcomm_2fpbnode_2eproto = {
-    false, false, 386, descriptor_table_protodef_mc_2fcomm_2fpbnode_2eproto,
+    false, false, 589, descriptor_table_protodef_mc_2fcomm_2fpbnode_2eproto,
     "mc/comm/pbnode.proto",
-    &descriptor_table_mc_2fcomm_2fpbnode_2eproto_once, nullptr, 0, 4,
+    &descriptor_table_mc_2fcomm_2fpbnode_2eproto_once, nullptr, 0, 6,
     schemas, file_default_instances, TableStruct_mc_2fcomm_2fpbnode_2eproto::offsets,
     file_level_metadata_mc_2fcomm_2fpbnode_2eproto, file_level_enum_descriptors_mc_2fcomm_2fpbnode_2eproto,
     file_level_service_descriptors_mc_2fcomm_2fpbnode_2eproto,
@@ -1258,6 +1319,624 @@ void PBScene::InternalSwap(PBScene* other) {
       file_level_metadata_mc_2fcomm_2fpbnode_2eproto[3]);
 }
 
+// ===================================================================
+
+class PBVec3::_Internal {
+ public:
+};
+
+PBVec3::PBVec3(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:mc.comm.PBVec3)
+}
+PBVec3::PBVec3(const PBVec3& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  PBVec3* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.w_){}
+    , decltype(_impl_.x_){}
+    , decltype(_impl_.y_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::memcpy(&_impl_.w_, &from._impl_.w_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.y_) -
+    reinterpret_cast<char*>(&_impl_.w_)) + sizeof(_impl_.y_));
+  // @@protoc_insertion_point(copy_constructor:mc.comm.PBVec3)
+}
+
+inline void PBVec3::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.w_){0}
+    , decltype(_impl_.x_){0}
+    , decltype(_impl_.y_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+PBVec3::~PBVec3() {
+  // @@protoc_insertion_point(destructor:mc.comm.PBVec3)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void PBVec3::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void PBVec3::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void PBVec3::Clear() {
+// @@protoc_insertion_point(message_clear_start:mc.comm.PBVec3)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&_impl_.w_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.y_) -
+      reinterpret_cast<char*>(&_impl_.w_)) + sizeof(_impl_.y_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* PBVec3::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // float w = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 13)) {
+          _impl_.w_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
+          ptr += sizeof(float);
+        } else
+          goto handle_unusual;
+        continue;
+      // float x = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 21)) {
+          _impl_.x_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
+          ptr += sizeof(float);
+        } else
+          goto handle_unusual;
+        continue;
+      // float y = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 29)) {
+          _impl_.y_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
+          ptr += sizeof(float);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* PBVec3::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:mc.comm.PBVec3)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // float w = 1;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_w = this->_internal_w();
+  uint32_t raw_w;
+  memcpy(&raw_w, &tmp_w, sizeof(tmp_w));
+  if (raw_w != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(1, this->_internal_w(), target);
+  }
+
+  // float x = 2;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_x = this->_internal_x();
+  uint32_t raw_x;
+  memcpy(&raw_x, &tmp_x, sizeof(tmp_x));
+  if (raw_x != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(2, this->_internal_x(), target);
+  }
+
+  // float y = 3;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_y = this->_internal_y();
+  uint32_t raw_y;
+  memcpy(&raw_y, &tmp_y, sizeof(tmp_y));
+  if (raw_y != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(3, this->_internal_y(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:mc.comm.PBVec3)
+  return target;
+}
+
+size_t PBVec3::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:mc.comm.PBVec3)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // float w = 1;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_w = this->_internal_w();
+  uint32_t raw_w;
+  memcpy(&raw_w, &tmp_w, sizeof(tmp_w));
+  if (raw_w != 0) {
+    total_size += 1 + 4;
+  }
+
+  // float x = 2;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_x = this->_internal_x();
+  uint32_t raw_x;
+  memcpy(&raw_x, &tmp_x, sizeof(tmp_x));
+  if (raw_x != 0) {
+    total_size += 1 + 4;
+  }
+
+  // float y = 3;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_y = this->_internal_y();
+  uint32_t raw_y;
+  memcpy(&raw_y, &tmp_y, sizeof(tmp_y));
+  if (raw_y != 0) {
+    total_size += 1 + 4;
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData PBVec3::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    PBVec3::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*PBVec3::GetClassData() const { return &_class_data_; }
+
+
+void PBVec3::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<PBVec3*>(&to_msg);
+  auto& from = static_cast<const PBVec3&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:mc.comm.PBVec3)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_w = from._internal_w();
+  uint32_t raw_w;
+  memcpy(&raw_w, &tmp_w, sizeof(tmp_w));
+  if (raw_w != 0) {
+    _this->_internal_set_w(from._internal_w());
+  }
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_x = from._internal_x();
+  uint32_t raw_x;
+  memcpy(&raw_x, &tmp_x, sizeof(tmp_x));
+  if (raw_x != 0) {
+    _this->_internal_set_x(from._internal_x());
+  }
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_y = from._internal_y();
+  uint32_t raw_y;
+  memcpy(&raw_y, &tmp_y, sizeof(tmp_y));
+  if (raw_y != 0) {
+    _this->_internal_set_y(from._internal_y());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void PBVec3::CopyFrom(const PBVec3& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:mc.comm.PBVec3)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool PBVec3::IsInitialized() const {
+  return true;
+}
+
+void PBVec3::InternalSwap(PBVec3* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(PBVec3, _impl_.y_)
+      + sizeof(PBVec3::_impl_.y_)
+      - PROTOBUF_FIELD_OFFSET(PBVec3, _impl_.w_)>(
+          reinterpret_cast<char*>(&_impl_.w_),
+          reinterpret_cast<char*>(&other->_impl_.w_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata PBVec3::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_mc_2fcomm_2fpbnode_2eproto_getter, &descriptor_table_mc_2fcomm_2fpbnode_2eproto_once,
+      file_level_metadata_mc_2fcomm_2fpbnode_2eproto[4]);
+}
+
+// ===================================================================
+
+class PBLight::_Internal {
+ public:
+  static const ::mc::comm::PBVec3& pos(const PBLight* msg);
+  static const ::mc::comm::PBVec3& forward(const PBLight* msg);
+  static const ::mc::comm::PBVec3& color(const PBLight* msg);
+  static const ::mc::comm::PBVec3& attenuation(const PBLight* msg);
+};
+
+const ::mc::comm::PBVec3&
+PBLight::_Internal::pos(const PBLight* msg) {
+  return *msg->_impl_.pos_;
+}
+const ::mc::comm::PBVec3&
+PBLight::_Internal::forward(const PBLight* msg) {
+  return *msg->_impl_.forward_;
+}
+const ::mc::comm::PBVec3&
+PBLight::_Internal::color(const PBLight* msg) {
+  return *msg->_impl_.color_;
+}
+const ::mc::comm::PBVec3&
+PBLight::_Internal::attenuation(const PBLight* msg) {
+  return *msg->_impl_.attenuation_;
+}
+PBLight::PBLight(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:mc.comm.PBLight)
+}
+PBLight::PBLight(const PBLight& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  PBLight* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.pos_){nullptr}
+    , decltype(_impl_.forward_){nullptr}
+    , decltype(_impl_.color_){nullptr}
+    , decltype(_impl_.attenuation_){nullptr}
+    , decltype(_impl_.kind_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_pos()) {
+    _this->_impl_.pos_ = new ::mc::comm::PBVec3(*from._impl_.pos_);
+  }
+  if (from._internal_has_forward()) {
+    _this->_impl_.forward_ = new ::mc::comm::PBVec3(*from._impl_.forward_);
+  }
+  if (from._internal_has_color()) {
+    _this->_impl_.color_ = new ::mc::comm::PBVec3(*from._impl_.color_);
+  }
+  if (from._internal_has_attenuation()) {
+    _this->_impl_.attenuation_ = new ::mc::comm::PBVec3(*from._impl_.attenuation_);
+  }
+  _this->_impl_.kind_ = from._impl_.kind_;
+  // @@protoc_insertion_point(copy_constructor:mc.comm.PBLight)
+}
+
+inline void PBLight::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.pos_){nullptr}
+    , decltype(_impl_.forward_){nullptr}
+    , decltype(_impl_.color_){nullptr}
+    , decltype(_impl_.attenuation_){nullptr}
+    , decltype(_impl_.kind_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+PBLight::~PBLight() {
+  // @@protoc_insertion_point(destructor:mc.comm.PBLight)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void PBLight::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete _impl_.pos_;
+  if (this != internal_default_instance()) delete _impl_.forward_;
+  if (this != internal_default_instance()) delete _impl_.color_;
+  if (this != internal_default_instance()) delete _impl_.attenuation_;
+}
+
+void PBLight::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void PBLight::Clear() {
+// @@protoc_insertion_point(message_clear_start:mc.comm.PBLight)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  if (GetArenaForAllocation() == nullptr && _impl_.pos_ != nullptr) {
+    delete _impl_.pos_;
+  }
+  _impl_.pos_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && _impl_.forward_ != nullptr) {
+    delete _impl_.forward_;
+  }
+  _impl_.forward_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && _impl_.color_ != nullptr) {
+    delete _impl_.color_;
+  }
+  _impl_.color_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && _impl_.attenuation_ != nullptr) {
+    delete _impl_.attenuation_;
+  }
+  _impl_.attenuation_ = nullptr;
+  _impl_.kind_ = 0;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* PBLight::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // .mc.comm.PBVec3 pos = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          ptr = ctx->ParseMessage(_internal_mutable_pos(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .mc.comm.PBVec3 forward = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          ptr = ctx->ParseMessage(_internal_mutable_forward(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .mc.comm.PBVec3 color = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
+          ptr = ctx->ParseMessage(_internal_mutable_color(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .mc.comm.PBVec3 attenuation = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
+          ptr = ctx->ParseMessage(_internal_mutable_attenuation(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 kind = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
+          _impl_.kind_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* PBLight::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:mc.comm.PBLight)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .mc.comm.PBVec3 pos = 1;
+  if (this->_internal_has_pos()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(1, _Internal::pos(this),
+        _Internal::pos(this).GetCachedSize(), target, stream);
+  }
+
+  // .mc.comm.PBVec3 forward = 2;
+  if (this->_internal_has_forward()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(2, _Internal::forward(this),
+        _Internal::forward(this).GetCachedSize(), target, stream);
+  }
+
+  // .mc.comm.PBVec3 color = 3;
+  if (this->_internal_has_color()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(3, _Internal::color(this),
+        _Internal::color(this).GetCachedSize(), target, stream);
+  }
+
+  // .mc.comm.PBVec3 attenuation = 4;
+  if (this->_internal_has_attenuation()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(4, _Internal::attenuation(this),
+        _Internal::attenuation(this).GetCachedSize(), target, stream);
+  }
+
+  // int32 kind = 5;
+  if (this->_internal_kind() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(5, this->_internal_kind(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:mc.comm.PBLight)
+  return target;
+}
+
+size_t PBLight::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:mc.comm.PBLight)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .mc.comm.PBVec3 pos = 1;
+  if (this->_internal_has_pos()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.pos_);
+  }
+
+  // .mc.comm.PBVec3 forward = 2;
+  if (this->_internal_has_forward()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.forward_);
+  }
+
+  // .mc.comm.PBVec3 color = 3;
+  if (this->_internal_has_color()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.color_);
+  }
+
+  // .mc.comm.PBVec3 attenuation = 4;
+  if (this->_internal_has_attenuation()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.attenuation_);
+  }
+
+  // int32 kind = 5;
+  if (this->_internal_kind() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_kind());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData PBLight::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    PBLight::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*PBLight::GetClassData() const { return &_class_data_; }
+
+
+void PBLight::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<PBLight*>(&to_msg);
+  auto& from = static_cast<const PBLight&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:mc.comm.PBLight)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_has_pos()) {
+    _this->_internal_mutable_pos()->::mc::comm::PBVec3::MergeFrom(
+        from._internal_pos());
+  }
+  if (from._internal_has_forward()) {
+    _this->_internal_mutable_forward()->::mc::comm::PBVec3::MergeFrom(
+        from._internal_forward());
+  }
+  if (from._internal_has_color()) {
+    _this->_internal_mutable_color()->::mc::comm::PBVec3::MergeFrom(
+        from._internal_color());
+  }
+  if (from._internal_has_attenuation()) {
+    _this->_internal_mutable_attenuation()->::mc::comm::PBVec3::MergeFrom(
+        from._internal_attenuation());
+  }
+  if (from._internal_kind() != 0) {
+    _this->_internal_set_kind(from._internal_kind());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void PBLight::CopyFrom(const PBLight& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:mc.comm.PBLight)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool PBLight::IsInitialized() const {
+  return true;
+}
+
+void PBLight::InternalSwap(PBLight* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(PBLight, _impl_.kind_)
+      + sizeof(PBLight::_impl_.kind_)
+      - PROTOBUF_FIELD_OFFSET(PBLight, _impl_.pos_)>(
+          reinterpret_cast<char*>(&_impl_.pos_),
+          reinterpret_cast<char*>(&other->_impl_.pos_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata PBLight::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_mc_2fcomm_2fpbnode_2eproto_getter, &descriptor_table_mc_2fcomm_2fpbnode_2eproto_once,
+      file_level_metadata_mc_2fcomm_2fpbnode_2eproto[5]);
+}
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace comm
 }  // namespace mc
@@ -1277,6 +1956,14 @@ Arena::CreateMaybeMessage< ::mc::comm::PBNode >(Arena* arena) {
 template<> PROTOBUF_NOINLINE ::mc::comm::PBScene*
 Arena::CreateMaybeMessage< ::mc::comm::PBScene >(Arena* arena) {
   return Arena::CreateMessageInternal< ::mc::comm::PBScene >(arena);
+}
+template<> PROTOBUF_NOINLINE ::mc::comm::PBVec3*
+Arena::CreateMaybeMessage< ::mc::comm::PBVec3 >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::mc::comm::PBVec3 >(arena);
+}
+template<> PROTOBUF_NOINLINE ::mc::comm::PBLight*
+Arena::CreateMaybeMessage< ::mc::comm::PBLight >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::mc::comm::PBLight >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

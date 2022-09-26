@@ -35,7 +35,7 @@ namespace game
         // light pos
         m_gb->GetEngine()->SetLightPos(m_gb->GetTransform()->GetWorldPos());
         // light color
-        m_gb->GetEngine()->SetLightColor(glm::vec3{0.5f * (y + 1.0f), 0.5f * (z + 1.0f), 1.0f});
+        // m_gb->GetEngine()->SetLightColor(glm::vec3{0.5f * (y + 1.0f), 0.5f * (z + 1.0f), 1.0f});
     }
     void ActLogicLightSource::life(double delta_time)
     {

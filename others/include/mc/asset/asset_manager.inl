@@ -33,6 +33,11 @@ namespace mc::asset
         return m_image_store;
     }
     template <>
+    inline Store<Light> &AssetManager::getStore()
+    {
+        return m_light_store;
+    }
+    template <>
     inline Store<ShaderCode> &AssetManager::getStore()
     {
         return m_shader_code_store;

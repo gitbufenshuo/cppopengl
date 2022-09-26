@@ -46,6 +46,9 @@ struct TableStruct_mc_2fcomm_2fpbnode_2eproto {
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_mc_2fcomm_2fpbnode_2eproto;
 namespace mc {
 namespace comm {
+class PBLight;
+struct PBLightDefaultTypeInternal;
+extern PBLightDefaultTypeInternal _PBLight_default_instance_;
 class PBNode;
 struct PBNodeDefaultTypeInternal;
 extern PBNodeDefaultTypeInternal _PBNode_default_instance_;
@@ -55,15 +58,20 @@ extern PBSceneDefaultTypeInternal _PBScene_default_instance_;
 class PBTransform;
 struct PBTransformDefaultTypeInternal;
 extern PBTransformDefaultTypeInternal _PBTransform_default_instance_;
+class PBVec3;
+struct PBVec3DefaultTypeInternal;
+extern PBVec3DefaultTypeInternal _PBVec3_default_instance_;
 class PBVec4;
 struct PBVec4DefaultTypeInternal;
 extern PBVec4DefaultTypeInternal _PBVec4_default_instance_;
 }  // namespace comm
 }  // namespace mc
 PROTOBUF_NAMESPACE_OPEN
+template<> ::mc::comm::PBLight* Arena::CreateMaybeMessage<::mc::comm::PBLight>(Arena*);
 template<> ::mc::comm::PBNode* Arena::CreateMaybeMessage<::mc::comm::PBNode>(Arena*);
 template<> ::mc::comm::PBScene* Arena::CreateMaybeMessage<::mc::comm::PBScene>(Arena*);
 template<> ::mc::comm::PBTransform* Arena::CreateMaybeMessage<::mc::comm::PBTransform>(Arena*);
+template<> ::mc::comm::PBVec3* Arena::CreateMaybeMessage<::mc::comm::PBVec3>(Arena*);
 template<> ::mc::comm::PBVec4* Arena::CreateMaybeMessage<::mc::comm::PBVec4>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace mc {
@@ -829,6 +837,404 @@ class PBScene final :
   union { Impl_ _impl_; };
   friend struct ::TableStruct_mc_2fcomm_2fpbnode_2eproto;
 };
+// -------------------------------------------------------------------
+
+class PBVec3 final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mc.comm.PBVec3) */ {
+ public:
+  inline PBVec3() : PBVec3(nullptr) {}
+  ~PBVec3() override;
+  explicit PROTOBUF_CONSTEXPR PBVec3(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  PBVec3(const PBVec3& from);
+  PBVec3(PBVec3&& from) noexcept
+    : PBVec3() {
+    *this = ::std::move(from);
+  }
+
+  inline PBVec3& operator=(const PBVec3& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline PBVec3& operator=(PBVec3&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const PBVec3& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const PBVec3* internal_default_instance() {
+    return reinterpret_cast<const PBVec3*>(
+               &_PBVec3_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    4;
+
+  friend void swap(PBVec3& a, PBVec3& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(PBVec3* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(PBVec3* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  PBVec3* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<PBVec3>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const PBVec3& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const PBVec3& from) {
+    PBVec3::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(PBVec3* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "mc.comm.PBVec3";
+  }
+  protected:
+  explicit PBVec3(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kWFieldNumber = 1,
+    kXFieldNumber = 2,
+    kYFieldNumber = 3,
+  };
+  // float w = 1;
+  void clear_w();
+  float w() const;
+  void set_w(float value);
+  private:
+  float _internal_w() const;
+  void _internal_set_w(float value);
+  public:
+
+  // float x = 2;
+  void clear_x();
+  float x() const;
+  void set_x(float value);
+  private:
+  float _internal_x() const;
+  void _internal_set_x(float value);
+  public:
+
+  // float y = 3;
+  void clear_y();
+  float y() const;
+  void set_y(float value);
+  private:
+  float _internal_y() const;
+  void _internal_set_y(float value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:mc.comm.PBVec3)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    float w_;
+    float x_;
+    float y_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_mc_2fcomm_2fpbnode_2eproto;
+};
+// -------------------------------------------------------------------
+
+class PBLight final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mc.comm.PBLight) */ {
+ public:
+  inline PBLight() : PBLight(nullptr) {}
+  ~PBLight() override;
+  explicit PROTOBUF_CONSTEXPR PBLight(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  PBLight(const PBLight& from);
+  PBLight(PBLight&& from) noexcept
+    : PBLight() {
+    *this = ::std::move(from);
+  }
+
+  inline PBLight& operator=(const PBLight& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline PBLight& operator=(PBLight&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const PBLight& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const PBLight* internal_default_instance() {
+    return reinterpret_cast<const PBLight*>(
+               &_PBLight_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    5;
+
+  friend void swap(PBLight& a, PBLight& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(PBLight* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(PBLight* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  PBLight* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<PBLight>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const PBLight& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const PBLight& from) {
+    PBLight::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(PBLight* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "mc.comm.PBLight";
+  }
+  protected:
+  explicit PBLight(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPosFieldNumber = 1,
+    kForwardFieldNumber = 2,
+    kColorFieldNumber = 3,
+    kAttenuationFieldNumber = 4,
+    kKindFieldNumber = 5,
+  };
+  // .mc.comm.PBVec3 pos = 1;
+  bool has_pos() const;
+  private:
+  bool _internal_has_pos() const;
+  public:
+  void clear_pos();
+  const ::mc::comm::PBVec3& pos() const;
+  PROTOBUF_NODISCARD ::mc::comm::PBVec3* release_pos();
+  ::mc::comm::PBVec3* mutable_pos();
+  void set_allocated_pos(::mc::comm::PBVec3* pos);
+  private:
+  const ::mc::comm::PBVec3& _internal_pos() const;
+  ::mc::comm::PBVec3* _internal_mutable_pos();
+  public:
+  void unsafe_arena_set_allocated_pos(
+      ::mc::comm::PBVec3* pos);
+  ::mc::comm::PBVec3* unsafe_arena_release_pos();
+
+  // .mc.comm.PBVec3 forward = 2;
+  bool has_forward() const;
+  private:
+  bool _internal_has_forward() const;
+  public:
+  void clear_forward();
+  const ::mc::comm::PBVec3& forward() const;
+  PROTOBUF_NODISCARD ::mc::comm::PBVec3* release_forward();
+  ::mc::comm::PBVec3* mutable_forward();
+  void set_allocated_forward(::mc::comm::PBVec3* forward);
+  private:
+  const ::mc::comm::PBVec3& _internal_forward() const;
+  ::mc::comm::PBVec3* _internal_mutable_forward();
+  public:
+  void unsafe_arena_set_allocated_forward(
+      ::mc::comm::PBVec3* forward);
+  ::mc::comm::PBVec3* unsafe_arena_release_forward();
+
+  // .mc.comm.PBVec3 color = 3;
+  bool has_color() const;
+  private:
+  bool _internal_has_color() const;
+  public:
+  void clear_color();
+  const ::mc::comm::PBVec3& color() const;
+  PROTOBUF_NODISCARD ::mc::comm::PBVec3* release_color();
+  ::mc::comm::PBVec3* mutable_color();
+  void set_allocated_color(::mc::comm::PBVec3* color);
+  private:
+  const ::mc::comm::PBVec3& _internal_color() const;
+  ::mc::comm::PBVec3* _internal_mutable_color();
+  public:
+  void unsafe_arena_set_allocated_color(
+      ::mc::comm::PBVec3* color);
+  ::mc::comm::PBVec3* unsafe_arena_release_color();
+
+  // .mc.comm.PBVec3 attenuation = 4;
+  bool has_attenuation() const;
+  private:
+  bool _internal_has_attenuation() const;
+  public:
+  void clear_attenuation();
+  const ::mc::comm::PBVec3& attenuation() const;
+  PROTOBUF_NODISCARD ::mc::comm::PBVec3* release_attenuation();
+  ::mc::comm::PBVec3* mutable_attenuation();
+  void set_allocated_attenuation(::mc::comm::PBVec3* attenuation);
+  private:
+  const ::mc::comm::PBVec3& _internal_attenuation() const;
+  ::mc::comm::PBVec3* _internal_mutable_attenuation();
+  public:
+  void unsafe_arena_set_allocated_attenuation(
+      ::mc::comm::PBVec3* attenuation);
+  ::mc::comm::PBVec3* unsafe_arena_release_attenuation();
+
+  // int32 kind = 5;
+  void clear_kind();
+  int32_t kind() const;
+  void set_kind(int32_t value);
+  private:
+  int32_t _internal_kind() const;
+  void _internal_set_kind(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:mc.comm.PBLight)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::mc::comm::PBVec3* pos_;
+    ::mc::comm::PBVec3* forward_;
+    ::mc::comm::PBVec3* color_;
+    ::mc::comm::PBVec3* attenuation_;
+    int32_t kind_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_mc_2fcomm_2fpbnode_2eproto;
+};
 // ===================================================================
 
 
@@ -1482,9 +1888,461 @@ PBScene::root_list() const {
   return _impl_.root_list_;
 }
 
+// -------------------------------------------------------------------
+
+// PBVec3
+
+// float w = 1;
+inline void PBVec3::clear_w() {
+  _impl_.w_ = 0;
+}
+inline float PBVec3::_internal_w() const {
+  return _impl_.w_;
+}
+inline float PBVec3::w() const {
+  // @@protoc_insertion_point(field_get:mc.comm.PBVec3.w)
+  return _internal_w();
+}
+inline void PBVec3::_internal_set_w(float value) {
+  
+  _impl_.w_ = value;
+}
+inline void PBVec3::set_w(float value) {
+  _internal_set_w(value);
+  // @@protoc_insertion_point(field_set:mc.comm.PBVec3.w)
+}
+
+// float x = 2;
+inline void PBVec3::clear_x() {
+  _impl_.x_ = 0;
+}
+inline float PBVec3::_internal_x() const {
+  return _impl_.x_;
+}
+inline float PBVec3::x() const {
+  // @@protoc_insertion_point(field_get:mc.comm.PBVec3.x)
+  return _internal_x();
+}
+inline void PBVec3::_internal_set_x(float value) {
+  
+  _impl_.x_ = value;
+}
+inline void PBVec3::set_x(float value) {
+  _internal_set_x(value);
+  // @@protoc_insertion_point(field_set:mc.comm.PBVec3.x)
+}
+
+// float y = 3;
+inline void PBVec3::clear_y() {
+  _impl_.y_ = 0;
+}
+inline float PBVec3::_internal_y() const {
+  return _impl_.y_;
+}
+inline float PBVec3::y() const {
+  // @@protoc_insertion_point(field_get:mc.comm.PBVec3.y)
+  return _internal_y();
+}
+inline void PBVec3::_internal_set_y(float value) {
+  
+  _impl_.y_ = value;
+}
+inline void PBVec3::set_y(float value) {
+  _internal_set_y(value);
+  // @@protoc_insertion_point(field_set:mc.comm.PBVec3.y)
+}
+
+// -------------------------------------------------------------------
+
+// PBLight
+
+// .mc.comm.PBVec3 pos = 1;
+inline bool PBLight::_internal_has_pos() const {
+  return this != internal_default_instance() && _impl_.pos_ != nullptr;
+}
+inline bool PBLight::has_pos() const {
+  return _internal_has_pos();
+}
+inline void PBLight::clear_pos() {
+  if (GetArenaForAllocation() == nullptr && _impl_.pos_ != nullptr) {
+    delete _impl_.pos_;
+  }
+  _impl_.pos_ = nullptr;
+}
+inline const ::mc::comm::PBVec3& PBLight::_internal_pos() const {
+  const ::mc::comm::PBVec3* p = _impl_.pos_;
+  return p != nullptr ? *p : reinterpret_cast<const ::mc::comm::PBVec3&>(
+      ::mc::comm::_PBVec3_default_instance_);
+}
+inline const ::mc::comm::PBVec3& PBLight::pos() const {
+  // @@protoc_insertion_point(field_get:mc.comm.PBLight.pos)
+  return _internal_pos();
+}
+inline void PBLight::unsafe_arena_set_allocated_pos(
+    ::mc::comm::PBVec3* pos) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.pos_);
+  }
+  _impl_.pos_ = pos;
+  if (pos) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:mc.comm.PBLight.pos)
+}
+inline ::mc::comm::PBVec3* PBLight::release_pos() {
+  
+  ::mc::comm::PBVec3* temp = _impl_.pos_;
+  _impl_.pos_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::mc::comm::PBVec3* PBLight::unsafe_arena_release_pos() {
+  // @@protoc_insertion_point(field_release:mc.comm.PBLight.pos)
+  
+  ::mc::comm::PBVec3* temp = _impl_.pos_;
+  _impl_.pos_ = nullptr;
+  return temp;
+}
+inline ::mc::comm::PBVec3* PBLight::_internal_mutable_pos() {
+  
+  if (_impl_.pos_ == nullptr) {
+    auto* p = CreateMaybeMessage<::mc::comm::PBVec3>(GetArenaForAllocation());
+    _impl_.pos_ = p;
+  }
+  return _impl_.pos_;
+}
+inline ::mc::comm::PBVec3* PBLight::mutable_pos() {
+  ::mc::comm::PBVec3* _msg = _internal_mutable_pos();
+  // @@protoc_insertion_point(field_mutable:mc.comm.PBLight.pos)
+  return _msg;
+}
+inline void PBLight::set_allocated_pos(::mc::comm::PBVec3* pos) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete _impl_.pos_;
+  }
+  if (pos) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(pos);
+    if (message_arena != submessage_arena) {
+      pos = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, pos, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.pos_ = pos;
+  // @@protoc_insertion_point(field_set_allocated:mc.comm.PBLight.pos)
+}
+
+// .mc.comm.PBVec3 forward = 2;
+inline bool PBLight::_internal_has_forward() const {
+  return this != internal_default_instance() && _impl_.forward_ != nullptr;
+}
+inline bool PBLight::has_forward() const {
+  return _internal_has_forward();
+}
+inline void PBLight::clear_forward() {
+  if (GetArenaForAllocation() == nullptr && _impl_.forward_ != nullptr) {
+    delete _impl_.forward_;
+  }
+  _impl_.forward_ = nullptr;
+}
+inline const ::mc::comm::PBVec3& PBLight::_internal_forward() const {
+  const ::mc::comm::PBVec3* p = _impl_.forward_;
+  return p != nullptr ? *p : reinterpret_cast<const ::mc::comm::PBVec3&>(
+      ::mc::comm::_PBVec3_default_instance_);
+}
+inline const ::mc::comm::PBVec3& PBLight::forward() const {
+  // @@protoc_insertion_point(field_get:mc.comm.PBLight.forward)
+  return _internal_forward();
+}
+inline void PBLight::unsafe_arena_set_allocated_forward(
+    ::mc::comm::PBVec3* forward) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.forward_);
+  }
+  _impl_.forward_ = forward;
+  if (forward) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:mc.comm.PBLight.forward)
+}
+inline ::mc::comm::PBVec3* PBLight::release_forward() {
+  
+  ::mc::comm::PBVec3* temp = _impl_.forward_;
+  _impl_.forward_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::mc::comm::PBVec3* PBLight::unsafe_arena_release_forward() {
+  // @@protoc_insertion_point(field_release:mc.comm.PBLight.forward)
+  
+  ::mc::comm::PBVec3* temp = _impl_.forward_;
+  _impl_.forward_ = nullptr;
+  return temp;
+}
+inline ::mc::comm::PBVec3* PBLight::_internal_mutable_forward() {
+  
+  if (_impl_.forward_ == nullptr) {
+    auto* p = CreateMaybeMessage<::mc::comm::PBVec3>(GetArenaForAllocation());
+    _impl_.forward_ = p;
+  }
+  return _impl_.forward_;
+}
+inline ::mc::comm::PBVec3* PBLight::mutable_forward() {
+  ::mc::comm::PBVec3* _msg = _internal_mutable_forward();
+  // @@protoc_insertion_point(field_mutable:mc.comm.PBLight.forward)
+  return _msg;
+}
+inline void PBLight::set_allocated_forward(::mc::comm::PBVec3* forward) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete _impl_.forward_;
+  }
+  if (forward) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(forward);
+    if (message_arena != submessage_arena) {
+      forward = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, forward, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.forward_ = forward;
+  // @@protoc_insertion_point(field_set_allocated:mc.comm.PBLight.forward)
+}
+
+// .mc.comm.PBVec3 color = 3;
+inline bool PBLight::_internal_has_color() const {
+  return this != internal_default_instance() && _impl_.color_ != nullptr;
+}
+inline bool PBLight::has_color() const {
+  return _internal_has_color();
+}
+inline void PBLight::clear_color() {
+  if (GetArenaForAllocation() == nullptr && _impl_.color_ != nullptr) {
+    delete _impl_.color_;
+  }
+  _impl_.color_ = nullptr;
+}
+inline const ::mc::comm::PBVec3& PBLight::_internal_color() const {
+  const ::mc::comm::PBVec3* p = _impl_.color_;
+  return p != nullptr ? *p : reinterpret_cast<const ::mc::comm::PBVec3&>(
+      ::mc::comm::_PBVec3_default_instance_);
+}
+inline const ::mc::comm::PBVec3& PBLight::color() const {
+  // @@protoc_insertion_point(field_get:mc.comm.PBLight.color)
+  return _internal_color();
+}
+inline void PBLight::unsafe_arena_set_allocated_color(
+    ::mc::comm::PBVec3* color) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.color_);
+  }
+  _impl_.color_ = color;
+  if (color) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:mc.comm.PBLight.color)
+}
+inline ::mc::comm::PBVec3* PBLight::release_color() {
+  
+  ::mc::comm::PBVec3* temp = _impl_.color_;
+  _impl_.color_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::mc::comm::PBVec3* PBLight::unsafe_arena_release_color() {
+  // @@protoc_insertion_point(field_release:mc.comm.PBLight.color)
+  
+  ::mc::comm::PBVec3* temp = _impl_.color_;
+  _impl_.color_ = nullptr;
+  return temp;
+}
+inline ::mc::comm::PBVec3* PBLight::_internal_mutable_color() {
+  
+  if (_impl_.color_ == nullptr) {
+    auto* p = CreateMaybeMessage<::mc::comm::PBVec3>(GetArenaForAllocation());
+    _impl_.color_ = p;
+  }
+  return _impl_.color_;
+}
+inline ::mc::comm::PBVec3* PBLight::mutable_color() {
+  ::mc::comm::PBVec3* _msg = _internal_mutable_color();
+  // @@protoc_insertion_point(field_mutable:mc.comm.PBLight.color)
+  return _msg;
+}
+inline void PBLight::set_allocated_color(::mc::comm::PBVec3* color) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete _impl_.color_;
+  }
+  if (color) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(color);
+    if (message_arena != submessage_arena) {
+      color = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, color, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.color_ = color;
+  // @@protoc_insertion_point(field_set_allocated:mc.comm.PBLight.color)
+}
+
+// .mc.comm.PBVec3 attenuation = 4;
+inline bool PBLight::_internal_has_attenuation() const {
+  return this != internal_default_instance() && _impl_.attenuation_ != nullptr;
+}
+inline bool PBLight::has_attenuation() const {
+  return _internal_has_attenuation();
+}
+inline void PBLight::clear_attenuation() {
+  if (GetArenaForAllocation() == nullptr && _impl_.attenuation_ != nullptr) {
+    delete _impl_.attenuation_;
+  }
+  _impl_.attenuation_ = nullptr;
+}
+inline const ::mc::comm::PBVec3& PBLight::_internal_attenuation() const {
+  const ::mc::comm::PBVec3* p = _impl_.attenuation_;
+  return p != nullptr ? *p : reinterpret_cast<const ::mc::comm::PBVec3&>(
+      ::mc::comm::_PBVec3_default_instance_);
+}
+inline const ::mc::comm::PBVec3& PBLight::attenuation() const {
+  // @@protoc_insertion_point(field_get:mc.comm.PBLight.attenuation)
+  return _internal_attenuation();
+}
+inline void PBLight::unsafe_arena_set_allocated_attenuation(
+    ::mc::comm::PBVec3* attenuation) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.attenuation_);
+  }
+  _impl_.attenuation_ = attenuation;
+  if (attenuation) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:mc.comm.PBLight.attenuation)
+}
+inline ::mc::comm::PBVec3* PBLight::release_attenuation() {
+  
+  ::mc::comm::PBVec3* temp = _impl_.attenuation_;
+  _impl_.attenuation_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::mc::comm::PBVec3* PBLight::unsafe_arena_release_attenuation() {
+  // @@protoc_insertion_point(field_release:mc.comm.PBLight.attenuation)
+  
+  ::mc::comm::PBVec3* temp = _impl_.attenuation_;
+  _impl_.attenuation_ = nullptr;
+  return temp;
+}
+inline ::mc::comm::PBVec3* PBLight::_internal_mutable_attenuation() {
+  
+  if (_impl_.attenuation_ == nullptr) {
+    auto* p = CreateMaybeMessage<::mc::comm::PBVec3>(GetArenaForAllocation());
+    _impl_.attenuation_ = p;
+  }
+  return _impl_.attenuation_;
+}
+inline ::mc::comm::PBVec3* PBLight::mutable_attenuation() {
+  ::mc::comm::PBVec3* _msg = _internal_mutable_attenuation();
+  // @@protoc_insertion_point(field_mutable:mc.comm.PBLight.attenuation)
+  return _msg;
+}
+inline void PBLight::set_allocated_attenuation(::mc::comm::PBVec3* attenuation) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete _impl_.attenuation_;
+  }
+  if (attenuation) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(attenuation);
+    if (message_arena != submessage_arena) {
+      attenuation = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, attenuation, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.attenuation_ = attenuation;
+  // @@protoc_insertion_point(field_set_allocated:mc.comm.PBLight.attenuation)
+}
+
+// int32 kind = 5;
+inline void PBLight::clear_kind() {
+  _impl_.kind_ = 0;
+}
+inline int32_t PBLight::_internal_kind() const {
+  return _impl_.kind_;
+}
+inline int32_t PBLight::kind() const {
+  // @@protoc_insertion_point(field_get:mc.comm.PBLight.kind)
+  return _internal_kind();
+}
+inline void PBLight::_internal_set_kind(int32_t value) {
+  
+  _impl_.kind_ = value;
+}
+inline void PBLight::set_kind(int32_t value) {
+  _internal_set_kind(value);
+  // @@protoc_insertion_point(field_set:mc.comm.PBLight.kind)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

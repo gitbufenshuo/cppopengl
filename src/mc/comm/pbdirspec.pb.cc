@@ -35,6 +35,7 @@ PROTOBUF_CONSTEXPR PBDirSpec::PBDirSpec(
   , /*decltype(_impl_.material_list_)*/{}
   , /*decltype(_impl_.scene_list_)*/{}
   , /*decltype(_impl_.node_list_)*/{}
+  , /*decltype(_impl_.light_list_)*/{}
   , /*decltype(_impl_.base_dir_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct PBDirSpecDefaultTypeInternal {
@@ -71,6 +72,7 @@ const uint32_t TableStruct_mc_2fcomm_2fpbdirspec_2eproto::offsets[] PROTOBUF_SEC
   PROTOBUF_FIELD_OFFSET(::mc::comm::PBDirSpec, _impl_.material_list_),
   PROTOBUF_FIELD_OFFSET(::mc::comm::PBDirSpec, _impl_.scene_list_),
   PROTOBUF_FIELD_OFFSET(::mc::comm::PBDirSpec, _impl_.node_list_),
+  PROTOBUF_FIELD_OFFSET(::mc::comm::PBDirSpec, _impl_.light_list_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::mc::comm::PBDirSpec)},
@@ -81,19 +83,19 @@ static const ::_pb::Message* const file_default_instances[] = {
 };
 
 const char descriptor_table_protodef_mc_2fcomm_2fpbdirspec_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\027mc/comm/pbdirspec.proto\022\007mc.comm\"\231\002\n\tP"
+  "\n\027mc/comm/pbdirspec.proto\022\007mc.comm\"\255\002\n\tP"
   "BDirSpec\022\020\n\010base_dir\030\001 \001(\t\022\022\n\nimage_list"
   "\030\002 \003(\t\022\027\n\017bin_buffer_list\030\003 \003(\t\022\030\n\020shade"
   "r_code_list\030\004 \003(\t\022\026\n\016art_logic_list\030\005 \003("
   "\t\022\026\n\016act_logic_list\030\006 \003(\t\022\024\n\014texture_lis"
   "t\030\007 \003(\t\022\022\n\nmodel_list\030\010 \003(\t\022\033\n\023shader_pr"
   "ogram_list\030\t \003(\t\022\025\n\rmaterial_list\030\n \003(\t\022"
-  "\022\n\nscene_list\030\013 \003(\t\022\021\n\tnode_list\030\014 \003(\tB\t"
-  "Z\007mc/commb\006proto3"
+  "\022\n\nscene_list\030\013 \003(\t\022\021\n\tnode_list\030\014 \003(\t\022\022"
+  "\n\nlight_list\030\r \003(\tB\tZ\007mc/commb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_mc_2fcomm_2fpbdirspec_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_mc_2fcomm_2fpbdirspec_2eproto = {
-    false, false, 337, descriptor_table_protodef_mc_2fcomm_2fpbdirspec_2eproto,
+    false, false, 357, descriptor_table_protodef_mc_2fcomm_2fpbdirspec_2eproto,
     "mc/comm/pbdirspec.proto",
     &descriptor_table_mc_2fcomm_2fpbdirspec_2eproto_once, nullptr, 0, 1,
     schemas, file_default_instances, TableStruct_mc_2fcomm_2fpbdirspec_2eproto::offsets,
@@ -136,6 +138,7 @@ PBDirSpec::PBDirSpec(const PBDirSpec& from)
     , decltype(_impl_.material_list_){from._impl_.material_list_}
     , decltype(_impl_.scene_list_){from._impl_.scene_list_}
     , decltype(_impl_.node_list_){from._impl_.node_list_}
+    , decltype(_impl_.light_list_){from._impl_.light_list_}
     , decltype(_impl_.base_dir_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
@@ -167,6 +170,7 @@ inline void PBDirSpec::SharedCtor(
     , decltype(_impl_.material_list_){arena}
     , decltype(_impl_.scene_list_){arena}
     , decltype(_impl_.node_list_){arena}
+    , decltype(_impl_.light_list_){arena}
     , decltype(_impl_.base_dir_){}
     , /*decltype(_impl_._cached_size_)*/{}
   };
@@ -198,6 +202,7 @@ inline void PBDirSpec::SharedDtor() {
   _impl_.material_list_.~RepeatedPtrField();
   _impl_.scene_list_.~RepeatedPtrField();
   _impl_.node_list_.~RepeatedPtrField();
+  _impl_.light_list_.~RepeatedPtrField();
   _impl_.base_dir_.Destroy();
 }
 
@@ -222,6 +227,7 @@ void PBDirSpec::Clear() {
   _impl_.material_list_.Clear();
   _impl_.scene_list_.Clear();
   _impl_.node_list_.Clear();
+  _impl_.light_list_.Clear();
   _impl_.base_dir_.ClearToEmpty();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -407,6 +413,21 @@ const char* PBDirSpec::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx
         } else
           goto handle_unusual;
         continue;
+      // repeated string light_list = 13;
+      case 13:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 106)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            auto str = _internal_add_light_list();
+            ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+            CHK_(ptr);
+            CHK_(::_pbi::VerifyUTF8(str, "mc.comm.PBDirSpec.light_list"));
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<106>(ptr));
+        } else
+          goto handle_unusual;
+        continue;
       default:
         goto handle_unusual;
     }  // switch
@@ -556,6 +577,16 @@ uint8_t* PBDirSpec::_InternalSerialize(
     target = stream->WriteString(12, s, target);
   }
 
+  // repeated string light_list = 13;
+  for (int i = 0, n = this->_internal_light_list_size(); i < n; i++) {
+    const auto& s = this->_internal_light_list(i);
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      s.data(), static_cast<int>(s.length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "mc.comm.PBDirSpec.light_list");
+    target = stream->WriteString(13, s, target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -660,6 +691,14 @@ size_t PBDirSpec::ByteSizeLong() const {
       _impl_.node_list_.Get(i));
   }
 
+  // repeated string light_list = 13;
+  total_size += 1 *
+      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(_impl_.light_list_.size());
+  for (int i = 0, n = _impl_.light_list_.size(); i < n; i++) {
+    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+      _impl_.light_list_.Get(i));
+  }
+
   // string base_dir = 1;
   if (!this->_internal_base_dir().empty()) {
     total_size += 1 +
@@ -696,6 +735,7 @@ void PBDirSpec::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROT
   _this->_impl_.material_list_.MergeFrom(from._impl_.material_list_);
   _this->_impl_.scene_list_.MergeFrom(from._impl_.scene_list_);
   _this->_impl_.node_list_.MergeFrom(from._impl_.node_list_);
+  _this->_impl_.light_list_.MergeFrom(from._impl_.light_list_);
   if (!from._internal_base_dir().empty()) {
     _this->_internal_set_base_dir(from._internal_base_dir());
   }
@@ -729,6 +769,7 @@ void PBDirSpec::InternalSwap(PBDirSpec* other) {
   _impl_.material_list_.InternalSwap(&other->_impl_.material_list_);
   _impl_.scene_list_.InternalSwap(&other->_impl_.scene_list_);
   _impl_.node_list_.InternalSwap(&other->_impl_.node_list_);
+  _impl_.light_list_.InternalSwap(&other->_impl_.light_list_);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
       &_impl_.base_dir_, lhs_arena,
       &other->_impl_.base_dir_, rhs_arena

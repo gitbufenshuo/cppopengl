@@ -27,3 +27,18 @@ message PBNode {
 message PBScene {
     repeated PBNode root_list = 1; // 所有根节点
 }
+
+message PBVec3 {
+    float w = 1;
+    float x = 2;
+    float y = 3;
+}
+
+
+message PBLight {
+    PBVec3 pos = 1; // 光源位置， 对于 direction light， 此项无意义
+    PBVec3 forward = 2; // 光的发射方向
+    PBVec3 color = 3; // 光源颜色
+    PBVec3 attenuation = 4; // 光源衰减
+    int32 kind = 5; // 光源种类 direction, point, spot
+}

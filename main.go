@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"gitee.com/onebook/cppopengl/bintools/app"
+	"gitee.com/onebook/cppopengl/bintools/light"
 	"gitee.com/onebook/cppopengl/bintools/objconvert"
 	"gitee.com/onebook/cppopengl/bintools/stact"
 	"gitee.com/onebook/cppopengl/bintools/start"
@@ -59,6 +60,10 @@ func main() {
 	}
 	if os.Args[1] == "app" {
 		app.Main()
+		return
+	}
+	if os.Args[1] == "light" {
+		light.Main()
 		return
 	}
 }

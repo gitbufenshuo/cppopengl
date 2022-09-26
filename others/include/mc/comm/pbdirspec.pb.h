@@ -191,6 +191,7 @@ class PBDirSpec final :
     kMaterialListFieldNumber = 10,
     kSceneListFieldNumber = 11,
     kNodeListFieldNumber = 12,
+    kLightListFieldNumber = 13,
     kBaseDirFieldNumber = 1,
   };
   // repeated string image_list = 2;
@@ -457,6 +458,30 @@ class PBDirSpec final :
   std::string* _internal_add_node_list();
   public:
 
+  // repeated string light_list = 13;
+  int light_list_size() const;
+  private:
+  int _internal_light_list_size() const;
+  public:
+  void clear_light_list();
+  const std::string& light_list(int index) const;
+  std::string* mutable_light_list(int index);
+  void set_light_list(int index, const std::string& value);
+  void set_light_list(int index, std::string&& value);
+  void set_light_list(int index, const char* value);
+  void set_light_list(int index, const char* value, size_t size);
+  std::string* add_light_list();
+  void add_light_list(const std::string& value);
+  void add_light_list(std::string&& value);
+  void add_light_list(const char* value);
+  void add_light_list(const char* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& light_list() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_light_list();
+  private:
+  const std::string& _internal_light_list(int index) const;
+  std::string* _internal_add_light_list();
+  public:
+
   // string base_dir = 1;
   void clear_base_dir();
   const std::string& base_dir() const;
@@ -490,6 +515,7 @@ class PBDirSpec final :
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> material_list_;
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> scene_list_;
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> node_list_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> light_list_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr base_dir_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -1380,6 +1406,81 @@ inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
 PBDirSpec::mutable_node_list() {
   // @@protoc_insertion_point(field_mutable_list:mc.comm.PBDirSpec.node_list)
   return &_impl_.node_list_;
+}
+
+// repeated string light_list = 13;
+inline int PBDirSpec::_internal_light_list_size() const {
+  return _impl_.light_list_.size();
+}
+inline int PBDirSpec::light_list_size() const {
+  return _internal_light_list_size();
+}
+inline void PBDirSpec::clear_light_list() {
+  _impl_.light_list_.Clear();
+}
+inline std::string* PBDirSpec::add_light_list() {
+  std::string* _s = _internal_add_light_list();
+  // @@protoc_insertion_point(field_add_mutable:mc.comm.PBDirSpec.light_list)
+  return _s;
+}
+inline const std::string& PBDirSpec::_internal_light_list(int index) const {
+  return _impl_.light_list_.Get(index);
+}
+inline const std::string& PBDirSpec::light_list(int index) const {
+  // @@protoc_insertion_point(field_get:mc.comm.PBDirSpec.light_list)
+  return _internal_light_list(index);
+}
+inline std::string* PBDirSpec::mutable_light_list(int index) {
+  // @@protoc_insertion_point(field_mutable:mc.comm.PBDirSpec.light_list)
+  return _impl_.light_list_.Mutable(index);
+}
+inline void PBDirSpec::set_light_list(int index, const std::string& value) {
+  _impl_.light_list_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:mc.comm.PBDirSpec.light_list)
+}
+inline void PBDirSpec::set_light_list(int index, std::string&& value) {
+  _impl_.light_list_.Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:mc.comm.PBDirSpec.light_list)
+}
+inline void PBDirSpec::set_light_list(int index, const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.light_list_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:mc.comm.PBDirSpec.light_list)
+}
+inline void PBDirSpec::set_light_list(int index, const char* value, size_t size) {
+  _impl_.light_list_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:mc.comm.PBDirSpec.light_list)
+}
+inline std::string* PBDirSpec::_internal_add_light_list() {
+  return _impl_.light_list_.Add();
+}
+inline void PBDirSpec::add_light_list(const std::string& value) {
+  _impl_.light_list_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:mc.comm.PBDirSpec.light_list)
+}
+inline void PBDirSpec::add_light_list(std::string&& value) {
+  _impl_.light_list_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:mc.comm.PBDirSpec.light_list)
+}
+inline void PBDirSpec::add_light_list(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.light_list_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:mc.comm.PBDirSpec.light_list)
+}
+inline void PBDirSpec::add_light_list(const char* value, size_t size) {
+  _impl_.light_list_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:mc.comm.PBDirSpec.light_list)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+PBDirSpec::light_list() const {
+  // @@protoc_insertion_point(field_list:mc.comm.PBDirSpec.light_list)
+  return _impl_.light_list_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+PBDirSpec::mutable_light_list() {
+  // @@protoc_insertion_point(field_mutable_list:mc.comm.PBDirSpec.light_list)
+  return &_impl_.light_list_;
 }
 
 #ifdef __GNUC__

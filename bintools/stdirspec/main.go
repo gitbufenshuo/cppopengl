@@ -22,6 +22,7 @@ func Main(baseDir string) {
 	var res comm.PBDirSpec
 	res.BaseDir = baseDir
 	onedir(&res, "image", &res.ImageList)
+	onedir(&res, "light", &res.LightList)
 	onedir(&res, "bin_buffer", &res.BinBufferList)
 	onedir(&res, "shader_code", &res.ShaderCodeList)
 	onedir(&res, "art_logic", &res.ArtLogicList)
