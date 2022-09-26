@@ -198,6 +198,7 @@ namespace mc::asset
                 auto _kind{_light->GetKind()};
                 auto &_pos{_light->GetPos()};
                 auto &_color{_light->GetColor()};
+                auto &_forward{_light->GetForward()};
 
                 if (_kind == 0)
                 {
@@ -219,6 +220,19 @@ namespace mc::asset
                 else
                 {
                     // spot light
+                    uni_pos[10] = '0' + static_cast<char>(index);
+                    uni_color[10] = '0' + static_cast<char>(index);
+                    uni_kind[10] = '0' + static_cast<char>(index);
+                    uni_attenuation[10] = '0' + static_cast<char>(index);
+                    uni_forward[10] = '0' + static_cast<char>(index);
+                    uni_cutoff[10] = '0' + static_cast<char>(index);
+
+                    m_sp->Uniform(uni_pos.data(), _pos);
+                    m_sp->Uniform(uni_color.data(), _color);
+                    m_sp->Uniform(uni_kind.data(), _kind);
+                    m_sp->Uniform(uni_attenuation.data(), glm::vec3{1.0f, 0.05f, 0.05f});
+                    m_sp->Uniform(uni_forward.data(), _forward);
+                    m_sp->Uniform(uni_cutoff.data(), glm::vec3{glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(17.5f)), 1.0f});
                 }
             }
         }

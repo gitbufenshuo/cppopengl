@@ -40,10 +40,17 @@ namespace game
         auto y = glm::sin(m_time * 3.14f * 0.5f);
         auto z = glm::cos(m_time * 3.14f * 0.5f);
         m_gb->GetTransform()->SetLocalTranslate(x, y * 5.0f + 5.0f, z * 5.0f);
-        // light pos
+        m_gb->GetTransform()->LookAt(glm::vec3{0.0f, 0.0f, 0.0f});
+        //  light pos
         auto _light{m_gb->GetEngine()->GetLight(m_light_index)};
         _light->SetPos(m_gb->GetTransform()->GetWorldPos());
-        _light->SetColor(glm::vec3(1.0f, 1.0f, 1.0f));
+        glm::vec3 color_list[3]{
+            glm::vec3{1.0f, 1.0f, 1.0f},
+            glm::vec3{0.0f, 1.0f, 1.0f},
+            glm::vec3{1.0f, 0.0f, 1.0f},
+        };
+        _light->SetColor(color_list[m_light_index]);
+        _light->SetForward(m_gb->GetTransform()->GetWorldZ() - m_gb->GetTransform()->GetWorldPos());
     }
     void ActLogicLightSource::life(double delta_time)
     {

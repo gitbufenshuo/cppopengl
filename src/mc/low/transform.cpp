@@ -346,19 +346,28 @@ namespace mc::low
         auto col0 = m6 * glm::vec4{final_x.x, final_x.y, final_x.z, 1.0f};
         auto col1 = m6 * glm::vec4{final_y.x, final_y.y, final_y.z, 1.0f};
         auto col2 = m6 * glm::vec4{final_z.x, final_z.y, final_z.z, 1.0f};
-        m6[0][0] = col0.x / m_scale.x;
-        m6[0][1] = col0.y / m_scale.x;
-        m6[0][2] = col0.z / m_scale.x;
+        // m6[0][0] = col0.x / m_scale.x;
+        // m6[0][1] = col0.y / m_scale.x;
+        // m6[0][2] = col0.z / m_scale.x;
+        m6[0][0] = col0.x;
+        m6[0][1] = col0.y;
+        m6[0][2] = col0.z;
         m6[0][3] = 0.0f;
 
-        m6[1][0] = col1.x / m_scale.y;
-        m6[1][1] = col1.y / m_scale.y;
-        m6[1][2] = col1.z / m_scale.y;
+        // m6[1][0] = col1.x / m_scale.y;
+        // m6[1][1] = col1.y / m_scale.y;
+        // m6[1][2] = col1.z / m_scale.y;
+        m6[1][0] = col1.x;
+        m6[1][1] = col1.y;
+        m6[1][2] = col1.z;
         m6[1][3] = 0.0f;
 
-        m6[2][0] = col2.x / m_scale.z;
-        m6[2][1] = col2.y / m_scale.z;
-        m6[2][2] = col2.z / m_scale.z;
+        // m6[2][0] = col2.x / m_scale.z;
+        // m6[2][1] = col2.y / m_scale.z;
+        // m6[2][2] = col2.z / m_scale.z;
+        m6[2][0] = col2.x;
+        m6[2][1] = col2.y;
+        m6[2][2] = col2.z;
         m6[2][3] = 0.0f;
 
         m6[3][0] = 0.0f;

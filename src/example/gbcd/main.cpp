@@ -69,7 +69,7 @@ namespace
             for (int index = 0; index < 3; ++index)
             {
                 auto _light{std::make_shared<mc::asset::Light>()};
-                _light->SetKind(mc::asset::Light::Kind::Point);
+                _light->SetKind(mc::asset::Light::Kind::Spot);
                 gogogo.AddLight(_light);
             }
         }
