@@ -36,6 +36,7 @@ namespace game
         void life(double delta_time);
 
     private:
+        int m_light_index{0};
         float m_time{0.0f};
         float m_x{-20.0f};
     };

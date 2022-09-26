@@ -23,6 +23,7 @@ namespace mc::asset
         m_image_data = stbi_load(m_file_path.data(), &m_width, &m_height, &m_nrChannels, 0);
         if (!m_image_data)
         {
+            std::cout << m_file_path << " Image::Image" << std::endl;
             throw 1;
         }
         //

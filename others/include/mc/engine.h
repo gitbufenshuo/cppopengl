@@ -82,6 +82,20 @@ namespace mc::low
         void DelGameobject(GameObject *gb); // 删除某个gb
         int GameObjectSize();
 
+        std::shared_ptr<mc::asset::Light> GetLight(int index)
+        {
+            return m_light_list[index];
+        }
+        void AddLight(std::shared_ptr<mc::asset::Light> light)
+        {
+            m_light_list.push_back(light);
+        }
+
+        int LightSize()
+        {
+            return m_light_list.size();
+        }
+
         void SetLightColor(glm::vec3 color)
         {
             m_light_color = color;

@@ -9,6 +9,7 @@
 
 // asset headers
 #include <mc/asset/texture.h>
+#include <mc/asset/light.h>
 #include <mc/asset/shader_program.h>
 #include <mc/asset/model.h>
 #include <mc/asset/act_logic.h>
@@ -64,34 +65,45 @@ namespace
     {
         auto &am{*gogogo.GetAM()};
         {
-            // 生成一个管理 object
-            auto newgb{new mc::low::GameObject{&gogogo}};
-            newgb->GetTransform()->SetLocalTranslate(0.0f, 5.0f, -5.0f);
-            newgb->GetTransform()->SetLocalScale(0.3f, 0.3f, 0.3f);
+            // create 三个 point light
+            for (int index = 0; index < 3; ++index)
             {
-                // mesh filter
-                auto mf{new mc::low::MeshFilter{}};
-                mf->AddModel(am.Get<mc::asset::Model>("52517.model.pb")); // 可以直接用资源名称获取
-                // mesh render
-                auto mr{new mc::low::MeshRender{}};
-                mr->SetGameobject(newgb);
-                mr->SetMaterial(std::make_shared<mc::asset::Material>(*am.Get<mc::asset::Material>())); // 复制一份
+                auto _light{std::make_shared<mc::asset::Light>()};
+                _light->SetKind(mc::asset::Light::Kind::Point);
+                gogogo.AddLight(_light);
+            }
+        }
+        {
+            // 生成三个管理 object
+            for (int index = 0; index < 3; ++index)
+            {
+                auto newgb{new mc::low::GameObject{&gogogo}};
+                newgb->GetTransform()->SetLocalScale(0.3f, 0.3f, 0.3f);
                 {
-                    // 改变uniform 让这个东西巨亮 用来代表光源
-                    static_cast<mc::asset::ArtLogicPhong *>(mr->GetMaterial()->GetArtLogic().get())->SetAmbient(1.0f);
+                    // mesh filter
+                    auto mf{new mc::low::MeshFilter{}};
+                    mf->AddModel(am.Get<mc::asset::Model>("52517.model.pb")); // 可以直接用资源名称获取
+                    // mesh render
+                    auto mr{new mc::low::MeshRender{}};
+                    mr->SetGameobject(newgb);
+                    mr->SetMaterial(std::make_shared<mc::asset::Material>(*am.Get<mc::asset::Material>())); // 复制一份
+                    {
+                        // 改变uniform 让这个东西巨亮 用来代表光源
+                        static_cast<mc::asset::ArtLogicPhong *>(mr->GetMaterial()->GetArtLogic().get())->SetAmbient(1.0f);
+                    }
+                    newgb->SetMeshFilter(mf);
+                    newgb->SetMeshRender(mr);
                 }
-                newgb->SetMeshFilter(mf);
-                newgb->SetMeshRender(mr);
+                {
+                    // act logic
+                    auto &act_factory{am.GetACF()};
+                    auto realActLogic{act_factory.Create(newgb, "mc::asset::ActLogicCamera", "")};
+                    newgb->AddAct(realActLogic);
+                    auto light_source_lg{act_factory.Create(newgb, game::ActLogicLightSource::s_class_name, std::string{static_cast<char>(index + '0')})};
+                    newgb->AddAct(light_source_lg);
+                }
+                gogogo.AddGameobject(newgb);
             }
-            {
-                // act logic
-                auto &act_factory{am.GetACF()};
-                auto realActLogic{act_factory.Create(newgb, "mc::asset::ActLogicCamera", "")};
-                newgb->AddAct(realActLogic);
-                auto light_source_lg{act_factory.Create(newgb, game::ActLogicLightSource::s_class_name, "")};
-                newgb->AddAct(light_source_lg);
-            }
-            gogogo.AddGameobject(newgb);
         }
         {
             // 生成三个 普通 object

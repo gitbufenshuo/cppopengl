@@ -172,8 +172,6 @@ namespace mc::asset
             m_sp->Uniform("uni_outline", m_outline);
             m_sp->Uniform("uni_View", eg->GetCamera()->GetViewMat());
             m_sp->Uniform("uni_Proj", eg->GetCamera()->GetProjMat());
-            m_sp->Uniform("uni_lightPos", eg->GetLightPos());
-            m_sp->Uniform("uni_lightColor", eg->GetLightColor());
             m_sp->Uniform("uni_viewPos", eg->GetCamera()->GetTransform()->GetWorldPos());
         }
         {
@@ -185,6 +183,44 @@ namespace mc::asset
         {
             m_sp->Uniform("uni_Model", gb->GetTransform()->GetWorldMat());
             m_sp->Uniform("uni_Normal", gb->GetTransform()->GetNormalMat());
+        }
+        {
+            // lights
+            std::string uni_pos{"uni_light[x].pos"};
+            std::string uni_forward{"uni_light[x].forward"};
+            std::string uni_color{"uni_light[x].color"};
+            std::string uni_attenuation{"uni_light[x].attenuation"};
+            std::string uni_cutoff{"uni_light[x].cutoff"};
+            std::string uni_kind{"uni_light[x].kind"};
+            for (int index = 0; index < eg->LightSize(); ++index)
+            {
+                auto _light{eg->GetLight(index)};
+                auto _kind{_light->GetKind()};
+                auto &_pos{_light->GetPos()};
+                auto &_color{_light->GetColor()};
+
+                if (_kind == 0)
+                {
+                    // dir light
+                }
+                else if (_kind == 1)
+                {
+                    // point light
+                    uni_pos[10] = '0' + static_cast<char>(index);
+                    uni_color[10] = '0' + static_cast<char>(index);
+                    uni_kind[10] = '0' + static_cast<char>(index);
+                    uni_attenuation[10] = '0' + static_cast<char>(index);
+
+                    m_sp->Uniform(uni_pos.data(), _pos);
+                    m_sp->Uniform(uni_color.data(), _color);
+                    m_sp->Uniform(uni_kind.data(), _kind);
+                    m_sp->Uniform(uni_attenuation.data(), glm::vec3{1.0f, 0.1f, 0.1f});
+                }
+                else
+                {
+                    // spot light
+                }
+            }
         }
     }
     void ArtLogicPhong::SetShaderProgram(std::shared_ptr<ShaderProgram> sp)

@@ -84,9 +84,9 @@ struct PBSceneDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PBSceneDefaultTypeInternal _PBScene_default_instance_;
 PROTOBUF_CONSTEXPR PBVec3::PBVec3(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.w_)*/0
-  , /*decltype(_impl_.x_)*/0
+    /*decltype(_impl_.x_)*/0
   , /*decltype(_impl_.y_)*/0
+  , /*decltype(_impl_.z_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct PBVec3DefaultTypeInternal {
   PROTOBUF_CONSTEXPR PBVec3DefaultTypeInternal()
@@ -103,6 +103,7 @@ PROTOBUF_CONSTEXPR PBLight::PBLight(
   , /*decltype(_impl_.forward_)*/nullptr
   , /*decltype(_impl_.color_)*/nullptr
   , /*decltype(_impl_.attenuation_)*/nullptr
+  , /*decltype(_impl_.cutoff_)*/nullptr
   , /*decltype(_impl_.kind_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct PBLightDefaultTypeInternal {
@@ -163,9 +164,9 @@ const uint32_t TableStruct_mc_2fcomm_2fpbnode_2eproto::offsets[] PROTOBUF_SECTIO
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::mc::comm::PBVec3, _impl_.w_),
   PROTOBUF_FIELD_OFFSET(::mc::comm::PBVec3, _impl_.x_),
   PROTOBUF_FIELD_OFFSET(::mc::comm::PBVec3, _impl_.y_),
+  PROTOBUF_FIELD_OFFSET(::mc::comm::PBVec3, _impl_.z_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::mc::comm::PBLight, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -177,6 +178,7 @@ const uint32_t TableStruct_mc_2fcomm_2fpbnode_2eproto::offsets[] PROTOBUF_SECTIO
   PROTOBUF_FIELD_OFFSET(::mc::comm::PBLight, _impl_.color_),
   PROTOBUF_FIELD_OFFSET(::mc::comm::PBLight, _impl_.attenuation_),
   PROTOBUF_FIELD_OFFSET(::mc::comm::PBLight, _impl_.kind_),
+  PROTOBUF_FIELD_OFFSET(::mc::comm::PBLight, _impl_.cutoff_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::mc::comm::PBVec4)},
@@ -206,16 +208,17 @@ const char descriptor_table_protodef_mc_2fcomm_2fpbnode_2eproto[] PROTOBUF_SECTI
   "t\030\002 \003(\t\022\022\n\nmodel_list\030\003 \003(\t\022\020\n\010material\030"
   "\004 \001(\t\022!\n\010sub_list\030\005 \003(\0132\017.mc.comm.PBNode"
   "\"-\n\007PBScene\022\"\n\troot_list\030\001 \003(\0132\017.mc.comm"
-  ".PBNode\")\n\006PBVec3\022\t\n\001w\030\001 \001(\002\022\t\n\001x\030\002 \001(\002\022"
-  "\t\n\001y\030\003 \001(\002\"\235\001\n\007PBLight\022\034\n\003pos\030\001 \001(\0132\017.mc"
+  ".PBNode\")\n\006PBVec3\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022"
+  "\t\n\001z\030\003 \001(\002\"\276\001\n\007PBLight\022\034\n\003pos\030\001 \001(\0132\017.mc"
   ".comm.PBVec3\022 \n\007forward\030\002 \001(\0132\017.mc.comm."
   "PBVec3\022\036\n\005color\030\003 \001(\0132\017.mc.comm.PBVec3\022$"
   "\n\013attenuation\030\004 \001(\0132\017.mc.comm.PBVec3\022\014\n\004"
-  "kind\030\005 \001(\005B\tZ\007mc/commb\006proto3"
+  "kind\030\005 \001(\005\022\037\n\006cutoff\030\006 \001(\0132\017.mc.comm.PBV"
+  "ec3B\tZ\007mc/commb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_mc_2fcomm_2fpbnode_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_mc_2fcomm_2fpbnode_2eproto = {
-    false, false, 589, descriptor_table_protodef_mc_2fcomm_2fpbnode_2eproto,
+    false, false, 622, descriptor_table_protodef_mc_2fcomm_2fpbnode_2eproto,
     "mc/comm/pbnode.proto",
     &descriptor_table_mc_2fcomm_2fpbnode_2eproto_once, nullptr, 0, 6,
     schemas, file_default_instances, TableStruct_mc_2fcomm_2fpbnode_2eproto::offsets,
@@ -1335,15 +1338,15 @@ PBVec3::PBVec3(const PBVec3& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   PBVec3* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.w_){}
-    , decltype(_impl_.x_){}
+      decltype(_impl_.x_){}
     , decltype(_impl_.y_){}
+    , decltype(_impl_.z_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::memcpy(&_impl_.w_, &from._impl_.w_,
-    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.y_) -
-    reinterpret_cast<char*>(&_impl_.w_)) + sizeof(_impl_.y_));
+  ::memcpy(&_impl_.x_, &from._impl_.x_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.z_) -
+    reinterpret_cast<char*>(&_impl_.x_)) + sizeof(_impl_.z_));
   // @@protoc_insertion_point(copy_constructor:mc.comm.PBVec3)
 }
 
@@ -1352,9 +1355,9 @@ inline void PBVec3::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.w_){0}
-    , decltype(_impl_.x_){0}
+      decltype(_impl_.x_){0}
     , decltype(_impl_.y_){0}
+    , decltype(_impl_.z_){0}
     , /*decltype(_impl_._cached_size_)*/{}
   };
 }
@@ -1382,9 +1385,9 @@ void PBVec3::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  ::memset(&_impl_.w_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&_impl_.y_) -
-      reinterpret_cast<char*>(&_impl_.w_)) + sizeof(_impl_.y_));
+  ::memset(&_impl_.x_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.z_) -
+      reinterpret_cast<char*>(&_impl_.x_)) + sizeof(_impl_.z_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1394,26 +1397,26 @@ const char* PBVec3::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // float w = 1;
+      // float x = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 13)) {
-          _impl_.w_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
-          ptr += sizeof(float);
-        } else
-          goto handle_unusual;
-        continue;
-      // float x = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 21)) {
           _impl_.x_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
           ptr += sizeof(float);
         } else
           goto handle_unusual;
         continue;
-      // float y = 3;
+      // float y = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 21)) {
+          _impl_.y_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
+          ptr += sizeof(float);
+        } else
+          goto handle_unusual;
+        continue;
+      // float z = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 29)) {
-          _impl_.y_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
+          _impl_.z_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
           ptr += sizeof(float);
         } else
           goto handle_unusual;
@@ -1447,34 +1450,34 @@ uint8_t* PBVec3::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // float w = 1;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_w = this->_internal_w();
-  uint32_t raw_w;
-  memcpy(&raw_w, &tmp_w, sizeof(tmp_w));
-  if (raw_w != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteFloatToArray(1, this->_internal_w(), target);
-  }
-
-  // float x = 2;
+  // float x = 1;
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_x = this->_internal_x();
   uint32_t raw_x;
   memcpy(&raw_x, &tmp_x, sizeof(tmp_x));
   if (raw_x != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteFloatToArray(2, this->_internal_x(), target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(1, this->_internal_x(), target);
   }
 
-  // float y = 3;
+  // float y = 2;
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_y = this->_internal_y();
   uint32_t raw_y;
   memcpy(&raw_y, &tmp_y, sizeof(tmp_y));
   if (raw_y != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteFloatToArray(3, this->_internal_y(), target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(2, this->_internal_y(), target);
+  }
+
+  // float z = 3;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_z = this->_internal_z();
+  uint32_t raw_z;
+  memcpy(&raw_z, &tmp_z, sizeof(tmp_z));
+  if (raw_z != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(3, this->_internal_z(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1493,16 +1496,7 @@ size_t PBVec3::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // float w = 1;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_w = this->_internal_w();
-  uint32_t raw_w;
-  memcpy(&raw_w, &tmp_w, sizeof(tmp_w));
-  if (raw_w != 0) {
-    total_size += 1 + 4;
-  }
-
-  // float x = 2;
+  // float x = 1;
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_x = this->_internal_x();
   uint32_t raw_x;
@@ -1511,12 +1505,21 @@ size_t PBVec3::ByteSizeLong() const {
     total_size += 1 + 4;
   }
 
-  // float y = 3;
+  // float y = 2;
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_y = this->_internal_y();
   uint32_t raw_y;
   memcpy(&raw_y, &tmp_y, sizeof(tmp_y));
   if (raw_y != 0) {
+    total_size += 1 + 4;
+  }
+
+  // float z = 3;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_z = this->_internal_z();
+  uint32_t raw_z;
+  memcpy(&raw_z, &tmp_z, sizeof(tmp_z));
+  if (raw_z != 0) {
     total_size += 1 + 4;
   }
 
@@ -1539,13 +1542,6 @@ void PBVec3::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBU
   (void) cached_has_bits;
 
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_w = from._internal_w();
-  uint32_t raw_w;
-  memcpy(&raw_w, &tmp_w, sizeof(tmp_w));
-  if (raw_w != 0) {
-    _this->_internal_set_w(from._internal_w());
-  }
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_x = from._internal_x();
   uint32_t raw_x;
   memcpy(&raw_x, &tmp_x, sizeof(tmp_x));
@@ -1558,6 +1554,13 @@ void PBVec3::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBU
   memcpy(&raw_y, &tmp_y, sizeof(tmp_y));
   if (raw_y != 0) {
     _this->_internal_set_y(from._internal_y());
+  }
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_z = from._internal_z();
+  uint32_t raw_z;
+  memcpy(&raw_z, &tmp_z, sizeof(tmp_z));
+  if (raw_z != 0) {
+    _this->_internal_set_z(from._internal_z());
   }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -1577,11 +1580,11 @@ void PBVec3::InternalSwap(PBVec3* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(PBVec3, _impl_.y_)
-      + sizeof(PBVec3::_impl_.y_)
-      - PROTOBUF_FIELD_OFFSET(PBVec3, _impl_.w_)>(
-          reinterpret_cast<char*>(&_impl_.w_),
-          reinterpret_cast<char*>(&other->_impl_.w_));
+      PROTOBUF_FIELD_OFFSET(PBVec3, _impl_.z_)
+      + sizeof(PBVec3::_impl_.z_)
+      - PROTOBUF_FIELD_OFFSET(PBVec3, _impl_.x_)>(
+          reinterpret_cast<char*>(&_impl_.x_),
+          reinterpret_cast<char*>(&other->_impl_.x_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata PBVec3::GetMetadata() const {
@@ -1598,6 +1601,7 @@ class PBLight::_Internal {
   static const ::mc::comm::PBVec3& forward(const PBLight* msg);
   static const ::mc::comm::PBVec3& color(const PBLight* msg);
   static const ::mc::comm::PBVec3& attenuation(const PBLight* msg);
+  static const ::mc::comm::PBVec3& cutoff(const PBLight* msg);
 };
 
 const ::mc::comm::PBVec3&
@@ -1616,6 +1620,10 @@ const ::mc::comm::PBVec3&
 PBLight::_Internal::attenuation(const PBLight* msg) {
   return *msg->_impl_.attenuation_;
 }
+const ::mc::comm::PBVec3&
+PBLight::_Internal::cutoff(const PBLight* msg) {
+  return *msg->_impl_.cutoff_;
+}
 PBLight::PBLight(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
@@ -1630,6 +1638,7 @@ PBLight::PBLight(const PBLight& from)
     , decltype(_impl_.forward_){nullptr}
     , decltype(_impl_.color_){nullptr}
     , decltype(_impl_.attenuation_){nullptr}
+    , decltype(_impl_.cutoff_){nullptr}
     , decltype(_impl_.kind_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
@@ -1646,6 +1655,9 @@ PBLight::PBLight(const PBLight& from)
   if (from._internal_has_attenuation()) {
     _this->_impl_.attenuation_ = new ::mc::comm::PBVec3(*from._impl_.attenuation_);
   }
+  if (from._internal_has_cutoff()) {
+    _this->_impl_.cutoff_ = new ::mc::comm::PBVec3(*from._impl_.cutoff_);
+  }
   _this->_impl_.kind_ = from._impl_.kind_;
   // @@protoc_insertion_point(copy_constructor:mc.comm.PBLight)
 }
@@ -1659,6 +1671,7 @@ inline void PBLight::SharedCtor(
     , decltype(_impl_.forward_){nullptr}
     , decltype(_impl_.color_){nullptr}
     , decltype(_impl_.attenuation_){nullptr}
+    , decltype(_impl_.cutoff_){nullptr}
     , decltype(_impl_.kind_){0}
     , /*decltype(_impl_._cached_size_)*/{}
   };
@@ -1679,6 +1692,7 @@ inline void PBLight::SharedDtor() {
   if (this != internal_default_instance()) delete _impl_.forward_;
   if (this != internal_default_instance()) delete _impl_.color_;
   if (this != internal_default_instance()) delete _impl_.attenuation_;
+  if (this != internal_default_instance()) delete _impl_.cutoff_;
 }
 
 void PBLight::SetCachedSize(int size) const {
@@ -1707,6 +1721,10 @@ void PBLight::Clear() {
     delete _impl_.attenuation_;
   }
   _impl_.attenuation_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && _impl_.cutoff_ != nullptr) {
+    delete _impl_.cutoff_;
+  }
+  _impl_.cutoff_ = nullptr;
   _impl_.kind_ = 0;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -1753,6 +1771,14 @@ const char* PBLight::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) 
       case 5:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
           _impl_.kind_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .mc.comm.PBVec3 cutoff = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 50)) {
+          ptr = ctx->ParseMessage(_internal_mutable_cutoff(), ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -1820,6 +1846,13 @@ uint8_t* PBLight::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteInt32ToArray(5, this->_internal_kind(), target);
   }
 
+  // .mc.comm.PBVec3 cutoff = 6;
+  if (this->_internal_has_cutoff()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(6, _Internal::cutoff(this),
+        _Internal::cutoff(this).GetCachedSize(), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -1864,6 +1897,13 @@ size_t PBLight::ByteSizeLong() const {
         *_impl_.attenuation_);
   }
 
+  // .mc.comm.PBVec3 cutoff = 6;
+  if (this->_internal_has_cutoff()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.cutoff_);
+  }
+
   // int32 kind = 5;
   if (this->_internal_kind() != 0) {
     total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_kind());
@@ -1902,6 +1942,10 @@ void PBLight::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOB
   if (from._internal_has_attenuation()) {
     _this->_internal_mutable_attenuation()->::mc::comm::PBVec3::MergeFrom(
         from._internal_attenuation());
+  }
+  if (from._internal_has_cutoff()) {
+    _this->_internal_mutable_cutoff()->::mc::comm::PBVec3::MergeFrom(
+        from._internal_cutoff());
   }
   if (from._internal_kind() != 0) {
     _this->_internal_set_kind(from._internal_kind());

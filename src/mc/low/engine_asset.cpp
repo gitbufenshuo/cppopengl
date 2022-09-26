@@ -96,6 +96,11 @@ namespace mc::low
         {
             new mc::asset::Image{am, pb_data.image_list(index)};
         }
+        // load Light
+        for (int index = 0; index < pb_data.light_list_size(); ++index)
+        {
+            new mc::asset::Light{am, pb_data.light_list(index)};
+        }
         // load BinBuffer
         for (int index = 0; index < pb_data.bin_buffer_list_size(); ++index)
         {

@@ -960,20 +960,11 @@ class PBVec3 final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kWFieldNumber = 1,
-    kXFieldNumber = 2,
-    kYFieldNumber = 3,
+    kXFieldNumber = 1,
+    kYFieldNumber = 2,
+    kZFieldNumber = 3,
   };
-  // float w = 1;
-  void clear_w();
-  float w() const;
-  void set_w(float value);
-  private:
-  float _internal_w() const;
-  void _internal_set_w(float value);
-  public:
-
-  // float x = 2;
+  // float x = 1;
   void clear_x();
   float x() const;
   void set_x(float value);
@@ -982,13 +973,22 @@ class PBVec3 final :
   void _internal_set_x(float value);
   public:
 
-  // float y = 3;
+  // float y = 2;
   void clear_y();
   float y() const;
   void set_y(float value);
   private:
   float _internal_y() const;
   void _internal_set_y(float value);
+  public:
+
+  // float z = 3;
+  void clear_z();
+  float z() const;
+  void set_z(float value);
+  private:
+  float _internal_z() const;
+  void _internal_set_z(float value);
   public:
 
   // @@protoc_insertion_point(class_scope:mc.comm.PBVec3)
@@ -999,9 +999,9 @@ class PBVec3 final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    float w_;
     float x_;
     float y_;
+    float z_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -1134,6 +1134,7 @@ class PBLight final :
     kForwardFieldNumber = 2,
     kColorFieldNumber = 3,
     kAttenuationFieldNumber = 4,
+    kCutoffFieldNumber = 6,
     kKindFieldNumber = 5,
   };
   // .mc.comm.PBVec3 pos = 1;
@@ -1208,6 +1209,24 @@ class PBLight final :
       ::mc::comm::PBVec3* attenuation);
   ::mc::comm::PBVec3* unsafe_arena_release_attenuation();
 
+  // .mc.comm.PBVec3 cutoff = 6;
+  bool has_cutoff() const;
+  private:
+  bool _internal_has_cutoff() const;
+  public:
+  void clear_cutoff();
+  const ::mc::comm::PBVec3& cutoff() const;
+  PROTOBUF_NODISCARD ::mc::comm::PBVec3* release_cutoff();
+  ::mc::comm::PBVec3* mutable_cutoff();
+  void set_allocated_cutoff(::mc::comm::PBVec3* cutoff);
+  private:
+  const ::mc::comm::PBVec3& _internal_cutoff() const;
+  ::mc::comm::PBVec3* _internal_mutable_cutoff();
+  public:
+  void unsafe_arena_set_allocated_cutoff(
+      ::mc::comm::PBVec3* cutoff);
+  ::mc::comm::PBVec3* unsafe_arena_release_cutoff();
+
   // int32 kind = 5;
   void clear_kind();
   int32_t kind() const;
@@ -1229,6 +1248,7 @@ class PBLight final :
     ::mc::comm::PBVec3* forward_;
     ::mc::comm::PBVec3* color_;
     ::mc::comm::PBVec3* attenuation_;
+    ::mc::comm::PBVec3* cutoff_;
     int32_t kind_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -1892,27 +1912,7 @@ PBScene::root_list() const {
 
 // PBVec3
 
-// float w = 1;
-inline void PBVec3::clear_w() {
-  _impl_.w_ = 0;
-}
-inline float PBVec3::_internal_w() const {
-  return _impl_.w_;
-}
-inline float PBVec3::w() const {
-  // @@protoc_insertion_point(field_get:mc.comm.PBVec3.w)
-  return _internal_w();
-}
-inline void PBVec3::_internal_set_w(float value) {
-  
-  _impl_.w_ = value;
-}
-inline void PBVec3::set_w(float value) {
-  _internal_set_w(value);
-  // @@protoc_insertion_point(field_set:mc.comm.PBVec3.w)
-}
-
-// float x = 2;
+// float x = 1;
 inline void PBVec3::clear_x() {
   _impl_.x_ = 0;
 }
@@ -1932,7 +1932,7 @@ inline void PBVec3::set_x(float value) {
   // @@protoc_insertion_point(field_set:mc.comm.PBVec3.x)
 }
 
-// float y = 3;
+// float y = 2;
 inline void PBVec3::clear_y() {
   _impl_.y_ = 0;
 }
@@ -1950,6 +1950,26 @@ inline void PBVec3::_internal_set_y(float value) {
 inline void PBVec3::set_y(float value) {
   _internal_set_y(value);
   // @@protoc_insertion_point(field_set:mc.comm.PBVec3.y)
+}
+
+// float z = 3;
+inline void PBVec3::clear_z() {
+  _impl_.z_ = 0;
+}
+inline float PBVec3::_internal_z() const {
+  return _impl_.z_;
+}
+inline float PBVec3::z() const {
+  // @@protoc_insertion_point(field_get:mc.comm.PBVec3.z)
+  return _internal_z();
+}
+inline void PBVec3::_internal_set_z(float value) {
+  
+  _impl_.z_ = value;
+}
+inline void PBVec3::set_z(float value) {
+  _internal_set_z(value);
+  // @@protoc_insertion_point(field_set:mc.comm.PBVec3.z)
 }
 
 // -------------------------------------------------------------------
@@ -2334,6 +2354,96 @@ inline void PBLight::_internal_set_kind(int32_t value) {
 inline void PBLight::set_kind(int32_t value) {
   _internal_set_kind(value);
   // @@protoc_insertion_point(field_set:mc.comm.PBLight.kind)
+}
+
+// .mc.comm.PBVec3 cutoff = 6;
+inline bool PBLight::_internal_has_cutoff() const {
+  return this != internal_default_instance() && _impl_.cutoff_ != nullptr;
+}
+inline bool PBLight::has_cutoff() const {
+  return _internal_has_cutoff();
+}
+inline void PBLight::clear_cutoff() {
+  if (GetArenaForAllocation() == nullptr && _impl_.cutoff_ != nullptr) {
+    delete _impl_.cutoff_;
+  }
+  _impl_.cutoff_ = nullptr;
+}
+inline const ::mc::comm::PBVec3& PBLight::_internal_cutoff() const {
+  const ::mc::comm::PBVec3* p = _impl_.cutoff_;
+  return p != nullptr ? *p : reinterpret_cast<const ::mc::comm::PBVec3&>(
+      ::mc::comm::_PBVec3_default_instance_);
+}
+inline const ::mc::comm::PBVec3& PBLight::cutoff() const {
+  // @@protoc_insertion_point(field_get:mc.comm.PBLight.cutoff)
+  return _internal_cutoff();
+}
+inline void PBLight::unsafe_arena_set_allocated_cutoff(
+    ::mc::comm::PBVec3* cutoff) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.cutoff_);
+  }
+  _impl_.cutoff_ = cutoff;
+  if (cutoff) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:mc.comm.PBLight.cutoff)
+}
+inline ::mc::comm::PBVec3* PBLight::release_cutoff() {
+  
+  ::mc::comm::PBVec3* temp = _impl_.cutoff_;
+  _impl_.cutoff_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::mc::comm::PBVec3* PBLight::unsafe_arena_release_cutoff() {
+  // @@protoc_insertion_point(field_release:mc.comm.PBLight.cutoff)
+  
+  ::mc::comm::PBVec3* temp = _impl_.cutoff_;
+  _impl_.cutoff_ = nullptr;
+  return temp;
+}
+inline ::mc::comm::PBVec3* PBLight::_internal_mutable_cutoff() {
+  
+  if (_impl_.cutoff_ == nullptr) {
+    auto* p = CreateMaybeMessage<::mc::comm::PBVec3>(GetArenaForAllocation());
+    _impl_.cutoff_ = p;
+  }
+  return _impl_.cutoff_;
+}
+inline ::mc::comm::PBVec3* PBLight::mutable_cutoff() {
+  ::mc::comm::PBVec3* _msg = _internal_mutable_cutoff();
+  // @@protoc_insertion_point(field_mutable:mc.comm.PBLight.cutoff)
+  return _msg;
+}
+inline void PBLight::set_allocated_cutoff(::mc::comm::PBVec3* cutoff) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete _impl_.cutoff_;
+  }
+  if (cutoff) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(cutoff);
+    if (message_arena != submessage_arena) {
+      cutoff = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, cutoff, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.cutoff_ = cutoff;
+  // @@protoc_insertion_point(field_set_allocated:mc.comm.PBLight.cutoff)
 }
 
 #ifdef __GNUC__

@@ -27,6 +27,7 @@ namespace mc::asset
         };
 
     public:
+        Light() = default;
         Light(AssetManager &am, const std::string &r_name);
         ~Light();
         Light(const Light &other);
@@ -37,13 +38,18 @@ namespace mc::asset
         void SetForward(glm::vec3 forward);
         void SetColor(glm::vec3 color);
         void SetAttenuation(glm::vec3 attenuation);
+        void SetKind(Kind kind);
 
         const glm::vec3 &GetPos() const;
         const glm::vec3 &GetForward() const;
         const glm::vec3 &GetColor() const;
         const glm::vec3 &GetAttenuation() const;
+        int GetKind() const;
 
         std::shared_ptr<Light> Clone() const;
+
+    private:
+        void load();
 
     private:
         const std::string m_r_name;

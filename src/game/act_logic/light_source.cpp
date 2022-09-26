@@ -8,6 +8,19 @@ namespace game
     {
         auto res{std::make_shared<ActLogicLightSource>()};
         res->m_gb = gb;
+        res->m_light_index = bin_data[0] - '0';
+        if (res->m_light_index == 0)
+        {
+            res->m_x = 3.14f / 3.0f;
+        }
+        else if (res->m_light_index == 1)
+        {
+            res->m_x = 3.14f;
+        }
+        else
+        {
+            res->m_x = 6.28f / 3.0f;
+        }
         return res;
     }
     ActLogicLightSource::~ActLogicLightSource() {}
@@ -22,20 +35,15 @@ namespace game
     }
     void ActLogicLightSource::move(double delta_time)
     {
-        if (m_x > 20.0f)
-        {
-            m_x = -20.f;
-        }
-        // x move
-        m_x += delta_time * 2.0f;
-        // y and z
+        // x and y and z
+        auto x = glm::sin(m_time * 3.14f * 2.0f * 0.1f + m_x) * 20.0f;
         auto y = glm::sin(m_time * 3.14f * 0.5f);
         auto z = glm::cos(m_time * 3.14f * 0.5f);
-        m_gb->GetTransform()->SetLocalTranslate(m_x, y * 5.0f + 5.0f, z * 5.0f);
+        m_gb->GetTransform()->SetLocalTranslate(x, y * 5.0f + 5.0f, z * 5.0f);
         // light pos
-        m_gb->GetEngine()->SetLightPos(m_gb->GetTransform()->GetWorldPos());
-        // light color
-        // m_gb->GetEngine()->SetLightColor(glm::vec3{0.5f * (y + 1.0f), 0.5f * (z + 1.0f), 1.0f});
+        auto _light{m_gb->GetEngine()->GetLight(m_light_index)};
+        _light->SetPos(m_gb->GetTransform()->GetWorldPos());
+        _light->SetColor(glm::vec3(1.0f, 1.0f, 1.0f));
     }
     void ActLogicLightSource::life(double delta_time)
     {
