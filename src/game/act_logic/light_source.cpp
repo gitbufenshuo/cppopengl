@@ -46,8 +46,8 @@ namespace game
         _light->SetPos(m_gb->GetTransform()->GetWorldPos());
         glm::vec3 color_list[3]{
             glm::vec3{1.0f, 1.0f, 1.0f},
-            glm::vec3{0.0f, 1.0f, 1.0f},
-            glm::vec3{1.0f, 0.0f, 1.0f},
+            glm::vec3{1.0f, 1.0f, 1.0f},
+            glm::vec3{1.0f, 1.0f, 1.0f},
         };
         _light->SetColor(color_list[m_light_index]);
         _light->SetForward(m_gb->GetTransform()->GetWorldZ() - m_gb->GetTransform()->GetWorldPos());
