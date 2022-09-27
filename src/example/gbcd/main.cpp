@@ -21,6 +21,7 @@
 
 // game headers
 #include <game/art_logic/cubemap.h> // skybox
+#include <game/art_logic/shadow_generate.h>
 
 // log
 #include <mc/log/log.h>
@@ -34,6 +35,7 @@ namespace
         // 或者借助于命令行自动扫描生成
         mc::asset::ArtLogicPhong::Register(am.GetARF());
         game::ArtLogicCubemap::Register(am.GetARF());
+        game::ArtLogicShadowGenerate::Register(am.GetARF());
     }
     void registActLogic(mc::low::Engine &gogogo)
     {
@@ -64,6 +66,7 @@ namespace
     void sceneInitCustom(mc::low::Engine &gogogo)
     {
         auto &am{*gogogo.GetAM()};
+        auto &art_factory{am.GetARF()};
         {
             // create 三个 spot light
             for (int index = 0; index < 3; ++index)
@@ -71,6 +74,12 @@ namespace
                 auto _light{std::make_shared<mc::asset::Light>()};
                 _light->SetKind(mc::asset::Light::Kind::Spot);
                 _light->SetCastShadow(true); // 本 light 会产生阴影
+                auto _artlogic{art_factory.Create(game::ArtLogicShadowGenerate::s_class_name, "")};
+                auto rart{static_cast<game::ArtLogicShadowGenerate *>(_artlogic.get())};
+                rart->SetLight(_light);
+                rart->SetShaderProgram(std::make_shared<mc::asset::ShaderProgram>(
+                    game::ArtLogicShadowGenerate::s_vcode, game::ArtLogicShadowGenerate::s_fcode));
+                _light->SetArtLogic(_artlogic);
                 gogogo.AddLight(_light);
             }
         }

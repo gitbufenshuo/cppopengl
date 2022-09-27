@@ -7,6 +7,23 @@
 
 namespace game
 {
+    const char *ArtLogicShadowGenerate::s_vcode{R"(
+        #version 330 core
+        layout(location = 0) in vec3 aPos;
+
+        uniform mat4 uni_lightSpaceMatrix;
+        uniform mat4 uni_model;
+
+        void main() {
+            gl_Position = uni_lightSpaceMatrix * uni_model * vec4(aPos, 1.0);
+        }
+    )"};
+    const char *ArtLogicShadowGenerate::s_fcode{R"(
+        #version 330 core
+        void main() {
+        }
+    )"};
+
     std::shared_ptr<mc::asset::ArtLogic> ArtLogicShadowGenerate::createFunc(const std::string &bin_data)
     {
         auto res{std::make_shared<ArtLogicShadowGenerate>()};
@@ -27,10 +44,6 @@ namespace game
         m_sp->Use();
         // 传一些 uniform
         {
-            // uni_lightSpaceMatrix
-            // uni_model
-            m_light->CalcLightMat();
-            // for vertex shader (VP 矩阵)
             m_sp->Uniform("uni_lightSpaceMatrix", m_light->GetLightMat());
             m_sp->Uniform("uni_model", gb->GetTransform()->GetWorldMat());
         }

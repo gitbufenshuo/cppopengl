@@ -16,33 +16,35 @@ namespace mc::low
      */
     void Engine::shadow_generate()
     {
+        glCullFace(GL_FRONT);
         // 遍历每一个 light, 将 depth 渲染到对应的 texture
         for (auto one_light : m_light_list)
         {
             glViewport(0, 0, one_light->GetShadowWidth(), one_light->GetShadowHeight());
             glBindFramebuffer(GL_FRAMEBUFFER, one_light->GetShadowFBO());
             glClear(GL_DEPTH_BUFFER_BIT);
+            one_light->CalcLightMat();
+            auto art_logic{one_light->GetArtLogic()};
             for (auto one_gb : g_shadow_cast_list)
             {
-                auto art_logic{one_light->GetArtLogic()};
                 art_logic->PostUniform(this, one_gb);
+                auto _mesh_filter{one_gb->GetMeshFilter()};
+                int model_size = _mesh_filter->modelsize();
+                for (int index = 0; index < model_size; ++index)
                 {
-                    auto _mesh_filter{one_gb->GetMeshFilter()};
-                    int model_size = _mesh_filter->modelsize();
-                    for (int index = 0; index < model_size; ++index)
-                    {
-                        auto _model = _mesh_filter->GetModel(index);
-                        _model->Use();
-                        glDrawElements(GL_TRIANGLES, _model->GetEBOCount(), _model->GetEBOType(), 0);
-                    }
+                    auto _model = _mesh_filter->GetModel(index);
+                    _model->Use();
+                    glDrawElements(GL_TRIANGLES, _model->GetEBOCount(), _model->GetEBOType(), 0);
                 }
             }
         }
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glCullFace(GL_BACK);
         g_shadow_cast_list.resize(0);
     }
     void Engine::draw_plain()
     {
+        glViewport(0, 0, m_width, m_height);
         glEnable(GL_STENCIL_TEST);
         glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
         glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
@@ -192,6 +194,7 @@ namespace mc::low
                 if (b_cast_shadow)
                 {
                     g_shadow_cast_list.push_back(_gb);
+                    g_plain_list.push_back(_gb);
                 }
             }
             else

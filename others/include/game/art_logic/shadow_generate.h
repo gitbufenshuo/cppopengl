@@ -16,9 +16,11 @@ namespace game
     private:
         std::shared_ptr<mc::asset::ShaderProgram> m_sp;
 
-    private:
+    public:
         static inline const std::string s_class_name{"game::art_logic::ArtLogicShadowGenerate"};
-        static std::shared_ptr<ArtLogic> createFunc(const std::string &bin_data);
+
+    private:
+        static std::shared_ptr<mc::asset::ArtLogic> createFunc(const std::string &bin_data);
 
     public:
         ~ArtLogicShadowGenerate() override;
@@ -37,6 +39,10 @@ namespace game
 
     public:
         void SetLight(std::shared_ptr<mc::asset::Light> _light);
+
+    public:
+        static const char *s_vcode;
+        static const char *s_fcode;
     };
 
 }
