@@ -12,6 +12,9 @@ namespace mc::asset
 
 #include <mc/asset/asset_manager.h>
 #include <mc/asset/art_logic.h>
+#include <mc/asset/texture.h>
+#include <mc/asset/shader_program.h>
+
 #include <mc/asset/md5sum.h>
 
 #include <mc/comm/pbmaterial.pb.h>
@@ -23,15 +26,19 @@ namespace mc::asset
     {
     public:
         Material(AssetManager &am, const std::string &r_name);
+        Material(const Material &other);
         ~Material();
 
     public:
         void Use();
         MD5SUM GetKey();
         std::shared_ptr<ArtLogic> GetArtLogic();
-        Material(const Material &other);
         void SetRenderBit(unsigned int bit, bool set);
         bool GetRenderBit(unsigned int bit);
+        bool GetCastShadow() const;
+        bool GetRecShadow() const;
+        void SetCastShadow(bool);
+        void SetRecShadow(bool);
 
     private:
         void load(); // load to gl
@@ -47,6 +54,8 @@ namespace mc::asset
         std::shared_ptr<ShaderProgram> m_program;
         std::shared_ptr<ArtLogic> m_art_logic;
         unsigned int m_render_bit{0};
+        bool m_cast_shadow{false}; // 产生阴影
+        bool m_rec_shadow{false};  // 接收阴影
     };
 }
 #endif

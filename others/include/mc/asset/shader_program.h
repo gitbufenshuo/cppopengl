@@ -12,6 +12,7 @@ namespace mc::asset
 #include <glm/glm.hpp>
 
 #include <mc/asset/asset_manager.h>
+#include <mc/asset/shader_code.h>
 #include <mc/asset/md5sum.h>
 
 #include <mc/comm/pbshaderprogram.pb.h>

@@ -65,11 +65,12 @@ namespace
     {
         auto &am{*gogogo.GetAM()};
         {
-            // create 三个 point light
+            // create 三个 spot light
             for (int index = 0; index < 3; ++index)
             {
                 auto _light{std::make_shared<mc::asset::Light>()};
                 _light->SetKind(mc::asset::Light::Kind::Spot);
+                _light->SetCastShadow(true); // 本 light 会产生阴影
                 gogogo.AddLight(_light);
             }
         }
@@ -119,7 +120,9 @@ namespace
                     // mesh render
                     auto mr{new mc::low::MeshRender{}};
                     mr->SetGameobject(newgb);
-                    mr->SetMaterial(std::make_shared<mc::asset::Material>(*am.Get<mc::asset::Material>())); // 复制一份
+                    auto ma{std::make_shared<mc::asset::Material>(*am.Get<mc::asset::Material>())}; // 复制一份
+                    mr->SetMaterial(ma);
+                    ma->SetCastShadow(true); // 会产生阴影
                     newgb->SetMeshFilter(mf);
                     newgb->SetMeshRender(mr);
                 }

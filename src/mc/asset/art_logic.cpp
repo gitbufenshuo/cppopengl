@@ -165,7 +165,17 @@ namespace mc::asset
         m_sp->Use();
         if (m_texture)
         {
+            m_sp->Uniform("uni_ourTexture", 0);
             m_texture->Use();
+            // light map bind
+            // std::string uni_shadow_map{"uni_shadow_map[x]"};
+
+            // for (int index = 0; index < eg->LightSize(); ++index)
+            // {
+            //     uni_shadow_map[15] = '0' + static_cast<char>(index);
+            //     eg->GetLight(index)->UseTexture(index + 1);
+            //     m_sp->Uniform(uni_shadow_map.data(), index + 1);
+            // }
         }
         // 传一些 uniform
         {
@@ -192,6 +202,7 @@ namespace mc::asset
             std::string uni_attenuation{"uni_light[x].attenuation"};
             std::string uni_cutoff{"uni_light[x].cutoff"};
             std::string uni_kind{"uni_light[x].kind"};
+            std::string uni_light_mat{"uni_light_mat[x]"}; // light space mat
             for (int index = 0; index < eg->LightSize(); ++index)
             {
                 auto _light{eg->GetLight(index)};
@@ -226,13 +237,15 @@ namespace mc::asset
                     uni_attenuation[10] = '0' + static_cast<char>(index);
                     uni_forward[10] = '0' + static_cast<char>(index);
                     uni_cutoff[10] = '0' + static_cast<char>(index);
-
+                    uni_light_mat[14] = '0' + static_cast<char>(index);
+                    // uni_light_mat
                     m_sp->Uniform(uni_pos.data(), _pos);
                     m_sp->Uniform(uni_color.data(), _color);
                     m_sp->Uniform(uni_kind.data(), _kind);
                     m_sp->Uniform(uni_attenuation.data(), glm::vec3{1.0f, 0.05f, 0.05f});
                     m_sp->Uniform(uni_forward.data(), _forward);
                     m_sp->Uniform(uni_cutoff.data(), glm::vec3{glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(17.5f)), 1.0f});
+                    m_sp->Uniform(uni_light_mat.data(), _light->GetLightMat());
                 }
             }
         }

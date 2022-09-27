@@ -67,6 +67,8 @@ namespace mc::low
         void after_render_logic();
         void standard_render(); // 普通渲染 gameobject
         void outline_render();  // 绘制轮廓
+        void draw_plain();
+        void shadow_generate(); // 生成 shadow map
         void draw_skybox();     // 绘制天空盒子
         void loadAsset(const char *file_path, mc::comm::PBDirSpec &pb_data);
 

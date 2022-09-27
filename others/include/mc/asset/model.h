@@ -10,6 +10,7 @@ namespace mc::asset
 #include <memory>
 
 #include <mc/asset/asset_manager.h>
+#include <mc/asset/bin_buffer.h>
 #include <mc/asset/md5sum.h>
 
 #include <mc/comm/pbmodel.pb.h>

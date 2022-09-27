@@ -11,6 +11,7 @@ namespace game
     {
         auto res{std::make_shared<ActLogicLookat>()};
         res->m_gb = gb;
+        return res;
     }
 
     void ActLogicLookat::Register(mc::asset::ActLogicFactory &acf)

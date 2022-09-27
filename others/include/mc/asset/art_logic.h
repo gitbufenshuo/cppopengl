@@ -21,6 +21,8 @@ namespace mc::asset
 #include <mc/camera.h>
 
 #include <mc/asset/asset_manager.h>
+#include <mc/asset/shader_program.h>
+#include <mc/asset/texture.h>
 #include <mc/asset/md5sum.h>
 
 // proto types

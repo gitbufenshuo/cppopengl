@@ -4,6 +4,8 @@
 #include <iostream>
 #include <filesystem>
 
+#include <glad/glad.h>
+
 #include <mc/asset/asset_manager.h>
 #include <mc/asset/light.h>
 #include <mc/asset/md5sum.h>
@@ -88,5 +90,64 @@ namespace mc::asset
         //
         m_kind = static_cast<Kind>(m_pb_data.kind());
     }
+    // shadow
+    void Light::SetCastShadow(bool v)
+    {
+        m_cast_shadow = v;
+        if (!v)
+        {
+            return;
+        }
+        if (m_depthMapFBO)
+        {
+            return;
+        }
+        glGenFramebuffers(1, &m_depthMapFBO);
+        glGenTextures(1, &m_shadow_map);
+        glBindTexture(GL_TEXTURE_2D, m_shadow_map);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
+                     m_shadow_width, m_shadow_height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        //
+        glBindFramebuffer(GL_FRAMEBUFFER, m_depthMapFBO);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_shadow_map, 0);
+        glDrawBuffer(GL_NONE);
+        glReadBuffer(GL_NONE);
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    }
+    bool Light::GetCastShadow() const
+    {
+        return m_cast_shadow;
+    }
+    void Light::CalcLightMat()
+    {
+        auto _view = glm::lookAt(m_pos,
+                                 m_pos + m_forward,
+                                 glm::vec3(0.0f, 1.0f, 0.0f));
+        auto _proj = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 50.0f);
+        m_light_mat = _proj * _view;
+    }
+    void Light::SetArtLogic(std::shared_ptr<ArtLogic> v)
+    {
+        m_art_logic = v;
+    }
+    void Light::UseTexture(int texture_pipe)
+    {
+        glActiveTexture(GL_TEXTURE0 + texture_pipe);
+        glBindTexture(GL_TEXTURE_2D, m_shadow_map);
+    }
+
+    const glm::mat4 &Light::GetLightMat() const
+    {
+        return m_light_mat;
+    }
+    unsigned int Light::GetShadowWidth() const { return m_shadow_width; }
+    unsigned int Light::GetShadowHeight() const { return m_shadow_height; }
+    unsigned int Light::GetShadowFBO() const { return m_depthMapFBO; }
+    unsigned int Light::GetShadowMap() const { return m_shadow_map; }
+    std::shared_ptr<ArtLogic> Light::GetArtLogic() const { return m_art_logic; }
 
 }

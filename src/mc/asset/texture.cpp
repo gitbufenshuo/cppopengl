@@ -90,9 +90,12 @@ namespace mc::asset
     }
     void Texture::load(AssetManager &am)
     {
+        if (m_pb_data.texture_type() == 0)
+        {
+            m_pb_data.set_texture_type(GL_TEXTURE_2D);
+        }
         switch (m_pb_data.texture_type())
         {
-        case 0:
         case GL_TEXTURE_2D:
             load_texture_2d(am);
             break;

@@ -110,6 +110,7 @@ namespace mc::low
     {
         logic_update();
         standard_render();
+        draw_plain();
         outline_render();
         draw_skybox();
         after_render_logic();

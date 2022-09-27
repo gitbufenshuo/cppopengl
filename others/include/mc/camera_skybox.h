@@ -11,6 +11,9 @@ namespace mc::low
 
 #include <mc/asset/texture.h>
 #include <mc/asset/shader_program.h>
+#include <mc/asset/shader_code.h>
+#include <mc/asset/model.h>
+#include <mc/asset/bin_buffer.h>
 #include <mc/asset/art_logic.h>
 
 namespace mc::low

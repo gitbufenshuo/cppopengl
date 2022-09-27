@@ -98,5 +98,21 @@ namespace mc::asset
     {
         return m_render_bit & bit;
     }
+    bool Material::GetCastShadow() const
+    {
+        return m_cast_shadow;
+    }
+    bool Material::GetRecShadow() const
+    {
+        return m_rec_shadow;
+    }
+    void Material::SetCastShadow(bool v)
+    {
+        m_cast_shadow = v;
+    }
+    void Material::SetRecShadow(bool v)
+    {
+        m_rec_shadow = v;
+    }
 
 } // namespace mc::asset
