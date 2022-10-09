@@ -92,6 +92,7 @@ namespace mc::asset
 
         std::shared_ptr<ShaderProgram> m_sp;
         std::shared_ptr<Texture> m_texture;
+        std::shared_ptr<Texture> m_normal;
 
     private:
         static std::shared_ptr<ArtLogic> createFunc(const std::string &bin_data);

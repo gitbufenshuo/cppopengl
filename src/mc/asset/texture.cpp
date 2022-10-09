@@ -40,9 +40,9 @@ namespace mc::asset
     {
         SPD_INFO("Texture::~Texture() addr:{}", static_cast<void *>(this));
     }
-    void Texture::Use()
+    void Texture::Use(int pipe)
     {
-        glActiveTexture(GL_TEXTURE0);
+        glActiveTexture(GL_TEXTURE0 + pipe);
         glBindTexture(m_pb_data.texture_type(), gl_id);
     }
     void Texture::load_cubemap(AssetManager &am)

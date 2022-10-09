@@ -163,18 +163,18 @@ namespace mc::asset
     void ArtLogicPhong::PostUniform(mc::low::Engine *eg, mc::low::GameObject *gb)
     {
         m_sp->Use();
-        if (m_texture)
         {
             m_sp->Uniform("uni_ourTexture", 0);
-            m_texture->Use();
+            m_texture->Use(0);
+            m_normal->Use(1);
             // light map bind
             std::string uni_shadow_map{"uni_shadow_map[x]"};
 
             for (int index = 0; index < eg->LightSize(); ++index)
             {
                 uni_shadow_map[15] = '0' + static_cast<char>(index);
-                eg->GetLight(index)->UseTexture(index + 1);
-                m_sp->Uniform(uni_shadow_map.data(), index + 1);
+                eg->GetLight(index)->UseTexture(index + 2);
+                m_sp->Uniform(uni_shadow_map.data(), index + 2);
             }
         }
         // 传一些 uniform
@@ -256,7 +256,14 @@ namespace mc::asset
     }
     void ArtLogicPhong::AddTexture(std::shared_ptr<Texture> texture)
     {
-        m_texture = texture;
+        if (!m_texture)
+        {
+            m_texture = texture;
+        }
+        else
+        {
+            m_normal = texture;
+        }
     }
     const std::string &ArtLogicPhong::ShowMe()
     {

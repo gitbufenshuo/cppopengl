@@ -23,7 +23,7 @@ namespace mc::asset
         ~Texture();
 
     public:
-        void Use();
+        void Use(int pipe);
 
     private:
         void load(AssetManager &am);            // load to gl
