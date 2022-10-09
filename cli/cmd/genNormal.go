@@ -58,23 +58,19 @@ func doyewu() {
 	fmt.Println("FileName", fInfo.Name())
 	var heightMapPath string
 	var normalMapPath string
-	var pngma bool
 	if strings.HasSuffix(f.Name(), ".png") {
 		m, err = png.Decode(f)
 		if err != nil {
 			panic("非png")
 		}
-		heightMapPath = path.Join(*gOutDir, fmt.Sprintf("%s_heightmap.png", fInfo.Name()))
-		normalMapPath = path.Join(*gOutDir, fmt.Sprintf("%s_normalmap.png", fInfo.Name()))
-		pngma = true
 	} else {
 		m, err = jpeg.Decode(f)
 		if err != nil {
 			panic("非jpeg")
 		}
-		heightMapPath = path.Join(*gOutDir, fmt.Sprintf("%s_heightmap.jpeg", fInfo.Name()))
-		normalMapPath = path.Join(*gOutDir, fmt.Sprintf("%s_normalmap.jpeg", fInfo.Name()))
 	}
+	heightMapPath = path.Join(*gOutDir, fmt.Sprintf("%s_heightmap.jpeg", fInfo.Name()))
+	normalMapPath = path.Join(*gOutDir, fmt.Sprintf("%s_normalmap.jpeg", fInfo.Name()))
 	fmt.Printf("%s\n", m.Bounds()) // 图片长宽
 	heightMap := image.NewRGBA(image.Rect(0, 0, m.Bounds().Max.X, m.Bounds().Max.Y))
 	for idx := 0; idx < m.Bounds().Max.X; idx++ {
@@ -86,11 +82,8 @@ func doyewu() {
 	}
 	os.Remove(heightMapPath)
 	heightFile, _ := os.Create(heightMapPath)
-	if pngma {
-		png.Encode(heightFile, heightMap)
-	} else {
-		jpeg.Encode(heightFile, heightMap, nil)
-	}
+	jpeg.Encode(heightFile, heightMap, nil)
+
 	//
 	normalMap := image.NewRGBA(image.Rect(0, 0, m.Bounds().Max.X, m.Bounds().Max.Y))
 	maxX, maxY := m.Bounds().Max.X, m.Bounds().Max.Y
@@ -133,9 +126,5 @@ func doyewu() {
 	}
 	os.Remove(normalMapPath)
 	normalFile, _ := os.Create(normalMapPath)
-	if pngma {
-		png.Encode(normalFile, normalMap)
-	} else {
-		jpeg.Encode(normalFile, normalMap, nil)
-	}
+	jpeg.Encode(normalFile, normalMap, nil)
 }
