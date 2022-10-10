@@ -125,10 +125,19 @@ namespace mc::asset
     void Light::CalcLightMat()
     {
         auto _view = glm::lookAt(m_pos,
-                                 m_pos + m_forward,
+                                 glm::vec3(0.0f, 0.0f, 0.0f),
                                  glm::vec3(0.0f, 1.0f, 0.0f));
-        auto _proj = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 50.0f);
-        m_light_mat = _proj * _view;
+        if (m_kind == Light::Kind::Direction)
+        {
+            float near_plane = 0.1f, far_plane = 75.0f;
+            auto _proj = glm::ortho(-50.0f, 50.0f, -50.0f, 50.0f, near_plane, far_plane);
+            m_light_mat = _proj * _view;
+        }
+        else
+        {
+            auto _proj = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 50.0f);
+            m_light_mat = _proj * _view;
+        }
     }
     void Light::SetArtLogic(std::shared_ptr<ArtLogic> v)
     {

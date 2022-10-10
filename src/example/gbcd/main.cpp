@@ -71,10 +71,10 @@ namespace
         auto &art_factory{am.GetARF()};
         {
             // create 三个 spot light
-            for (int index = 0; index < 3; ++index)
+            for (int index = 0; index < 1; ++index)
             {
                 auto _light{std::make_shared<mc::asset::Light>()};
-                _light->SetKind(mc::asset::Light::Kind::Spot);
+                _light->SetKind(mc::asset::Light::Kind::Direction);
                 _light->SetCastShadow(true); // 本 light 会产生阴影
                 auto _artlogic{art_factory.Create(game::ArtLogicShadowGenerate::s_class_name, "")};
                 auto rart{static_cast<game::ArtLogicShadowGenerate *>(_artlogic.get())};
@@ -87,7 +87,7 @@ namespace
         }
         {
             // 生成三个管理 object
-            for (int index = 0; index < 3; ++index)
+            for (int index = 0; index < 1; ++index)
             {
                 auto newgb{new mc::low::GameObject{&gogogo}};
                 newgb->GetTransform()->SetLocalScale(0.3f, 0.3f, 0.3f);

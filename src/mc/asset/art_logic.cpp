@@ -165,6 +165,7 @@ namespace mc::asset
         m_sp->Use();
         {
             m_sp->Uniform("uni_ourTexture", 0);
+            m_sp->Uniform("uni_ourNormal", 1);
             m_texture->Use(0);
             m_normal->Use(1);
             // light map bind
@@ -214,6 +215,15 @@ namespace mc::asset
                 if (_kind == 0)
                 {
                     // dir light
+                    uni_pos[10] = '0' + static_cast<char>(index);
+                    uni_color[10] = '0' + static_cast<char>(index);
+                    uni_kind[10] = '0' + static_cast<char>(index);
+                    uni_light_mat[14] = '0' + static_cast<char>(index);
+
+                    m_sp->Uniform(uni_pos.data(), _pos);
+                    m_sp->Uniform(uni_color.data(), _color);
+                    m_sp->Uniform(uni_kind.data(), _kind);
+                    m_sp->Uniform(uni_light_mat.data(), _light->GetLightMat());
                 }
                 else if (_kind == 1)
                 {

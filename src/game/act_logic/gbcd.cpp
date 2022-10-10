@@ -121,7 +121,7 @@ namespace game
 
     void ActLogicGBCD::move(double delta_time)
     {
-        m_gb->GetTransform()->Rotate(0.0f, 1.0f, 0.0f, 1.0f * delta_time);
+        // m_gb->GetTransform()->Rotate(0.0f, 1.0f, 0.0f, 1.0f * delta_time);
         return;
     }
     void ActLogicGBCD::life(double delta_time)

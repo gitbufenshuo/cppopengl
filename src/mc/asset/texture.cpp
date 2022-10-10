@@ -80,6 +80,8 @@ namespace mc::asset
         glBindTexture(GL_TEXTURE_2D, gl_id);
         // copy the data to gpu
         int internal_format = _img->GetNrChannels() == 3 ? GL_RGB : GL_RGBA;
+        // internal_format = GL_RGBA;
+        std::cout << "Texture::load_texture_2d internal_format " << _img->GetNrChannels() << std::endl;
         glTexImage2D(GL_TEXTURE_2D, 0, internal_format, _img->GetWidth(), _img->GetHeight(), 0, internal_format, GL_UNSIGNED_BYTE, _img->GetData());
         glGenerateMipmap(GL_TEXTURE_2D);
         // settings
