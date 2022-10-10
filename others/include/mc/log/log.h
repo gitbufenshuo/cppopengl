@@ -6,7 +6,8 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 
 #define SPD_INFO(...) mc::log::Log::GetLogger()->info(__VA_ARGS__)
-#define SPD_WARN(...) mc::log::Log::GetLogger()->warn(__VA_ARGS__)
+// #define SPD_WARN(...) mc::log::Log::GetLogger()->warn(__VA_ARGS__)
+#define SPD_WARN(...) (__VA_ARGS__)
 #define SPD_DEBUG(...) mc::log::Log::GetLogger()->debug(__VA_ARGS__)
 #define SPD_TRACE(...) mc::log::Log::GetLogger()->trace(__VA_ARGS__)
 #define SPD_ERROR(...) mc::log::Log::GetLogger()->error(__VA_ARGS__)

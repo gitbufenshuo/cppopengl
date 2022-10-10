@@ -66,7 +66,7 @@ namespace game
     void ArtLogicPhongSpot::PostUniform(mc::low::Engine *eg, mc::low::GameObject *gb)
     {
         m_sp->Use();
-        m_texture->Use();
+        m_texture->Use(0);
         // 传一些 uniform
         {
             // for vertex shader (MVP 矩阵)

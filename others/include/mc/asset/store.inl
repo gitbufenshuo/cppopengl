@@ -30,7 +30,7 @@ namespace mc::asset
         auto it{m_store.find(key)};
         if (it == m_store.end())
         {
-            std::cout << "[NOT FOUND] Store<T>::Get() " << key << " " << typeid(T).name() << std::endl;
+            std::cout << "[NOT FOUND] Store<T>::Get() " << key << " " << typeid(T).name() << " Total: " << m_store.size() << std::endl;
         }
         return m_store[key];
     }
@@ -43,6 +43,8 @@ namespace mc::asset
         {
             mc::tools::MD5Sum(r_name, key.data);
         }
+        std::cout << "StoreGet "
+                  << "r_name:" << r_name << " key:" << key << std::endl;
         return Get(key);
     }
 

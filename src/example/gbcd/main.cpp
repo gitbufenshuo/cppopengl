@@ -127,7 +127,7 @@ namespace
                     // mesh render
                     auto mr{new mc::low::MeshRender{}};
                     mr->SetGameobject(newgb);
-                    auto ma{std::make_shared<mc::asset::Material>(*am.Get<mc::asset::Material>("phongnormalmap.sp.pb"))}; // 复制一份
+                    auto ma{std::make_shared<mc::asset::Material>(*am.Get<mc::asset::Material>("phongmap.material.pb"))}; // 复制一份
                     mr->SetMaterial(ma);
                     ma->SetCastShadow(true); // 会产生阴影
                     newgb->SetMeshFilter(mf);
@@ -154,7 +154,7 @@ namespace
                 // mesh render
                 auto mr{new mc::low::MeshRender{}};
                 mr->SetGameobject(newgb);
-                mr->SetMaterial(std::make_shared<mc::asset::Material>(*am.Get<mc::asset::Material>("phongnormalmap.sp.pb"))); // 复制一份
+                mr->SetMaterial(std::make_shared<mc::asset::Material>(*am.Get<mc::asset::Material>("phongmap.material.pb"))); // 复制一份
                 newgb->SetMeshFilter(mf);
                 newgb->SetMeshRender(mr);
             }
@@ -172,7 +172,7 @@ namespace
                 // mesh render
                 auto mr{new mc::low::MeshRender{}};
                 mr->SetGameobject(newgb);
-                mr->SetMaterial(std::make_shared<mc::asset::Material>(*am.Get<mc::asset::Material>("phongnormalmap.sp.pb"))); // 复制一份
+                mr->SetMaterial(std::make_shared<mc::asset::Material>(*am.Get<mc::asset::Material>("phongmap.material.pb"))); // 复制一份
                 newgb->SetMeshFilter(mf);
                 newgb->SetMeshRender(mr);
             }
@@ -188,7 +188,7 @@ namespace game::example_list::gbcd
         mc::low::Engine gogogo{800, 800, "Hello gbcd"};
         registArtLogic(gogogo);
         registActLogic(gogogo);
-        gogogo.LoadAssetAndCreate("gogogo.pb.data", false);
+        gogogo.LoadAssetAndCreate("others/resource/asset/gogogo.pb.data", false);
         sceneInitCustom(gogogo);
         createSkybox(gogogo); // 测试 skybox
         gogogo.Run();

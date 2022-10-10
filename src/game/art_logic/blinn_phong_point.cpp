@@ -71,7 +71,7 @@ namespace game
     void ArtLogicBlinnPhongPoint::PostUniform(mc::low::Engine *eg, mc::low::GameObject *gb)
     {
         m_sp->Use();
-        m_texture->Use();
+        m_texture->Use(0);
         // 传一些 uniform
         {
             m_sp->Uniform("ma_View", eg->GetCamera()->GetViewMat());

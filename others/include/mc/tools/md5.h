@@ -2,6 +2,7 @@
 #define MC_TOOLS_MD5_H
 
 #include <string>
+#include <iostream>
 
 #include <openssl/evp.h>
 
