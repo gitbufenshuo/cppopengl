@@ -159,7 +159,7 @@ func _gencube(baseDir, name string, x, y, z, px, py, pz float32) {
 	// attri
 	copy_attrib := make([]int32, len(base_cube_attrib))
 	copy(copy_attrib, base_cube_attrib)
-	{
+	if *g_verbose {
 		// 打印一下
 		for idx := 0; idx < len(copy_cube); idx += 14 {
 			fmt.Printf("P:(%f,%f,%f) UV:(%f,%f) N:(%f,%f,%f) B:(%f,%f,%f) T:(%f,%f,%f)\n",
@@ -217,8 +217,9 @@ func _gen(baseDir, name, shape, parameter string) {
 	}
 }
 
-func _show(baseDir, model string) {
-	full_name := path.Join(baseDir, "model", model)
+func _show(baseDir, name string) {
+	model_name := fmt.Sprintf("%s.model.pb", name)
+	full_name := path.Join(baseDir, "model", model_name)
 	data, _ := ioutil.ReadFile(full_name)
 	var pbmodel comm.PBModel
 	proto.Unmarshal(data, &pbmodel)
