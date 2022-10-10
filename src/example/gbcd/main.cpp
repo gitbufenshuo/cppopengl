@@ -14,6 +14,7 @@
 #include <mc/asset/model.h>
 #include <mc/asset/act_logic.h>
 #include <mc/asset/art_logic.h>
+#include <mc/asset/art_logic_simple.h>
 
 // game headers
 #include <game/act_logic/gbcd.h>
@@ -34,6 +35,7 @@ namespace
         // 这一步必须手动
         // 或者借助于命令行自动扫描生成
         mc::asset::ArtLogicPhong::Register(am.GetARF());
+        mc::asset::ArtLogicSimple::Register(am.GetARF());
         game::ArtLogicCubemap::Register(am.GetARF());
         game::ArtLogicShadowGenerate::Register(am.GetARF());
     }
@@ -92,15 +94,11 @@ namespace
                 {
                     // mesh filter
                     auto mf{new mc::low::MeshFilter{}};
-                    mf->AddModel(am.Get<mc::asset::Model>("52517.model.pb")); // 可以直接用资源名称获取
+                    mf->AddModel(am.Get<mc::asset::Model>("newcube.model.pb")); // 可以直接用资源名称获取
                     // mesh render
                     auto mr{new mc::low::MeshRender{}};
                     mr->SetGameobject(newgb);
-                    mr->SetMaterial(std::make_shared<mc::asset::Material>(*am.Get<mc::asset::Material>())); // 复制一份
-                    {
-                        // 改变uniform 让这个东西巨亮 用来代表光源
-                        static_cast<mc::asset::ArtLogicPhong *>(mr->GetMaterial()->GetArtLogic().get())->SetAmbient(1.0f);
-                    }
+                    mr->SetMaterial(std::make_shared<mc::asset::Material>(*am.Get<mc::asset::Material>("simple.material.pb"))); // 复制一份
                     newgb->SetMeshFilter(mf);
                     newgb->SetMeshRender(mr);
                 }
@@ -125,11 +123,11 @@ namespace
                 {
                     // mesh filter
                     auto mf{new mc::low::MeshFilter{}};
-                    mf->AddModel(am.Get<mc::asset::Model>("low-poly-fox-by-pixelmannen.obj.model.pb")); // 可以直接用资源名称获取
+                    mf->AddModel(am.Get<mc::asset::Model>("newcube.model.pb")); // 可以直接用资源名称获取
                     // mesh render
                     auto mr{new mc::low::MeshRender{}};
                     mr->SetGameobject(newgb);
-                    auto ma{std::make_shared<mc::asset::Material>(*am.Get<mc::asset::Material>())}; // 复制一份
+                    auto ma{std::make_shared<mc::asset::Material>(*am.Get<mc::asset::Material>("phongnormalmap.sp.pb"))}; // 复制一份
                     mr->SetMaterial(ma);
                     ma->SetCastShadow(true); // 会产生阴影
                     newgb->SetMeshFilter(mf);
@@ -152,11 +150,11 @@ namespace
             {
                 // mesh filter
                 auto mf{new mc::low::MeshFilter{}};
-                mf->AddModel(am.Get<mc::asset::Model>("52517.model.pb")); // 可以直接用资源名称获取
+                mf->AddModel(am.Get<mc::asset::Model>("newcube.model.pb")); // 可以直接用资源名称获取
                 // mesh render
                 auto mr{new mc::low::MeshRender{}};
                 mr->SetGameobject(newgb);
-                mr->SetMaterial(std::make_shared<mc::asset::Material>(*am.Get<mc::asset::Material>())); // 复制一份
+                mr->SetMaterial(std::make_shared<mc::asset::Material>(*am.Get<mc::asset::Material>("phongnormalmap.sp.pb"))); // 复制一份
                 newgb->SetMeshFilter(mf);
                 newgb->SetMeshRender(mr);
             }
@@ -170,11 +168,11 @@ namespace
             {
                 // mesh filter
                 auto mf{new mc::low::MeshFilter{}};
-                mf->AddModel(am.Get<mc::asset::Model>("52517.model.pb")); // 可以直接用资源名称获取
+                mf->AddModel(am.Get<mc::asset::Model>("newcube.model.pb")); // 可以直接用资源名称获取
                 // mesh render
                 auto mr{new mc::low::MeshRender{}};
                 mr->SetGameobject(newgb);
-                mr->SetMaterial(std::make_shared<mc::asset::Material>(*am.Get<mc::asset::Material>())); // 复制一份
+                mr->SetMaterial(std::make_shared<mc::asset::Material>(*am.Get<mc::asset::Material>("phongnormalmap.sp.pb"))); // 复制一份
                 newgb->SetMeshFilter(mf);
                 newgb->SetMeshRender(mr);
             }
