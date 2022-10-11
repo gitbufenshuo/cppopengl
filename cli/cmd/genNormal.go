@@ -25,10 +25,11 @@ var (
 // genNormalCmd represents the genNormal command
 var genNormalCmd = &cobra.Command{
 	Use:   "genNormal",
-	Short: "给一个纹理图，生成相应的 height map 和 normal map",
-	Long: `生成两个文件:
+	Short: "给一个纹理图，生成相应的 height map 和 normal map 和 parallax map",
+	Long: `生成三个文件:
 1. xxx-height-map
-2. xxx-normal-map`,
+2. xxx-normal-map
+3. xxx-parallax-map`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("genNormal 正在执行")
 		fmt.Println("file", *gFile)
@@ -58,6 +59,7 @@ func doyewu() {
 	fmt.Println("FileName", fInfo.Name())
 	var heightMapPath string
 	var normalMapPath string
+	var parallaxMapPath string
 	if strings.HasSuffix(f.Name(), ".png") {
 		m, err = png.Decode(f)
 		if err != nil {
@@ -71,18 +73,26 @@ func doyewu() {
 	}
 	heightMapPath = path.Join(*gOutDir, fmt.Sprintf("%s_heightmap.jpeg", fInfo.Name()))
 	normalMapPath = path.Join(*gOutDir, fmt.Sprintf("%s_normalmap.jpeg", fInfo.Name()))
+	parallaxMapPath = path.Join(*gOutDir, fmt.Sprintf("%s_parallaxmap.jpeg", fInfo.Name()))
+
 	fmt.Printf("%s\n", m.Bounds()) // 图片长宽
 	heightMap := image.NewRGBA(image.Rect(0, 0, m.Bounds().Max.X, m.Bounds().Max.Y))
+	parallaxMap := image.NewRGBA(image.Rect(0, 0, m.Bounds().Max.X, m.Bounds().Max.Y))
 	for idx := 0; idx < m.Bounds().Max.X; idx++ {
 		for jdx := 0; jdx < m.Bounds().Max.Y; jdx++ {
 			craw_r, craw_g, craw_b, _ := m.At(idx, jdx).RGBA()
 			avg := (craw_r + craw_g + craw_b) / 3
+			avg_inverse := 255 - avg
 			heightMap.SetRGBA(idx, jdx, color.RGBA{R: uint8(avg), G: uint8(avg), B: uint8(avg)})
+			parallaxMap.SetRGBA(idx, jdx, color.RGBA{R: uint8(avg_inverse), G: uint8(avg_inverse), B: uint8(avg_inverse)})
 		}
 	}
 	os.Remove(heightMapPath)
 	heightFile, _ := os.Create(heightMapPath)
 	jpeg.Encode(heightFile, heightMap, nil)
+	os.Remove(parallaxMapPath)
+	parallaxFile, _ := os.Create(parallaxMapPath)
+	jpeg.Encode(parallaxFile, parallaxMap, nil)
 
 	//
 	normalMap := image.NewRGBA(image.Rect(0, 0, m.Bounds().Max.X, m.Bounds().Max.Y))
