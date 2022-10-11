@@ -166,16 +166,18 @@ namespace mc::asset
         {
             m_sp->Uniform("uni_ourTexture", 0);
             m_sp->Uniform("uni_ourNormal", 1);
+            m_sp->Uniform("uni_ourParallax", 2);
             m_texture->Use(0);
             m_normal->Use(1);
+            m_parallax->Use(2);
             // light map bind
             std::string uni_shadow_map{"uni_shadow_map[x]"};
 
             for (int index = 0; index < eg->LightSize(); ++index)
             {
                 uni_shadow_map[15] = '0' + static_cast<char>(index);
-                eg->GetLight(index)->UseTexture(index + 2);
-                m_sp->Uniform(uni_shadow_map.data(), index + 2);
+                eg->GetLight(index)->UseTexture(index + 3);
+                m_sp->Uniform(uni_shadow_map.data(), index + 3);
             }
         }
         // 传一些 uniform
@@ -272,7 +274,14 @@ namespace mc::asset
         }
         else
         {
-            m_normal = texture;
+            if (!m_normal)
+            {
+                m_normal = texture;
+            }
+            else
+            {
+                m_parallax = texture;
+            }
         }
     }
     const std::string &ArtLogicPhong::ShowMe()
