@@ -57,6 +57,7 @@ func doyewu() {
 	fInfo.Name()
 
 	fmt.Println("FileName", fInfo.Name())
+	var rawMapPath string
 	var heightMapPath string
 	var normalMapPath string
 	var parallaxMapPath string
@@ -71,28 +72,44 @@ func doyewu() {
 			panic("非jpeg")
 		}
 	}
-	heightMapPath = path.Join(*gOutDir, fmt.Sprintf("%s_heightmap.jpeg", fInfo.Name()))
-	normalMapPath = path.Join(*gOutDir, fmt.Sprintf("%s_normalmap.jpeg", fInfo.Name()))
-	parallaxMapPath = path.Join(*gOutDir, fmt.Sprintf("%s_parallaxmap.jpeg", fInfo.Name()))
+	rawMapPath = path.Join(*gOutDir, fmt.Sprintf("%s_rawmap.jpg", fInfo.Name()))
+	heightMapPath = path.Join(*gOutDir, fmt.Sprintf("%s_heightmap.jpg", fInfo.Name()))
+	normalMapPath = path.Join(*gOutDir, fmt.Sprintf("%s_normalmap.jpg", fInfo.Name()))
+	parallaxMapPath = path.Join(*gOutDir, fmt.Sprintf("%s_parallaxmap.jpg", fInfo.Name()))
 
 	fmt.Printf("%s\n", m.Bounds()) // 图片长宽
+
+	rawMap := image.NewRGBA(image.Rect(0, 0, m.Bounds().Max.X, m.Bounds().Max.Y))
 	heightMap := image.NewRGBA(image.Rect(0, 0, m.Bounds().Max.X, m.Bounds().Max.Y))
 	parallaxMap := image.NewRGBA(image.Rect(0, 0, m.Bounds().Max.X, m.Bounds().Max.Y))
+
 	for idx := 0; idx < m.Bounds().Max.X; idx++ {
 		for jdx := 0; jdx < m.Bounds().Max.Y; jdx++ {
-			craw_r, craw_g, craw_b, _ := m.At(idx, jdx).RGBA()
-			avg := (craw_r + craw_g + craw_b) / 3
+			craw_r, craw_g, craw_b, craw_A := m.At(idx, jdx).RGBA()
+			r_8, g_8, b_8, a_8 := craw_r>>8, craw_g>>8, craw_b>>8, craw_A>>8
+			if idx+jdx < 100 {
+				fmt.Println("- - -")
+				fmt.Println(craw_r, craw_g, craw_b, craw_A)
+				fmt.Println(r_8, g_8, b_8, a_8)
+			}
+			avg := (r_8 + g_8 + b_8) / 3
 			avg_inverse := 255 - avg
-			heightMap.SetRGBA(idx, jdx, color.RGBA{R: uint8(avg), G: uint8(avg), B: uint8(avg)})
-			parallaxMap.SetRGBA(idx, jdx, color.RGBA{R: uint8(avg_inverse), G: uint8(avg_inverse), B: uint8(avg_inverse)})
+			rawMap.Set(idx, jdx, color.RGBA{R: uint8(r_8), G: uint8(g_8), B: uint8(b_8), A: uint8(a_8)})
+			heightMap.Set(idx, jdx, color.RGBA{R: uint8(avg), G: uint8(avg), B: uint8(avg), A: 255})
+			parallaxMap.Set(idx, jdx, color.RGBA{R: uint8(avg_inverse), G: uint8(avg_inverse), B: uint8(avg_inverse), A: 255})
 		}
 	}
+	os.Remove(rawMapPath)
+	rawFile, _ := os.Create(rawMapPath)
+	jpeg.Encode(rawFile, rawMap, &jpeg.Options{Quality: 10})
+	//
 	os.Remove(heightMapPath)
 	heightFile, _ := os.Create(heightMapPath)
-	jpeg.Encode(heightFile, heightMap, nil)
+	jpeg.Encode(heightFile, heightMap, &jpeg.Options{Quality: 10})
+	//
 	os.Remove(parallaxMapPath)
 	parallaxFile, _ := os.Create(parallaxMapPath)
-	jpeg.Encode(parallaxFile, parallaxMap, nil)
+	jpeg.Encode(parallaxFile, parallaxMap, &jpeg.Options{Quality: 10})
 
 	//
 	normalMap := image.NewRGBA(image.Rect(0, 0, m.Bounds().Max.X, m.Bounds().Max.Y))
@@ -105,12 +122,12 @@ func doyewu() {
 			{
 				xiao, _, _, _ := heightMap.At((x-1)%maxX, y).RGBA()
 				da, _, _, _ := heightMap.At((x+1)%maxX, y).RGBA()
-				dx = (float64(da) - float64(xiao)) / 255
+				dx = (float64(da>>8) - float64(xiao>>8)) / 255
 			}
 			{
 				xiao, _, _, _ := heightMap.At(x, (y-1)%maxY).RGBA()
 				da, _, _, _ := heightMap.At(x, (y+1)%maxY).RGBA()
-				dy = (float64(da) - float64(xiao)) / 255
+				dy = (float64(da>>8) - float64(xiao>>8)) / 255
 			}
 			dx = -dx
 			dy = -dy
@@ -127,14 +144,15 @@ func doyewu() {
 			dz += 255
 			dz /= 2
 
-			normalMap.SetRGBA(x, y, color.RGBA{
+			normalMap.Set(x, y, color.RGBA{
 				R: uint8(dx),
 				G: uint8(dy),
 				B: uint8(dz),
+				A: 255,
 			})
 		}
 	}
 	os.Remove(normalMapPath)
 	normalFile, _ := os.Create(normalMapPath)
-	jpeg.Encode(normalFile, normalMap, nil)
+	jpeg.Encode(normalFile, normalMap, &jpeg.Options{Quality: 10})
 }
