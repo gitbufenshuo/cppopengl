@@ -18,7 +18,7 @@ namespace mc::asset
     Image::Image(AssetManager &am, const std::string &r_name) : m_r_name{r_name},
                                                                 m_file_path{(stdpath{am.GetBaseDir()} / stdpath{s_scope} / stdpath{r_name}).string()}
     {
-        stbi_set_flip_vertically_on_load(false);
+        stbi_set_flip_vertically_on_load(true);
 
         m_image_data = stbi_load(m_file_path.data(), &m_width, &m_height, &m_nrChannels, 0);
         if (!m_image_data)

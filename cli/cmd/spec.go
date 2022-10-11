@@ -11,6 +11,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"strings"
 
 	"gitee.com/onebook/cppopengl/cli/mc/comm"
 	"github.com/spf13/cobra"
@@ -30,6 +31,10 @@ var specCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(specCmd)
+}
+
+var ignore_file = []string{
+	".DS_Store",
 }
 
 func do_spec() {
@@ -59,6 +64,11 @@ func onedir(res *comm.PBDirSpec, dir string, list *[]string) {
 	fmt.Printf("Visited: %s\n", dir)
 	full_dir := path.Join(res.BaseDir, dir)
 	var visit = func(path string, f os.FileInfo, err error) error {
+		for _, oneignore := range ignore_file {
+			if strings.Contains(f.Name(), oneignore) {
+				return nil
+			}
+		}
 		if f != nil && !f.IsDir() {
 			fmt.Printf("	- add:[fname: %s]\n", f.Name())
 			*list = append(*list, f.Name())
