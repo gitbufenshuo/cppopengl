@@ -39,7 +39,7 @@ namespace game
         auto x = glm::sin(m_time * 3.14f * 2.0f * 0.1f + m_x) * 20.0f;
         auto y = glm::sin(m_time * 3.14f * 0.5f);
         auto z = glm::cos(m_time * 3.14f * 0.5f);
-        m_gb->GetTransform()->SetLocalTranslate(x, y * 5.0f + 5.0f, z * 5.0f);
+        m_gb->GetTransform()->SetLocalTranslate(x, y * 5.0f + 15.0f, z * 5.0f + 22.0f);
         m_gb->GetTransform()->LookAt(glm::vec3{0.0f, 0.0f, 0.0f});
         //  light pos
         auto _light{m_gb->GetEngine()->GetLight(m_light_index)};
