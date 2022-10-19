@@ -86,7 +86,7 @@ namespace
             }
         }
         {
-            // 生成三个管理 object
+            // 生成管理 object
             for (int index = 0; index < 1; ++index)
             {
                 auto newgb{new mc::low::GameObject{&gogogo}};

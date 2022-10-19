@@ -27,8 +27,8 @@ namespace mc::low
         int m_id;
         std::string m_name;
         std::unique_ptr<Transform> m_transform;
-        MeshRender *m_render;
-        MeshFilter *m_filter;
+        MeshRender *m_render{};
+        MeshFilter *m_filter{};
         std::vector<std::shared_ptr<mc::asset::ActLogic>> act_list;
         Engine *m_engine;
         bool m_deleted{false}; // 是否已经被删除
