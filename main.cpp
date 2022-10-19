@@ -46,20 +46,27 @@ void reg_entry(std::unordered_map<std::string, entry_func> &entry_list)
                 one));
     }
     {
-		entry_func one{game::example_list::gbcd::Main};
-		entry_list.insert(
-			std::pair(
-				game::example_list::gbcd::g_name,
-				one));
-	}
-	{
-		entry_func one{game::example_list::math::Main};
-		entry_list.insert(
-			std::pair(
-				game::example_list::math::g_name,
-				one));
-	}
-	// placeholder
+        entry_func one{game::example_list::gbcd::Main};
+        entry_list.insert(
+            std::pair(
+                game::example_list::gbcd::g_name,
+                one));
+    }
+    {
+        entry_func one{game::example_list::math::Main};
+        entry_list.insert(
+            std::pair(
+                game::example_list::math::g_name,
+                one));
+    }
+    {
+        entry_func one{game::example_list::uvt::Main};
+        entry_list.insert(
+            std::pair(
+                game::example_list::uvt::g_name,
+                one));
+    }
+    // placeholder
 }
 
 int main(int argc, char *argv[])

@@ -36,8 +36,11 @@ namespace game::example_list::math
     const std::string g_name{"math"};
     int Main();
 }
+namespace game::example_list::uvt
+{
+    const std::string g_name{"uvt"};
+    int Main();
+}
 // placeholder
-
-
 
 #endif
