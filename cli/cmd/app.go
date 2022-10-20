@@ -141,3 +141,9 @@ func exapmle_cpp_func(name string) {
 	os.RemoveAll(path.Join(newdir, "main.cpp"))
 	ioutil.WriteFile(path.Join(newdir, "main.cpp"), []byte(lastthing), 0644)
 }
+
+func theap() {
+
+	// heap.Init()
+
+}

@@ -4,7 +4,7 @@
 
 #include <uv/uv.h>
 
-namespace
+namespace uv::server
 {
     uv_loop_t *loop;
 
@@ -63,6 +63,92 @@ namespace
 
 }
 
+namespace uv::client
+{
+    void on_close(uv_handle_t *handle);
+    void on_connect(uv_connect_t *req, int status);
+    void on_write(uv_write_t *req, int status);
+
+    uv_loop_t *loop;
+
+    void alloc_cb(uv_handle_t *handle, size_t size, uv_buf_t *buf)
+    {
+        *buf = uv_buf_init(static_cast<char *>(malloc(size)), size);
+    }
+
+    void on_close(uv_handle_t *handle)
+    {
+        printf("closed.");
+    }
+
+    void on_write(uv_write_t *req, int status)
+    {
+        if (status)
+        {
+            perror("uv_write error ");
+            return;
+        }
+        printf("wrote.\n");
+        free(req);
+        // uv_close((uv_handle_t*)req->handle, on_close);
+    }
+
+    void on_read(uv_stream_t *tcp, ssize_t nread, const uv_buf_t *buf)
+    {
+        printf("on_read. %p\n", tcp);
+        if (nread >= 0)
+        {
+            // printf("read: %s\n", tcp->data);
+            printf("read: %s\n", buf->base);
+        }
+        else
+        {
+            // we got an EOF
+            uv_close((uv_handle_t *)tcp, on_close);
+        }
+
+        // cargo-culted
+        free(buf->base);
+    }
+
+    void write2(uv_stream_t *stream, char *data, int len2)
+    {
+        uv_buf_t buffer[] = {
+            {.base = data, .len = len2}};
+        uv_write_t *req = malloc(sizeof(uv_write_t));
+        uv_write(req, stream, buffer, 1, on_write);
+    }
+
+    void on_connect(uv_connect_t *connection, int status)
+    {
+        if (status < 0)
+        {
+            printf("failed to connect\n");
+            return;
+        }
+        printf("connected. %p %d\n", connection, status);
+
+        uv_stream_t *stream = connection->handle;
+        free(connection);
+        write2(stream, "echo  world!", 12);
+        uv_read_start(stream, alloc_cb, on_read);
+    }
+
+    void startConn(char *host, int port)
+    {
+        uv_tcp_t *pSock = malloc(sizeof(uv_tcp_t));
+        uv_tcp_init(loop, pSock);
+        uv_tcp_keepalive(pSock, 1, 60);
+
+        struct sockaddr_in dest;
+        uv_ip4_addr(host, port, &dest);
+
+        uv_connect_t *pConn = malloc(sizeof(uv_connect_t));
+        printf("allocated %p\n", pConn);
+        uv_tcp_connect(pConn, pSock, (const struct sockaddr *)&dest, on_connect);
+    }
+}
+
 /**
  * @brief 测试 libuv 相关功能
  *
@@ -72,10 +158,10 @@ namespace game::example_list::uvt
 
     int Main()
     {
-        loop = uv_default_loop();
+        uv::server::loop = uv_default_loop();
 
         uv_tcp_t server;
-        uv_tcp_init(loop, &server);
+        uv_tcp_init(uv::server::loop, &server);
 
         int err{};
 
@@ -87,7 +173,7 @@ namespace game::example_list::uvt
         err = uv_tcp_bind(&server, reinterpret_cast<sockaddr *>(&bind_addr), 0);
         printf("uv_tcp_bind:%d\n", err);
 
-        int r = uv_listen((uv_stream_t *)&server, 128, on_new_connection);
+        int r = uv_listen((uv_stream_t *)&server, 128, uv::server::on_new_connection);
         if (r)
         {
             fprintf(stderr, "Listen error!\n");
@@ -97,6 +183,6 @@ namespace game::example_list::uvt
         {
             printf("ListenGood!!\n");
         }
-        return uv_run(loop, UV_RUN_DEFAULT);
+        return uv_run(uv::server::loop, UV_RUN_DEFAULT);
     }
 }
