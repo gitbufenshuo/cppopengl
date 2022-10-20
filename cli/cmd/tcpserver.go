@@ -226,7 +226,7 @@ func do_chat_client() {
 		fix_write(server, len_buf)
 		fix_write(server, data_buf)
 	}
-	{
+	for {
 		// read twice
 		buffer := make([]byte, 1000)
 		fix_read(server, id_buf)
