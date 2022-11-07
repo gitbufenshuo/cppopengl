@@ -75,6 +75,7 @@ namespace
             {
                 auto _light{std::make_shared<mc::asset::Light>()};
                 _light->SetKind(mc::asset::Light::Kind::Direction);
+                _light->SetColor(glm::vec3{0.0f, 0.0f, 1.0f});
                 _light->SetCastShadow(true); // 本 light 会产生阴影
                 auto _artlogic{art_factory.Create(game::ArtLogicShadowGenerate::s_class_name, "")};
                 auto rart{static_cast<game::ArtLogicShadowGenerate *>(_artlogic.get())};

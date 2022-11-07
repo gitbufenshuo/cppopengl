@@ -13,6 +13,9 @@
 #include <mc/asset/model.h>
 #include <mc/asset/md5sum.h>
 
+// glmex
+#include <mc/glmex/show.h>
+
 // tools
 #include <mc/tools/md5.h>
 // log
@@ -212,6 +215,7 @@ namespace mc::asset
                 auto _kind{_light->GetKind()};
                 auto &_pos{_light->GetPos()};
                 auto &_color{_light->GetColor()};
+                mc::glmex::showVec(_color);
                 auto &_forward{_light->GetForward()};
 
                 if (_kind == 0)

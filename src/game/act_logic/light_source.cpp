@@ -44,7 +44,8 @@ namespace game
         //  light pos
         auto _light{m_gb->GetEngine()->GetLight(m_light_index)};
         _light->SetPos(m_gb->GetTransform()->GetWorldPos());
-        _light->SetColor(glm::vec3{1.0f, 1.0f, 1.0f});
+        float blue = (glm::sin(m_time * 2 * 3.14) + 1.0f) * 0.5f;
+        _light->SetColor(glm::vec3{blue, blue, 1.0f});
         // _light->SetForward(m_gb->GetTransform()->GetWorldZ() - m_gb->GetTransform()->GetWorldPos());
     }
     void ActLogicLightSource::life(double delta_time)
