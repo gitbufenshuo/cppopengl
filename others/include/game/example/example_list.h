@@ -41,6 +41,12 @@ namespace game::example_list::uvt
     const std::string g_name{"uvt"};
     int Main();
 }
+namespace game::example_list::freetype
+{
+    const std::string g_name{"freetype"};
+    int Main();
+}
 // placeholder
+
 
 #endif

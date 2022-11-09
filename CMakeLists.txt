@@ -21,6 +21,7 @@ if (APPLE)
     set (PROTO_LIB ${PROJECT_SOURCE_DIR}/others/lib/libprotobuf.a)
     set (CRYPTO_LIB ${PROJECT_SOURCE_DIR}/others/lib/libcrypto.lib)
     set (UV_LIB ${PROJECT_SOURCE_DIR}/others/lib/libuv.1.dylib)
+    set (FREETYPE_LIB ${PROJECT_SOURCE_DIR}/others/lib/libfreetype.6.dylib)
     set (COLOR_BOLD "bold")
     set (COLOR_GREEN "green")
 else()
@@ -45,6 +46,7 @@ target_link_libraries (mc.out src
     ${PROTO_LIB}
     ${CRYPTO_LIB}
     ${UV_LIB}
+    ${FREETYPE_LIB}
 )
 target_include_directories(
     mc.out

@@ -66,7 +66,14 @@ void reg_entry(std::unordered_map<std::string, entry_func> &entry_list)
                 game::example_list::uvt::g_name,
                 one));
     }
-    // placeholder
+    {
+		entry_func one{game::example_list::freetype::Main};
+		entry_list.insert(
+			std::pair(
+				game::example_list::freetype::g_name,
+				one));
+	}
+	// placeholder
 }
 
 int main(int argc, char *argv[])
